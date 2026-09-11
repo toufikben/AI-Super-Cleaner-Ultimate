@@ -14,7 +14,9 @@ data class FileMetadataEntity(
     val contentHash: String? = null,
     val perceptualHash: String? = null,
     val blurScore: Double? = null,
-    val isScreenshot: Boolean = false
+    val isScreenshot: Boolean = false,
+    val durationMillis: Long = 0L,
+    val relativePath: String? = null
 )
 
 @Entity(tableName = "scan_history")

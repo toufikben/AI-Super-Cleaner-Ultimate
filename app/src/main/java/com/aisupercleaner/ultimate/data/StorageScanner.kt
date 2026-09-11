@@ -32,7 +32,9 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                     MediaStore.MediaColumns.DISPLAY_NAME,
                     MediaStore.MediaColumns.MIME_TYPE,
                     MediaStore.MediaColumns.SIZE,
-                    MediaStore.MediaColumns.DATE_MODIFIED
+                    MediaStore.MediaColumns.DATE_MODIFIED,
+                    MediaStore.MediaColumns.DURATION,
+                    MediaStore.MediaColumns.RELATIVE_PATH
                 )
                 resolver.query(collection, projection, null, null, null)?.use { cursor ->
                     val idIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
@@ -40,6 +42,8 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                     val mimeIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.MIME_TYPE)
                     val sizeIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.SIZE)
                     val modifiedIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED)
+                    val durationIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DURATION)
+                    val pathIndex = cursor.getColumnIndex(MediaStore.MediaColumns.RELATIVE_PATH)
                     while (cursor.moveToNext()) {
                         coroutineContext.ensureActive()
                         val id = cursor.getLong(idIndex)
@@ -50,7 +54,9 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                             mimeType = cursor.getString(mimeIndex) ?: "application/octet-stream",
                             sizeBytes = size,
                             modifiedEpochSeconds = cursor.getLong(modifiedIndex),
-                            mediaType = mediaType
+                            mediaType = mediaType,
+                            durationMillis = if (durationIndex >= 0 && !cursor.isNull(durationIndex)) cursor.getLong(durationIndex) else 0L,
+                            relativePath = if (pathIndex >= 0 && !cursor.isNull(pathIndex)) cursor.getString(pathIndex) else null
                         )
                         totalFiles++
                         totalBytes += size

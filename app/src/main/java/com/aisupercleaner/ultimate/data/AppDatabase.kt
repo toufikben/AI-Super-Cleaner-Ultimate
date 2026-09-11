@@ -23,6 +23,12 @@ interface StorageDao {
     @Query("SELECT * FROM file_metadata WHERE contentHash IS NOT NULL ORDER BY contentHash, sizeBytes DESC")
     fun observeDuplicateCandidates(): Flow<List<FileMetadataEntity>>
 
+    @Query("SELECT * FROM file_metadata WHERE sizeBytes >= :minimumBytes ORDER BY sizeBytes DESC")
+    fun observeLargeFiles(minimumBytes: Long): Flow<List<FileMetadataEntity>>
+
+    @Query("SELECT * FROM file_metadata WHERE relativePath LIKE '%Download%' OR LOWER(displayName) LIKE '%.apk' ORDER BY modifiedEpochSeconds ASC")
+    fun observeDownloads(): Flow<List<FileMetadataEntity>>
+
     @Query("UPDATE file_metadata SET contentHash = :contentHash, perceptualHash = :perceptualHash, blurScore = :blurScore, isScreenshot = :isScreenshot WHERE uri = :uri")
     suspend fun updateAnalysis(uri: String, contentHash: String?, perceptualHash: String?, blurScore: Double?, isScreenshot: Boolean)
 
@@ -63,7 +69,7 @@ interface StorageDao {
     suspend fun clearTrash()
 }
 
-@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class], version = 3, exportSchema = false)
+@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun storageDao(): StorageDao
 
@@ -71,7 +77,7 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile private var instance: AppDatabase? = null
         fun get(context: Context): AppDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "storage_intelligence.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .fallbackToDestructiveMigration()
                 .build().also { instance = it }
         }
@@ -89,6 +95,13 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
                 db.execSQL("CREATE TABLE IF NOT EXISTS trash_items (uri TEXT NOT NULL, displayName TEXT NOT NULL, sizeBytes INTEGER NOT NULL, trashedAtEpochMillis INTEGER NOT NULL, PRIMARY KEY(uri))")
                 db.execSQL("CREATE INDEX IF NOT EXISTS index_trash_items_trashedAtEpochMillis ON trash_items(trashedAtEpochMillis)")
+            }
+        }
+
+        private val MIGRATION_3_4 = object : androidx.room.migration.Migration(3, 4) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN durationMillis INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN relativePath TEXT")
             }
         }
     }
