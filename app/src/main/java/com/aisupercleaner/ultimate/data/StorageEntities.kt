@@ -10,7 +10,11 @@ data class FileMetadataEntity(
     val mimeType: String,
     val sizeBytes: Long,
     val modifiedEpochSeconds: Long,
-    val mediaType: String
+    val mediaType: String,
+    val contentHash: String? = null,
+    val perceptualHash: String? = null,
+    val blurScore: Double? = null,
+    val isScreenshot: Boolean = false
 )
 
 @Entity(tableName = "scan_history")

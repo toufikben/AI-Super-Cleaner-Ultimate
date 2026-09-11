@@ -17,6 +17,12 @@ interface StorageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertFiles(files: List<FileMetadataEntity>)
 
+    @Query("SELECT * FROM file_metadata ORDER BY sizeBytes DESC")
+    suspend fun allFiles(): List<FileMetadataEntity>
+
+    @Query("UPDATE file_metadata SET contentHash = :contentHash, perceptualHash = :perceptualHash, blurScore = :blurScore, isScreenshot = :isScreenshot WHERE uri = :uri")
+    suspend fun updateAnalysis(uri: String, contentHash: String?, perceptualHash: String?, blurScore: Double?, isScreenshot: Boolean)
+
     @Query("DELETE FROM file_metadata")
     suspend fun clearFiles()
 
@@ -42,14 +48,26 @@ interface StorageDao {
     suspend fun latestScan(): ScanHistoryEntity?
 }
 
-@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class], version = 1, exportSchema = false)
+@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun storageDao(): StorageDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null
         fun get(context: Context): AppDatabase = instance ?: synchronized(this) {
-            instance ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "storage_intelligence.db").build().also { instance = it }
+            instance ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "storage_intelligence.db")
+                .addMigrations(MIGRATION_1_2)
+                .fallbackToDestructiveMigration()
+                .build().also { instance = it }
+        }
+
+        private val MIGRATION_1_2 = object : androidx.room.migration.Migration(1, 2) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN contentHash TEXT")
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN perceptualHash TEXT")
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN blurScore REAL")
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN isScreenshot INTEGER NOT NULL DEFAULT 0")
+            }
         }
     }
 }
