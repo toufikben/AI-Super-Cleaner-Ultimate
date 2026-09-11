@@ -34,8 +34,10 @@ import com.aisupercleaner.ultimate.data.CleanupManager
 import com.aisupercleaner.ultimate.data.SmartCleanupReport
 import com.aisupercleaner.ultimate.data.StorageScanner
 import com.aisupercleaner.ultimate.data.ScanProgress
-import com.aisupercleaner.ultimate.data.VideoCompressor
 import com.aisupercleaner.ultimate.data.VideoPreset
+import com.aisupercleaner.ultimate.data.CompressionManager
+import com.aisupercleaner.ultimate.data.CompressionResult
+import com.aisupercleaner.ultimate.data.ImagePreset
 import com.aisupercleaner.ultimate.privacy.AppPreferences
 import com.aisupercleaner.ultimate.privacy.StoragePermissionManager
 import com.aisupercleaner.ultimate.ui.theme.*
@@ -57,7 +59,7 @@ fun CleanerApp() {
     val recommendationEngine = remember { RecommendationEngine(database.storageDao()) }
     val duplicateEngine = remember { DuplicateEngine(context.contentResolver, database.storageDao()) }
     val cleanupManager = remember { CleanupManager(context.contentResolver, database.storageDao()) }
-    val videoCompressor = remember { VideoCompressor(context) }
+    val compressionManager = remember { CompressionManager(context, context.contentResolver, database.storageDao()) }
     val scope = rememberCoroutineScope()
     val fileCount by database.storageDao().observeFileCount().collectAsStateWithLifecycle(initialValue = 0)
     val totalBytes by database.storageDao().observeTotalBytes().collectAsStateWithLifecycle(initialValue = 0L)
@@ -97,7 +99,7 @@ fun CleanerApp() {
             0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, onSmartScan = { showPermissionEducation = true })
             1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager)
             2 -> AnalyzeScreen(Modifier.padding(padding), database)
-            3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, videoCompressor)
+            3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager)
             4 -> PrivacyCenterScreen(Modifier.padding(padding), preferences)
             else -> PlaceholderScreen(navItems[selected].label, Modifier.padding(padding))
         }
@@ -157,14 +159,20 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     }
 }
 @Composable private fun AnalysisFileRow(item: com.aisupercleaner.ultimate.data.FileMetadataEntity, label: String) { Card(shape = RoundedCornerShape(16.dp)) { Row(Modifier.fillMaxWidth().padding(14.dp), verticalAlignment = Alignment.CenterVertically) { Icon(if (item.mediaType == "video") Icons.Default.VideoFile else if (item.mediaType == "audio") Icons.Default.AudioFile else Icons.Default.InsertDriveFile, null, tint = MaterialTheme.colorScheme.secondary); Spacer(Modifier.width(10.dp)); Column(Modifier.weight(1f)) { Text(item.displayName, fontWeight = FontWeight.SemiBold); Text("$label · ${formatBytes(item.sizeBytes)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant); if (item.durationMillis > 0) Text("Duration ${item.durationMillis / 1000}s", style = MaterialTheme.typography.labelSmall) } } } }
-@Composable private fun ToolsScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, videoCompressor: VideoCompressor) {
-    var selectedVideo by remember { mutableStateOf<android.net.Uri?>(null) }; var isCompressing by remember { mutableStateOf(false) }; var resultMessage by remember { mutableStateOf<String?>(null) }; val scope = rememberCoroutineScope()
+@Composable private fun ToolsScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, compressionManager: CompressionManager) {
+    val compressionHistory by database.storageDao().observeCompressionHistory().collectAsStateWithLifecycle(initialValue = emptyList())
+    var selectedVideo by remember { mutableStateOf<android.net.Uri?>(null) }; var selectedImage by remember { mutableStateOf<android.net.Uri?>(null) }; var isCompressing by remember { mutableStateOf(false) }; var resultMessage by remember { mutableStateOf<String?>(null) }; val scope = rememberCoroutineScope()
     val picker = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.GetContent()) { uri -> selectedVideo = uri }
+    val imagePicker = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.GetContent()) { uri -> selectedImage = uri }
     Column(modifier.fillMaxSize()) {
         LazyColumn(Modifier.weight(1f).padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(top = 24.dp, bottom = 16.dp)) {
             item { Text("Tools", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold); Text("Compress a copy without overwriting the original.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
-            item { Card(shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) { Text("Video Compressor", fontWeight = FontWeight.SemiBold); Text(selectedVideo?.toString() ?: "No video selected", style = MaterialTheme.typography.bodySmall); Button(onClick = { picker.launch("video/*") }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Default.VideoFile, null); Spacer(Modifier.width(8.dp)); Text("Choose video") }; Button(onClick = { selectedVideo?.let { uri -> scope.launch { isCompressing = true; try { val output = videoCompressor.compressCopy(uri, VideoPreset.BALANCED); resultMessage = "Compressed copy created: ${output.name}. The original was not changed." } catch (_: Exception) { resultMessage = "Compression failed because the device or codec does not support this input." } finally { isCompressing = false } } } }, enabled = selectedVideo != null && !isCompressing, modifier = Modifier.fillMaxWidth()) { if (isCompressing) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) else Text("Compress copy") } } } }
+            item { Card(shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) { Text("Video Compressor", fontWeight = FontWeight.SemiBold); Text(selectedVideo?.toString() ?: "No video selected", style = MaterialTheme.typography.bodySmall); Button(onClick = { picker.launch("video/*") }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Default.VideoFile, null); Spacer(Modifier.width(8.dp)); Text("Choose video") }; Button(onClick = { selectedVideo?.let { uri -> scope.launch { isCompressing = true; try { val result = compressionManager.compressVideoCopy(uri, VideoPreset.BALANCED, 0L); resultMessage = when (result) { is CompressionResult.Success -> "Compressed copy exported to MediaStore: ${result.outputUri}"; is CompressionResult.Failure -> result.message } } finally { isCompressing = false } } } }, enabled = selectedVideo != null && !isCompressing, modifier = Modifier.fillMaxWidth()) { if (isCompressing) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) else Text("Compress and export copy") } } } }
+            item { Card(shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) { Text("Image Compressor", fontWeight = FontWeight.SemiBold); Text(selectedImage?.toString() ?: "No image selected", style = MaterialTheme.typography.bodySmall); Button(onClick = { imagePicker.launch("image/*") }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Default.Image, null); Spacer(Modifier.width(8.dp)); Text("Choose image") }; Button(onClick = { selectedImage?.let { uri -> scope.launch { isCompressing = true; try { val result = compressionManager.compressImageCopy(uri, ImagePreset.BALANCED, 0L); resultMessage = when (result) { is CompressionResult.Success -> "Compressed image exported to MediaStore: ${result.outputUri}"; is CompressionResult.Failure -> result.message } } finally { isCompressing = false } } } }, enabled = selectedImage != null && !isCompressing, modifier = Modifier.fillMaxWidth()) { if (isCompressing) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) else Text("Compress and export copy") } } } }
             item { Text("Trash", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold) }
+            item { Text("Compression history", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold) }
+            if (compressionHistory.isEmpty()) item { EmptyState("No compression history", "Completed and failed attempts will be recorded locally.") }
+            items(compressionHistory) { item -> Card(shape = RoundedCornerShape(16.dp)) { Row(Modifier.fillMaxWidth().padding(14.dp), verticalAlignment = Alignment.CenterVertically) { Icon(if (item.mediaType == "video") Icons.Default.VideoFile else Icons.Default.Image, null, tint = MaterialTheme.colorScheme.secondary); Spacer(Modifier.width(10.dp)); Column(Modifier.weight(1f)) { Text("${item.mediaType.replaceFirstChar { it.uppercase() }} · ${item.preset}", fontWeight = FontWeight.SemiBold); Text("${formatBytes(item.originalBytes)} → ${formatBytes(item.outputBytes)} · ${item.status}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) } } } }
         }
         TrashScreen(Modifier.weight(1f), database, cleanupManager)
     }

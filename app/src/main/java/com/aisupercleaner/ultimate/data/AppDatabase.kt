@@ -67,9 +67,15 @@ interface StorageDao {
 
     @Query("DELETE FROM trash_items")
     suspend fun clearTrash()
+
+    @Insert
+    suspend fun insertCompressionHistory(item: CompressionHistoryEntity)
+
+    @Query("SELECT * FROM compression_history ORDER BY createdAtEpochMillis DESC LIMIT 50")
+    fun observeCompressionHistory(): Flow<List<CompressionHistoryEntity>>
 }
 
-@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class], version = 4, exportSchema = false)
+@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class, CompressionHistoryEntity::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun storageDao(): StorageDao
 
@@ -77,7 +83,7 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile private var instance: AppDatabase? = null
         fun get(context: Context): AppDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "storage_intelligence.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                 .fallbackToDestructiveMigration()
                 .build().also { instance = it }
         }
@@ -102,6 +108,12 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE file_metadata ADD COLUMN durationMillis INTEGER NOT NULL DEFAULT 0")
                 db.execSQL("ALTER TABLE file_metadata ADD COLUMN relativePath TEXT")
+            }
+        }
+
+        private val MIGRATION_4_5 = object : androidx.room.migration.Migration(4, 5) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS compression_history (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, inputUri TEXT NOT NULL, outputUri TEXT, mediaType TEXT NOT NULL, preset TEXT NOT NULL, originalBytes INTEGER NOT NULL, outputBytes INTEGER NOT NULL, status TEXT NOT NULL, createdAtEpochMillis INTEGER NOT NULL)")
             }
         }
     }
