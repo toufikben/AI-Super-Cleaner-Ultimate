@@ -26,3 +26,11 @@ data class ScanHistoryEntity(
     val totalBytes: Long,
     val status: String
 )
+
+@Entity(tableName = "trash_items", indices = [Index("trashedAtEpochMillis")])
+data class TrashItemEntity(
+    @androidx.room.PrimaryKey val uri: String,
+    val displayName: String,
+    val sizeBytes: Long,
+    val trashedAtEpochMillis: Long
+)
