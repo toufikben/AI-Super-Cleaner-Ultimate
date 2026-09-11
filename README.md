@@ -4,28 +4,19 @@
 
 ## حالة المشروع
 
-**المراحل 1–11 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، الاختبارات، AdMob، وRewarded Ads الاختيارية.
+**المراحل 1–12 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، الاختبارات، AdMob، Rewarded Ads الاختيارية، Google Play Billing، Premium، وPaywall.
 
-**المرحلة 12 مكتملة:** Google Play Billing، Premium entitlement، اشتراك شهري، Lifetime، وPaywall واضح.
+**المرحلة 13 مكتملة:** Google UMP Consent Flow، Privacy Options، Privacy Policy، وData Safety documentation.
 
-## Premium
+## UMP والإعلانات
 
-يستخدم المشروع المنتجين:
+يطلب التطبيق تحديث UMP عند كل تشغيل، ويعرض Consent Form عند الحاجة، ولا يهيئ AdMob أو يطلب إعلاناً قبل اكتمال الموافقة وتحقق `canRequestAds()`. يظهر Privacy Options entry point داخل Settings عندما يطلبه UMP. فشل الموافقة لا يعطل Free cleaning، بل يبقي الإعلانات غير مهيأة.
 
-- `premium_monthly` للاشتراك الشهري.
-- `premium_lifetime` للشراء الدائم.
+Rewarded Ads اختيارية، والإعلانات البينية محدودة، ولا يظهر إعلان داخل حذف الملفات أو Trash.
 
-يتحقق BillingManager من ProductDetails ومشتريات Google Play، ويعتمد Premium فقط عند Purchase بحالة PURCHASED مع acknowledgement. يعرض Paywall إزالة الإعلانات وAdvanced AI Scan وSimilar Photos وVideo compression وScheduled Scan وStorage history. تظل Free cleaning متاحة، ولا يكون Premium أو الإعلان شرطاً لحذف ملف.
+## الخصوصية وأمان البيانات
 
-قبل الإصدار يجب إنشاء المنتجات في Play Console، اختبار License Testers، إضافة استعادة مشتريات ومزامنة خلفية مناسبة، ومراجعة Terms وPrivacy.
-
-## الإعلانات
-
-Rewarded Ads اختيارية فقط، والإعلانات البينية لها cooldown. لا يظهر إعلان داخل اختيار الملفات أو تأكيد Trash أو الحذف الدائم.
-
-## الخصوصية
-
-تظل الملفات على الجهاز. لا يستخدم التطبيق `MANAGE_EXTERNAL_STORAGE` ولا يتجاوز قيود Android.
+الفهرسة والتحليل والضغط محلية. لا يرفع التطبيق الصور أو الفيديو أو الصوت أو أسماء الملفات إلى خادم التطبيق. قد تعالج Google Mobile Ads وGoogle Play بياناتها الخاصة وفق الموافقة وسياسات Google. يجب مطابقة [سياسة الخصوصية](docs/PRIVACY_POLICY.md) و[Data Safety](docs/DATA_SAFETY.md) مع إعدادات Play Console قبل الإصدار.
 
 ## البناء
 
@@ -33,8 +24,9 @@ Rewarded Ads اختيارية فقط، والإعلانات البينية له�
 ./gradlew assembleDebug lintDebug --no-daemon
 ```
 
-## خارطة التنفيذ التالية
+## متطلبات الإصدار التالي
 
-1. Google UMP والموافقة والـPrivacy/Data Safety.
-2. استعادة المشتريات وLicense Testing وInstrumentation.
-3. اختبارات الإصدار النهائية والنشر التجريبي.
+1. استبدال Test Ad IDs بمعرفات إنتاجية.
+2. إنشاء UMP messages وPrivacy Policy URL في AdMob.
+3. استكمال Data Safety وPlay Billing disclosures.
+4. اختبار الرفض والتعديل والموافقة واستعادة المشتريات على أجهزة فعلية.

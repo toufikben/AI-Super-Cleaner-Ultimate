@@ -45,6 +45,7 @@ dependencies {
     implementation("androidx.media3:media3-transformer:1.5.1")
     implementation("com.google.android.gms:play-services-ads:23.6.0")
     implementation("com.android.billingclient:billing-ktx:7.1.1")
+    implementation("com.google.android.ump:user-messaging-platform:4.0.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
     testImplementation("junit:junit:4.13.2")
 }
