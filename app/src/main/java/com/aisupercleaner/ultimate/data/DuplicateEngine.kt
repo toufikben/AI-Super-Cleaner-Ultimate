@@ -4,8 +4,13 @@ import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import java.io.BufferedInputStream
 import java.security.MessageDigest
 import kotlin.coroutines.coroutineContext
@@ -33,16 +38,20 @@ class DuplicateEngine(private val resolver: ContentResolver, private val dao: St
         val imageHashes = mutableListOf<Pair<FileMetadataEntity, Long>>()
         val blurred = mutableListOf<FileMetadataEntity>()
         val screenshots = mutableListOf<FileMetadataEntity>()
-        for (file in imageFiles) {
+        val semaphore = Semaphore(2)
+        imageFiles.chunked(32).forEach { chunk ->
             coroutineContext.ensureActive()
-            val analysis = analyzeImage(file.uri)
-            val isScreenshot = screenshotName(file.displayName)
-            if (analysis != null) {
-                dao.updateAnalysis(file.uri, file.contentHash, analysis.hash, analysis.blurScore, isScreenshot)
-                imageHashes += file.copy(perceptualHash = analysis.hash, blurScore = analysis.blurScore, isScreenshot = isScreenshot) to analysis.hash.toULong(16).toLong()
-                if (analysis.blurScore < 0.10) blurred += file.copy(blurScore = analysis.blurScore)
+            coroutineScope {
+                chunk.map { file -> async(Dispatchers.IO) { semaphore.withPermit { file to analyzeImage(file.uri) } } }.awaitAll().forEach { (file, analysis) ->
+                    val isScreenshot = screenshotName(file.displayName)
+                    if (analysis != null) {
+                        dao.updateAnalysis(file.uri, file.contentHash, analysis.hash, analysis.blurScore, isScreenshot)
+                        imageHashes += file.copy(perceptualHash = analysis.hash, blurScore = analysis.blurScore, isScreenshot = isScreenshot) to analysis.hash.toULong(16).toLong()
+                        if (analysis.blurScore < 0.10) blurred += file.copy(blurScore = analysis.blurScore)
+                    }
+                    if (isScreenshot) screenshots += file.copy(isScreenshot = true)
+                }
             }
-            if (isScreenshot) screenshots += file.copy(isScreenshot = true)
         }
         val similarGroups = buildSimilarGroups(imageHashes)
         MediaAnalysisReport(duplicateGroups, similarGroups, blurred, screenshots)

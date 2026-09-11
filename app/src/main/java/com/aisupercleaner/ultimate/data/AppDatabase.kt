@@ -20,6 +20,9 @@ interface StorageDao {
     @Query("SELECT * FROM file_metadata ORDER BY sizeBytes DESC")
     suspend fun allFiles(): List<FileMetadataEntity>
 
+    @Query("SELECT * FROM file_metadata WHERE uri = :uri LIMIT 1")
+    suspend fun findFile(uri: String): FileMetadataEntity?
+
     @Query("SELECT * FROM file_metadata WHERE contentHash IS NOT NULL ORDER BY contentHash, sizeBytes DESC")
     fun observeDuplicateCandidates(): Flow<List<FileMetadataEntity>>
 

@@ -9,15 +9,16 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import kotlin.coroutines.coroutineContext
 
-data class ScanProgress(val stage: String, val scannedFiles: Int, val discoveredBytes: Long)
-data class ScanResult(val filesScanned: Int, val totalBytes: Long)
+data class ScanProgress(val stage: String, val scannedFiles: Int, val discoveredBytes: Long, val cacheHits: Int = 0)
+data class ScanResult(val filesScanned: Int, val totalBytes: Long, val cacheHits: Int, val cacheMisses: Int)
 
 class StorageScanner(private val resolver: ContentResolver, private val dao: StorageDao) {
     suspend fun scan(onProgress: (ScanProgress) -> Unit): ScanResult = withContext(Dispatchers.IO) {
         val startedAt = System.currentTimeMillis()
-        dao.clearFiles()
         var totalFiles = 0
         var totalBytes = 0L
+        var cacheHits = 0
+        var cacheMisses = 0
         try {
             val sources = listOf(
                 Triple(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image", "Scanning photos"),
@@ -48,7 +49,7 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                         coroutineContext.ensureActive()
                         val id = cursor.getLong(idIndex)
                         val size = cursor.getLong(sizeIndex).coerceAtLeast(0L)
-                        batch += FileMetadataEntity(
+                        val metadata = FileMetadataEntity(
                             uri = ContentUris.withAppendedId(collection, id).toString(),
                             displayName = cursor.getString(nameIndex) ?: "Unnamed file",
                             mimeType = cursor.getString(mimeIndex) ?: "application/octet-stream",
@@ -58,20 +59,22 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                             durationMillis = if (durationIndex >= 0 && !cursor.isNull(durationIndex)) cursor.getLong(durationIndex) else 0L,
                             relativePath = if (pathIndex >= 0 && !cursor.isNull(pathIndex)) cursor.getString(pathIndex) else null
                         )
+                        val cached = dao.findFile(metadata.uri)
+                        if (ScanCachePolicy.isUnchanged(cached, metadata)) cacheHits++ else { batch += metadata; cacheMisses++ }
                         totalFiles++
                         totalBytes += size
                         if (batch.size == 200) {
                             dao.upsertFiles(batch.toList())
                             batch.clear()
-                            onProgress(ScanProgress(stage, totalFiles, totalBytes))
+                            onProgress(ScanProgress(stage, totalFiles, totalBytes, cacheHits))
                         }
                     }
                 }
                 if (batch.isNotEmpty()) dao.upsertFiles(batch)
-                onProgress(ScanProgress(stage, totalFiles, totalBytes))
+                onProgress(ScanProgress(stage, totalFiles, totalBytes, cacheHits))
             }
             dao.insertScanHistory(ScanHistoryEntity(startedAtEpochMillis = startedAt, completedAtEpochMillis = System.currentTimeMillis(), filesScanned = totalFiles, totalBytes = totalBytes, status = "completed"))
-            ScanResult(totalFiles, totalBytes)
+            ScanResult(totalFiles, totalBytes, cacheHits, cacheMisses)
         } catch (e: SecurityException) {
             dao.insertScanHistory(ScanHistoryEntity(startedAtEpochMillis = startedAt, completedAtEpochMillis = System.currentTimeMillis(), filesScanned = totalFiles, totalBytes = totalBytes, status = "permission_denied"))
             throw e
