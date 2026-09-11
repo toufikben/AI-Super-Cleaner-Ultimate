@@ -96,8 +96,8 @@ fun CleanerApp() {
     val navItems = listOf(NavItem("Home", Icons.Default.Home), NavItem("Clean", Icons.Default.AutoAwesome), NavItem("Analyze", Icons.Default.PieChart), NavItem("Tools", Icons.Default.Build), NavItem("Settings", Icons.Default.Settings))
     Scaffold(containerColor = MaterialTheme.colorScheme.background, bottomBar = { NavigationBar(containerColor = MaterialTheme.colorScheme.surface) { navItems.forEachIndexed { index, item -> NavigationBarItem(selected = selected == index, onClick = { selected = index }, icon = { Icon(item.icon, item.label) }, label = { Text(item.label, fontSize = 11.sp) }) } } }) { padding ->
         when (selected) {
-            0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, onSmartScan = { showPermissionEducation = true })
-            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager)
+            0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
+            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, onAdvancedScan = { showPermissionEducation = true })
             2 -> AnalyzeScreen(Modifier.padding(padding), database)
             3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager)
             4 -> PrivacyCenterScreen(Modifier.padding(padding), preferences)
@@ -109,7 +109,7 @@ fun CleanerApp() {
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount: Int, videoCount: Int, audioCount: Int, freeBytes: Long, totalStorageBytes: Long, report: SmartCleanupReport?, mediaReport: MediaAnalysisReport?, progress: ScanProgress?, isScanning: Boolean, onSmartScan: () -> Unit) {
+fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount: Int, videoCount: Int, audioCount: Int, freeBytes: Long, totalStorageBytes: Long, report: SmartCleanupReport?, mediaReport: MediaAnalysisReport?, progress: ScanProgress?, isScanning: Boolean, onSmartScan: () -> Unit, onQuickClean: () -> Unit) {
     val findings = listOf(
         Finding("Photos", "$imageCount items · From MediaStore", "—", Icons.Default.PhotoLibrary, SoftMint),
         Finding("Videos", "$videoCount items · From MediaStore", "—", Icons.Default.VideoLibrary, SoftBlue),
@@ -118,7 +118,7 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     LazyColumn(modifier.fillMaxSize().padding(horizontal = 20.dp), contentPadding = PaddingValues(top = 24.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item { Header() }
         item { ScoreCard(fileCount, totalBytes, freeBytes, totalStorageBytes, report) }
-        item { PrimaryActions(onSmartScan, isScanning) }
+        item { PrimaryActions(onSmartScan, onQuickClean, isScanning) }
         if (progress != null) item { ScanProgressCard(progress) }
         if (report != null) {
             item { ExplainableSummary(report) }
@@ -139,7 +139,7 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), shape = RoundedCornerShape(24.dp)) { Column(Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { Column { Text(if (report == null) "Device storage" else "Smart Cleanup Score", color = Color.White.copy(alpha = .75f), style = MaterialTheme.typography.labelLarge); Text(if (report == null) "Not analyzed" else "${report.healthScore} / 100", color = Color.White, fontSize = 30.sp, fontWeight = FontWeight.Bold); Text("$fileCount indexed media files", color = Color.White.copy(alpha = .75f), style = MaterialTheme.typography.bodySmall) }; Box(Modifier.size(72.dp).clip(CircleShape).background(Color.White.copy(alpha = .13f)), contentAlignment = Alignment.Center) { Icon(Icons.Default.VerifiedUser, null, tint = Color.White, modifier = Modifier.size(34.dp)) } }; LinearProgressIndicator(progress = { if (report == null) ratio else report.healthScore / 100f }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape), color = ScoreAccent, trackColor = Color.White.copy(alpha = .18f)); Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { Text("Used ${formatBytes(used)}", color = Color.White.copy(alpha = .8f), style = MaterialTheme.typography.bodySmall); Text("Free ${formatBytes(freeBytes)}", color = Color.White.copy(alpha = .8f), style = MaterialTheme.typography.bodySmall) } } }
 }
 
-@Composable private fun PrimaryActions(onSmartScan: () -> Unit, isScanning: Boolean) { Column(verticalArrangement = Arrangement.spacedBy(10.dp)) { Button(onClick = onSmartScan, enabled = !isScanning, modifier = Modifier.fillMaxWidth().height(54.dp), shape = RoundedCornerShape(16.dp)) { if (isScanning) { CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp); Spacer(Modifier.width(10.dp)); Text("SCANNING…") } else { Icon(Icons.Default.AutoAwesome, null); Spacer(Modifier.width(10.dp)); Text("SMART SCAN", fontWeight = FontWeight.Bold) } }; Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) { OutlinedButton(onClick = {}, modifier = Modifier.weight(1f).height(50.dp), shape = RoundedCornerShape(14.dp)) { Icon(Icons.Default.CleaningServices, null); Spacer(Modifier.width(6.dp)); Text("Quick clean") }; OutlinedButton(onClick = {}, modifier = Modifier.weight(1f).height(50.dp), shape = RoundedCornerShape(14.dp)) { Icon(Icons.Default.PieChart, null); Spacer(Modifier.width(6.dp)); Text("Analyze") } } } }
+@Composable private fun PrimaryActions(onSmartScan: () -> Unit, onQuickClean: () -> Unit, isScanning: Boolean) { Column(verticalArrangement = Arrangement.spacedBy(10.dp)) { Button(onClick = onSmartScan, enabled = !isScanning, modifier = Modifier.fillMaxWidth().height(54.dp), shape = RoundedCornerShape(16.dp)) { if (isScanning) { CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp); Spacer(Modifier.width(10.dp)); Text("SCANNING…") } else { Icon(Icons.Default.AutoAwesome, null); Spacer(Modifier.width(10.dp)); Text("SMART SCAN", fontWeight = FontWeight.Bold) } }; Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) { OutlinedButton(onClick = onQuickClean, modifier = Modifier.weight(1f).height(50.dp), shape = RoundedCornerShape(14.dp)) { Icon(Icons.Default.CleaningServices, null); Spacer(Modifier.width(6.dp)); Text("Quick clean") }; OutlinedButton(onClick = {}, modifier = Modifier.weight(1f).height(50.dp), shape = RoundedCornerShape(14.dp)) { Icon(Icons.Default.PieChart, null); Spacer(Modifier.width(6.dp)); Text("Analyze") } } } }
 
 @Composable private fun ScanProgressCard(progress: ScanProgress) { Card(colors = CardDefaults.cardColors(containerColor = SoftBlue), shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { Row(verticalAlignment = Alignment.CenterVertically) { CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp); Spacer(Modifier.width(10.dp)); Text(progress.stage, fontWeight = FontWeight.SemiBold) }; Text("${progress.scannedFiles} files indexed · ${formatBytes(progress.discoveredBytes)}", style = MaterialTheme.typography.bodySmall) } } }
 @Composable private fun ExplainableSummary(report: SmartCleanupReport) { Card(colors = CardDefaults.cardColors(containerColor = SoftMint), shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) { Row(verticalAlignment = Alignment.CenterVertically) { Icon(Icons.Default.AutoAwesome, null, tint = ScoreAccent); Spacer(Modifier.width(8.dp)); Text("Explainable analysis", fontWeight = FontWeight.SemiBold) }; Text(if (report.potentialReviewBytes > 0) "Potentially recoverable for review: ${formatBytes(report.potentialReviewBytes)}" else "No high-confidence review category found", fontWeight = FontWeight.Bold); Text(report.explanation, style = MaterialTheme.typography.bodySmall) } } }
@@ -178,12 +178,13 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     }
     resultMessage?.let { AlertDialog(onDismissRequest = { resultMessage = null }, confirmButton = { TextButton(onClick = { resultMessage = null }) { Text("OK") } }, title = { Text("Compression status") }, text = { Text(it) }) }
 }
-@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager) {
+@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, onAdvancedScan: () -> Unit) {
     val candidates by database.storageDao().observeDuplicateCandidates().collectAsStateWithLifecycle(initialValue = emptyList())
     val scope = rememberCoroutineScope(); var selected by remember { mutableStateOf(setOf<String>()) }; var confirm by remember { mutableStateOf(false) }; var message by remember { mutableStateOf<String?>(null) }
     val selectedItems = candidates.filter { it.uri in selected }
     LazyColumn(modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 24.dp)) {
-        item { Text("Clean safely", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold); Text("Review duplicate candidates before moving them to Trash.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        item { Text("Clean safely", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold); Text("Quick Clean shows only exact-hash candidates. Advanced Smart Scan adds broader analysis for review.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        item { OutlinedButton(onClick = onAdvancedScan, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) { Icon(Icons.Default.AutoAwesome, null); Spacer(Modifier.width(8.dp)); Text("Run Advanced Smart Scan") } }
         item { Text("${selectedItems.size} selected · ${formatBytes(selectedItems.sumOf { it.sizeBytes })}", fontWeight = FontWeight.SemiBold) }
         if (candidates.isEmpty()) item { EmptyState("No analyzed duplicate candidates yet", "Run Smart Scan first. Nothing is selected by default.") }
         items(candidates) { item ->
