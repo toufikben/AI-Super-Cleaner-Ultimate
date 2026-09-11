@@ -1,6 +1,8 @@
 # قائمة ما قبل النشر — AI Super Cleaner Ultimate
 
-آخر تحديث: 11 سبتمبر 2026
+آخر تحديث: 11 سبتمبر 2026 — المرحلة الحالية: 15 إعداد الحسابات والإصدار التجريبي
+
+خارطة المراحل الكاملة: `docs/PROJECT_ROADMAP.md`
 
 ## الحالة الحالية
 
@@ -27,7 +29,7 @@
 |---|---|---|
 | متبقٍ | أسرار توقيع Android | إضافة Keystore وSecrets في GitHub Actions أو بيئة إصدار محمية. لا ترفع ملف keystore إلى Git. |
 | مكتمل | Production AdMob App ID وAd Unit IDs | تم إنشاء IDs واستبدالها في Manifest وAdManager. |
-| متبقٍ | UMP message | إنشاء رسالة الموافقة في AdMob Privacy & messaging وربطها بالتطبيق. |
+| متبقٍ | UMP message | إنشاء رسالة الموافقة في AdMob Privacy & messaging وربطها بالتطبيق. لوحة Privacy & messaging تحتاج متابعة من Console. |
 | متبقٍ | Privacy Policy URL | نشر السياسة على رابط عام ثابت وإدخاله في AdMob وGoogle Play. |
 | متبقٍ | Billing products | إنشاء `premium_monthly` و`premium_lifetime` في Play Console بنفس المعرفات. |
 | متبقٍ | License testers | إضافة حسابات الاختبار وتجربة الشراء والاستعادة والإلغاء والانتهاء. |
