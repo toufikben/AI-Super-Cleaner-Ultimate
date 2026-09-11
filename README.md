@@ -4,26 +4,28 @@
 
 ## حالة المشروع
 
-**المراحل 1–9 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، محللات الملفات الكبيرة والتنزيلات، ضغط النسخ وسجلها، ومسارا Quick Clean وAdvanced Smart Scan.
+**المراحل 1–10 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، واختبارات Unit.
 
-**المرحلة 10 مكتملة:** Cache للملفات غير المتغيرة، bounded concurrency لتحليل الصور، cancellation، واختبارات Unit للـCache.
+**المرحلة 11 مكتملة:** AdMob خلف مدير مستقل، Rewarded Ad اختياري، interstitial cooldown، وفشل آمن لا يعطل الوظائف الأساسية.
 
-## الأداء
+## سياسة الإعلانات
 
-يقارن الماسح URI والحجم وmodified timestamp وMIME type قبل إعادة كتابة metadata. يعاد استخدام نتائج التحليل للملفات الثابتة. تحليل الصور يعمل على دفعات وبحد أقصى مسارين متوازيين، ويستخدم نسخاً مصغرة لحماية الذاكرة. لا توجد عمليات تحليل ثقيلة على Main Thread.
+يمكن للمستخدم اختيار Watch a short ad to unlock one Advanced Scan، لكن Advanced Smart Scan الأساسي لا يعتمد على الإعلان، والحذف لا يعتمد عليه إطلاقاً. لا يظهر إعلان داخل اختيار الملفات أو تأكيد النقل إلى Trash أو الحذف الدائم. يوجد cooldown للإعلانات البينية ولا توجد سلسلة إعلانات بعد كل إجراء.
 
-## الاختبارات
-
-```bash
-./gradlew testDebugUnitTest assembleDebug lintDebug --no-daemon
-```
+يستخدم المشروع حالياً Google test App ID وtest ad unit IDs فقط. قبل الإصدار يجب استبدالها بمعرفات الإنتاج، إضافة UMP/consent flow، تحديث Privacy Policy وData Safety، وضبط frequency caps من AdMob console.
 
 ## الخصوصية
 
-تظل الملفات على الجهاز. لا يستخدم التطبيق `MANAGE_EXTERNAL_STORAGE` ولا يتجاوز قيود Android.
+تظل الملفات على الجهاز. لا يستخدم التطبيق `MANAGE_EXTERNAL_STORAGE` ولا يتجاوز قيود Android. لا تُرفع الصور أو الفيديوهات إلى خادم في مسار التنظيف أو الضغط العادي.
+
+## البناء
+
+```bash
+./gradlew assembleDebug lintDebug
+```
 
 ## خارطة التنفيذ التالية
 
-1. AdMob بإعلانات محدودة وRewarded اختياري.
+1. Google UMP والموافقة والـPrivacy/Data Safety قبل الإنتاج.
 2. Google Play Billing وPremium وPaywall.
-3. تحسينات الاختبارات النهائية وInstrumentation والأداء على المكتبات الضخمة.
+3. اختبارات Instrumentation وBenchmark النهائية.

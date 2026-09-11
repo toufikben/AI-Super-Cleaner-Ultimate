@@ -3,6 +3,7 @@ package com.aisupercleaner.ultimate
 import android.os.Bundle
 import android.os.Environment
 import android.os.StatFs
+import android.app.Activity
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.activity.compose.LocalActivity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +40,7 @@ import com.aisupercleaner.ultimate.data.VideoPreset
 import com.aisupercleaner.ultimate.data.CompressionManager
 import com.aisupercleaner.ultimate.data.CompressionResult
 import com.aisupercleaner.ultimate.data.ImagePreset
+import com.aisupercleaner.ultimate.ads.AdManager
 import com.aisupercleaner.ultimate.privacy.AppPreferences
 import com.aisupercleaner.ultimate.privacy.StoragePermissionManager
 import com.aisupercleaner.ultimate.ui.theme.*
@@ -60,6 +63,8 @@ fun CleanerApp() {
     val duplicateEngine = remember { DuplicateEngine(context.contentResolver, database.storageDao()) }
     val cleanupManager = remember { CleanupManager(context.contentResolver, database.storageDao()) }
     val compressionManager = remember { CompressionManager(context, context.contentResolver, database.storageDao()) }
+    val adManager = remember { AdManager(context) }
+    LaunchedEffect(Unit) { adManager.initialize() }
     val scope = rememberCoroutineScope()
     val fileCount by database.storageDao().observeFileCount().collectAsStateWithLifecycle(initialValue = 0)
     val totalBytes by database.storageDao().observeTotalBytes().collectAsStateWithLifecycle(initialValue = 0L)
@@ -97,7 +102,7 @@ fun CleanerApp() {
     Scaffold(containerColor = MaterialTheme.colorScheme.background, bottomBar = { NavigationBar(containerColor = MaterialTheme.colorScheme.surface) { navItems.forEachIndexed { index, item -> NavigationBarItem(selected = selected == index, onClick = { selected = index }, icon = { Icon(item.icon, item.label) }, label = { Text(item.label, fontSize = 11.sp) }) } } }) { padding ->
         when (selected) {
             0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
-            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, onAdvancedScan = { showPermissionEducation = true })
+            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, onAdvancedScan = { showPermissionEducation = true })
             2 -> AnalyzeScreen(Modifier.padding(padding), database)
             3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager)
             4 -> PrivacyCenterScreen(Modifier.padding(padding), preferences)
@@ -178,13 +183,14 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     }
     resultMessage?.let { AlertDialog(onDismissRequest = { resultMessage = null }, confirmButton = { TextButton(onClick = { resultMessage = null }) { Text("OK") } }, title = { Text("Compression status") }, text = { Text(it) }) }
 }
-@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, onAdvancedScan: () -> Unit) {
+@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, adManager: AdManager, onAdvancedScan: () -> Unit) {
     val candidates by database.storageDao().observeDuplicateCandidates().collectAsStateWithLifecycle(initialValue = emptyList())
     val scope = rememberCoroutineScope(); var selected by remember { mutableStateOf(setOf<String>()) }; var confirm by remember { mutableStateOf(false) }; var message by remember { mutableStateOf<String?>(null) }
-    val selectedItems = candidates.filter { it.uri in selected }
+    val selectedItems = candidates.filter { it.uri in selected }; val activity = LocalActivity.current
     LazyColumn(modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 24.dp)) {
         item { Text("Clean safely", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold); Text("Quick Clean shows only exact-hash candidates. Advanced Smart Scan adds broader analysis for review.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         item { OutlinedButton(onClick = onAdvancedScan, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) { Icon(Icons.Default.AutoAwesome, null); Spacer(Modifier.width(8.dp)); Text("Run Advanced Smart Scan") } }
+        item { TextButton(onClick = { activity?.let { adManager.showRewardedAd(it, onReward = onAdvancedScan, onUnavailable = { message = "Rewarded Ad is unavailable. Advanced Smart Scan remains available without an ad." }) } }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Default.PlayCircle, null); Spacer(Modifier.width(8.dp)); Text("Watch a short ad to unlock one Advanced Scan (optional)") } }
         item { Text("${selectedItems.size} selected · ${formatBytes(selectedItems.sumOf { it.sizeBytes })}", fontWeight = FontWeight.SemiBold) }
         if (candidates.isEmpty()) item { EmptyState("No analyzed duplicate candidates yet", "Run Smart Scan first. Nothing is selected by default.") }
         items(candidates) { item ->
