@@ -4,29 +4,30 @@
 
 ## حالة المشروع
 
-**المراحل 1–12 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، الاختبارات، AdMob، Rewarded Ads الاختيارية، Google Play Billing، Premium، وPaywall.
+**المراحل 1–13 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، AdMob، Rewarded Ads، Google Play Billing، Premium، Paywall، UMP، وسياسة الخصوصية وData Safety.
 
-**المرحلة 13 مكتملة:** Google UMP Consent Flow، Privacy Options، Privacy Policy، وData Safety documentation.
+**المرحلة 14 مكتملة:** Unit tests، Instrumentation test source، Release QA script، ProGuard، Release build، وGitHub Actions pipeline.
 
-## UMP والإعلانات
-
-يطلب التطبيق تحديث UMP عند كل تشغيل، ويعرض Consent Form عند الحاجة، ولا يهيئ AdMob أو يطلب إعلاناً قبل اكتمال الموافقة وتحقق `canRequestAds()`. يظهر Privacy Options entry point داخل Settings عندما يطلبه UMP. فشل الموافقة لا يعطل Free cleaning، بل يبقي الإعلانات غير مهيأة.
-
-Rewarded Ads اختيارية، والإعلانات البينية محدودة، ولا يظهر إعلان داخل حذف الملفات أو Trash.
-
-## الخصوصية وأمان البيانات
-
-الفهرسة والتحليل والضغط محلية. لا يرفع التطبيق الصور أو الفيديو أو الصوت أو أسماء الملفات إلى خادم التطبيق. قد تعالج Google Mobile Ads وGoogle Play بياناتها الخاصة وفق الموافقة وسياسات Google. يجب مطابقة [سياسة الخصوصية](docs/PRIVACY_POLICY.md) و[Data Safety](docs/DATA_SAFETY.md) مع إعدادات Play Console قبل الإصدار.
-
-## البناء
+## QA والبناء
 
 ```bash
-./gradlew assembleDebug lintDebug --no-daemon
+QA_ALLOW_TEST_ADS=1 ./scripts/qa_release.sh
+./gradlew assembleRelease --no-daemon
 ```
 
-## متطلبات الإصدار التالي
+تم التحقق محلياً من Unit tests وassembleDebug وlintDebug وassembleRelease. لا يوجد جهاز أو Emulator متصل في بيئة البناء الحالية، ولذلك لم تُنفذ Instrumentation tests فعلياً؛ مصدر الاختبار موجود في `app/src/androidTest`.
 
-1. استبدال Test Ad IDs بمعرفات إنتاجية.
-2. إنشاء UMP messages وPrivacy Policy URL في AdMob.
-3. استكمال Data Safety وPlay Billing disclosures.
-4. اختبار الرفض والتعديل والموافقة واستعادة المشتريات على أجهزة فعلية.
+ينتج Release حالياً APK غير موقع حتى تُمرر متغيرات keystore المحمية:
+
+```text
+ANDROID_KEYSTORE_PATH
+ANDROID_KEYSTORE_PASSWORD
+ANDROID_KEY_ALIAS
+ANDROID_KEY_PASSWORD
+```
+
+لا تحفظ هذه القيم في GitHub أو الملفات المصدرية. راجع [تقرير QA](docs/PHASE_14_QA_REPORT.md) قبل النشر.
+
+## قبل النشر
+
+استبدل Test Ad IDs، أنشئ UMP messages، اربط Privacy Policy URL، أنشئ منتجات Play Billing، اختبر License Testers، نفذ Instrumentation على API 26+، وراجع Data Safety وPlay Console Internal Testing.

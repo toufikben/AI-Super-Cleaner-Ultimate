@@ -10,6 +10,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.aisupercleaner.ultimate.qa.AdFrequencyPolicy
 
 class AdManager(context: Context) {
     private val appContext = context.applicationContext
@@ -39,7 +40,7 @@ class AdManager(context: Context) {
 
     fun canShowInterstitialAfterCleanup(now: Long = System.currentTimeMillis()): Boolean {
         val last = preferences.getLong(KEY_LAST_INTERSTITIAL, 0L)
-        return now - last >= INTERSTITIAL_COOLDOWN_MS
+        return AdFrequencyPolicy.canShowInterstitial(last, now)
     }
 
     fun markInterstitialShown() { preferences.edit().putLong(KEY_LAST_INTERSTITIAL, System.currentTimeMillis()).apply() }
@@ -67,6 +68,5 @@ class AdManager(context: Context) {
         private const val INTERSTITIAL_TEST_UNIT = "ca-app-pub-3940256099942544/1033173712"
         private const val KEY_LAST_REWARD = "last_reward_at"
         private const val KEY_LAST_INTERSTITIAL = "last_interstitial_at"
-        private const val INTERSTITIAL_COOLDOWN_MS = 15 * 60 * 1000L
     }
 }

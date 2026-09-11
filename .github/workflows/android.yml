@@ -18,6 +18,9 @@ jobs:
           java-version: '17'
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-      - name: Build debug APK
+      - name: Run release QA checks
         uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew assembleDebug
+      - run: QA_ALLOW_TEST_ADS=1 ./scripts/qa_release.sh
+      - name: Build unsigned release artifact
+        uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew assembleRelease
