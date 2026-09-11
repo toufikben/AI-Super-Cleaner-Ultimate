@@ -10,6 +10,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import kotlinx.coroutines.flow.Flow
 
+data class StorageAggregate(val fileCount: Int, val totalBytes: Long)
+
 @Dao
 interface StorageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -26,6 +28,12 @@ interface StorageDao {
 
     @Query("SELECT COUNT(*) FROM file_metadata WHERE mediaType = :mediaType")
     fun observeCountByType(mediaType: String): Flow<Int>
+
+    @Query("SELECT COUNT(*) AS fileCount, COALESCE(SUM(sizeBytes), 0) AS totalBytes FROM file_metadata WHERE mediaType = :mediaType AND sizeBytes >= :minimumBytes")
+    suspend fun aggregateLargeFiles(mediaType: String, minimumBytes: Long): StorageAggregate
+
+    @Query("SELECT COUNT(*) AS fileCount, COALESCE(SUM(sizeBytes), 0) AS totalBytes FROM file_metadata WHERE mediaType = 'image' AND (LOWER(displayName) LIKE '%screenshot%' OR LOWER(displayName) LIKE '%screen_shot%' OR LOWER(displayName) LIKE '%screen-shot%' OR LOWER(displayName) LIKE '%screen shot%')")
+    suspend fun aggregateScreenshots(): StorageAggregate
 
     @Insert
     suspend fun insertScanHistory(history: ScanHistoryEntity)
