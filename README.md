@@ -4,28 +4,37 @@
 
 ## حالة المشروع
 
-**المراحل 1–10 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، واختبارات Unit.
+**المراحل 1–11 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، الاختبارات، AdMob، وRewarded Ads الاختيارية.
 
-**المرحلة 11 مكتملة:** AdMob خلف مدير مستقل، Rewarded Ad اختياري، interstitial cooldown، وفشل آمن لا يعطل الوظائف الأساسية.
+**المرحلة 12 مكتملة:** Google Play Billing، Premium entitlement، اشتراك شهري، Lifetime، وPaywall واضح.
 
-## سياسة الإعلانات
+## Premium
 
-يمكن للمستخدم اختيار Watch a short ad to unlock one Advanced Scan، لكن Advanced Smart Scan الأساسي لا يعتمد على الإعلان، والحذف لا يعتمد عليه إطلاقاً. لا يظهر إعلان داخل اختيار الملفات أو تأكيد النقل إلى Trash أو الحذف الدائم. يوجد cooldown للإعلانات البينية ولا توجد سلسلة إعلانات بعد كل إجراء.
+يستخدم المشروع المنتجين:
 
-يستخدم المشروع حالياً Google test App ID وtest ad unit IDs فقط. قبل الإصدار يجب استبدالها بمعرفات الإنتاج، إضافة UMP/consent flow، تحديث Privacy Policy وData Safety، وضبط frequency caps من AdMob console.
+- `premium_monthly` للاشتراك الشهري.
+- `premium_lifetime` للشراء الدائم.
+
+يتحقق BillingManager من ProductDetails ومشتريات Google Play، ويعتمد Premium فقط عند Purchase بحالة PURCHASED مع acknowledgement. يعرض Paywall إزالة الإعلانات وAdvanced AI Scan وSimilar Photos وVideo compression وScheduled Scan وStorage history. تظل Free cleaning متاحة، ولا يكون Premium أو الإعلان شرطاً لحذف ملف.
+
+قبل الإصدار يجب إنشاء المنتجات في Play Console، اختبار License Testers، إضافة استعادة مشتريات ومزامنة خلفية مناسبة، ومراجعة Terms وPrivacy.
+
+## الإعلانات
+
+Rewarded Ads اختيارية فقط، والإعلانات البينية لها cooldown. لا يظهر إعلان داخل اختيار الملفات أو تأكيد Trash أو الحذف الدائم.
 
 ## الخصوصية
 
-تظل الملفات على الجهاز. لا يستخدم التطبيق `MANAGE_EXTERNAL_STORAGE` ولا يتجاوز قيود Android. لا تُرفع الصور أو الفيديوهات إلى خادم في مسار التنظيف أو الضغط العادي.
+تظل الملفات على الجهاز. لا يستخدم التطبيق `MANAGE_EXTERNAL_STORAGE` ولا يتجاوز قيود Android.
 
 ## البناء
 
 ```bash
-./gradlew assembleDebug lintDebug
+./gradlew assembleDebug lintDebug --no-daemon
 ```
 
 ## خارطة التنفيذ التالية
 
-1. Google UMP والموافقة والـPrivacy/Data Safety قبل الإنتاج.
-2. Google Play Billing وPremium وPaywall.
-3. اختبارات Instrumentation وBenchmark النهائية.
+1. Google UMP والموافقة والـPrivacy/Data Safety.
+2. استعادة المشتريات وLicense Testing وInstrumentation.
+3. اختبارات الإصدار النهائية والنشر التجريبي.
