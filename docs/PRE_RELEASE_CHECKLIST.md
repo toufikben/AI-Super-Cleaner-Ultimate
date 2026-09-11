@@ -4,7 +4,7 @@
 
 ## الحالة الحالية
 
-التطبيق في حالة **Release Candidate قابل للبناء**. لم يُنشر بعد على Google Play، ولم تُستخدم أسرار توقيع أو معرفات إنتاجية داخل المستودع.
+التطبيق في حالة **Release Candidate قابل للبناء**. لم يُنشر بعد على Google Play، ولم تُستخدم أسرار توقيع داخل المستودع. تم إنشاء AdMob App وProduction Ad Unit IDs في حساب AdMob.
 
 ## البنود التي سأكملها محلياً
 
@@ -19,14 +19,14 @@
 | مكتمل | Privacy Policy وData Safety drafts | موجودان في `docs/` |
 | متبقٍ | مراجعة نتائج Instrumentation بعد تشغيلها على جهازك أو Emulator | يحتاج بيئة Android فعلية |
 | متبقٍ | إصلاح أي مشكلة تظهر في اختبار الجهاز | بعد استلام النتائج |
-| متبقٍ | تدقيق نهائي للـAPK/AAB بعد وضع إعدادات الإنتاج | بعد المعرفات الإنتاجية |
+| مكتمل | تدقيق QA بعد وضع AdMob IDs الإنتاجية | `./scripts/qa_release.sh` نجح بدون `QA_ALLOW_TEST_ADS` |
 
 ## البنود التي ستنفذها أنت على GitHub وGoogle Play
 
 | الحالة | البند | الإجراء المطلوب |
 |---|---|---|
 | متبقٍ | أسرار توقيع Android | إضافة Keystore وSecrets في GitHub Actions أو بيئة إصدار محمية. لا ترفع ملف keystore إلى Git. |
-| متبقٍ | Production AdMob App ID وAd Unit IDs | استبدال Test IDs في إعدادات الإنتاج فقط، مع إبقاء Test IDs للتطوير المحلي إن رغبت. |
+| مكتمل | Production AdMob App ID وAd Unit IDs | تم إنشاء IDs واستبدالها في Manifest وAdManager. |
 | متبقٍ | UMP message | إنشاء رسالة الموافقة في AdMob Privacy & messaging وربطها بالتطبيق. |
 | متبقٍ | Privacy Policy URL | نشر السياسة على رابط عام ثابت وإدخاله في AdMob وGoogle Play. |
 | متبقٍ | Billing products | إنشاء `premium_monthly` و`premium_lifetime` في Play Console بنفس المعرفات. |

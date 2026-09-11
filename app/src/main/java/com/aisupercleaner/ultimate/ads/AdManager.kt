@@ -21,7 +21,7 @@ class AdManager(context: Context) {
     fun initialize() { MobileAds.initialize(appContext); preloadRewarded() }
 
     fun preloadRewarded() {
-        RewardedAd.load(appContext, REWARDED_TEST_UNIT, AdRequest.Builder().build(), object : RewardedAdLoadCallback() {
+        RewardedAd.load(appContext, REWARDED_PRODUCTION_UNIT, AdRequest.Builder().build(), object : RewardedAdLoadCallback() {
             override fun onAdLoaded(ad: RewardedAd) { rewarded = ad }
             override fun onAdFailedToLoad(error: LoadAdError) { rewarded = null }
         })
@@ -47,7 +47,7 @@ class AdManager(context: Context) {
 
     fun loadInterstitialIfAllowed() {
         if (!canShowInterstitialAfterCleanup()) return
-        InterstitialAd.load(appContext, INTERSTITIAL_TEST_UNIT, AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
+        InterstitialAd.load(appContext, INTERSTITIAL_PRODUCTION_UNIT, AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
             override fun onAdLoaded(ad: InterstitialAd) { interstitial = ad }
             override fun onAdFailedToLoad(error: LoadAdError) { interstitial = null }
         })
@@ -63,9 +63,8 @@ class AdManager(context: Context) {
     }
 
     companion object {
-        // Google test IDs are used until a release AdMob application is configured.
-        private const val REWARDED_TEST_UNIT = "ca-app-pub-3940256099942544/5224354917"
-        private const val INTERSTITIAL_TEST_UNIT = "ca-app-pub-3940256099942544/1033173712"
+        private const val REWARDED_PRODUCTION_UNIT = "ca-app-pub-2934454612171100/7133782308"
+        private const val INTERSTITIAL_PRODUCTION_UNIT = "ca-app-pub-2934454612171100/8721838321"
         private const val KEY_LAST_REWARD = "last_reward_at"
         private const val KEY_LAST_INTERSTITIAL = "last_interstitial_at"
     }
