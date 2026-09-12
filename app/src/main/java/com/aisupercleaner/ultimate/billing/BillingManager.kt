@@ -15,6 +15,7 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
+import com.aisupercleaner.ultimate.qa.PremiumEntitlementPolicy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -31,23 +32,32 @@ class BillingManager(context: Context) : BillingClientStateListener, PurchasesUp
     private val _message = MutableStateFlow<String?>(null)
     val message = _message.asStateFlow()
     private val handler = Handler(Looper.getMainLooper())
+    private var reconnectScheduled = false
     private val client = BillingClient.newBuilder(context.applicationContext)
         .setListener(this)
         .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
         .build()
 
-    init { client.startConnection(this) }
+    init { connect() }
+
+    private fun connect() {
+        if (!client.isReady) client.startConnection(this)
+    }
 
     override fun onBillingSetupFinished(result: BillingResult) {
+        reconnectScheduled = false
         if (result.responseCode == BillingClient.BillingResponseCode.OK) refresh()
         else _message.value = "Google Play Billing is unavailable: ${result.debugMessage}"
     }
 
     override fun onBillingServiceDisconnected() {
-        handler.postDelayed({ if (!client.isReady) client.startConnection(this) }, 2_000)
+        if (reconnectScheduled) return
+        reconnectScheduled = true
+        handler.postDelayed({ reconnectScheduled = false; connect() }, RECONNECT_DELAY_MILLIS)
     }
 
-    private fun refresh() {
+    fun refresh() {
+        if (!client.isReady) { connect(); return }
         queryProducts()
         queryPurchases(BillingClient.ProductType.INAPP)
         queryPurchases(BillingClient.ProductType.SUBS)
@@ -59,21 +69,22 @@ class BillingManager(context: Context) : BillingClientStateListener, PurchasesUp
             .build()
         client.queryProductDetailsAsync(oneTime) { result, details ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) _catalog.value = _catalog.value.copy(lifetime = details.productDetailsList.firstOrNull())
-            else _message.value = "Lifetime product is unavailable: ${result.debugMessage}"
+            else if (result.responseCode != BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) _message.value = "Lifetime product is unavailable: ${result.debugMessage}"
         }
         val subscription = QueryProductDetailsParams.newBuilder()
             .setProductList(listOf(QueryProductDetailsParams.Product.newBuilder().setProductId(MONTHLY).setProductType(BillingClient.ProductType.SUBS).build()))
             .build()
         client.queryProductDetailsAsync(subscription) { result, details ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) _catalog.value = _catalog.value.copy(monthly = details.productDetailsList.firstOrNull())
-            else _message.value = "Monthly product is unavailable: ${result.debugMessage}"
+            else if (result.responseCode != BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) _message.value = "Monthly product is unavailable: ${result.debugMessage}"
         }
     }
 
     private fun queryPurchases(type: String) {
         client.queryPurchasesAsync(QueryPurchasesParams.newBuilder().setProductType(type).build()) { result, purchases ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) process(purchases)
-            else if (result.responseCode != BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) _message.value = "Could not restore purchases: ${result.debugMessage}"
+            else if (result.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) connect()
+            else _message.value = "Could not restore purchases: ${result.debugMessage}"
         }
     }
 
@@ -81,22 +92,26 @@ class BillingManager(context: Context) : BillingClientStateListener, PurchasesUp
         when {
             result.responseCode == BillingClient.BillingResponseCode.OK && purchases != null -> process(purchases)
             result.responseCode == BillingClient.BillingResponseCode.USER_CANCELED -> _message.value = "Purchase canceled."
+            result.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> refresh()
+            result.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> connect()
             result.responseCode != BillingClient.BillingResponseCode.OK -> _message.value = "Purchase failed: ${result.debugMessage}"
         }
     }
 
     private fun process(purchases: List<Purchase>) {
-        purchases.filter { purchase -> purchase.products.any { it == MONTHLY || it == LIFETIME } }.forEach { purchase ->
-            when (purchase.purchaseState) {
-                Purchase.PurchaseState.PURCHASED -> {
-                    _isPremium.value = true
-                    if (!purchase.isAcknowledged) {
-                        client.acknowledgePurchase(AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()) { result ->
-                            if (result.responseCode != BillingClient.BillingResponseCode.OK) _message.value = "Purchase received but could not be confirmed: ${result.debugMessage}"
-                        }
-                    }
-                }
-                Purchase.PurchaseState.PENDING -> _message.value = "Purchase is pending confirmation by Google Play."
+        val valid = purchases.filter { purchase -> purchase.products.any { it == MONTHLY || it == LIFETIME } }
+        _isPremium.value = PremiumEntitlementPolicy.isPremium(
+            purchasedProductIds = valid.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }.flatMap { it.products }.toSet(),
+            purchaseCompleted = valid.any { it.purchaseState == Purchase.PurchaseState.PURCHASED }
+        )
+        valid.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED && !it.isAcknowledged }.forEach { acknowledge(it) }
+        if (valid.any { it.purchaseState == Purchase.PurchaseState.PENDING }) _message.value = "Purchase is pending confirmation by Google Play."
+    }
+
+    private fun acknowledge(purchase: Purchase) {
+        client.acknowledgePurchase(AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()) { result ->
+            if (result.responseCode != BillingClient.BillingResponseCode.OK && result.responseCode != BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                _message.value = "Purchase received but could not be confirmed: ${result.debugMessage}"
             }
         }
     }
@@ -113,9 +128,12 @@ class BillingManager(context: Context) : BillingClientStateListener, PurchasesUp
     }
 
     private fun launch(activity: Activity, product: BillingFlowParams.ProductDetailsParams) {
+        if (!client.isReady) { _message.value = "Google Play Billing is connecting. Please try again."; connect(); return }
         val result = client.launchBillingFlow(activity, BillingFlowParams.newBuilder().setProductDetailsParamsList(listOf(product)).build())
         if (result.responseCode != BillingClient.BillingResponseCode.OK) _message.value = "Could not open Google Play checkout: ${result.debugMessage}"
     }
 
     fun clearMessage() { _message.value = null }
+
+    companion object { private const val RECONNECT_DELAY_MILLIS = 2_000L }
 }

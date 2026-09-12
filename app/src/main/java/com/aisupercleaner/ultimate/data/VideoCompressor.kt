@@ -18,22 +18,32 @@ import kotlin.coroutines.resumeWithException
 class VideoCompressor(private val context: Context) {
     suspend fun compressCopy(input: Uri, preset: VideoPreset): File = withContext(Dispatchers.Main) {
         val output = File(context.cacheDir, "compressed_${System.currentTimeMillis()}.mp4")
-        suspendCancellableCoroutine { continuation ->
-            val transformer = Transformer.Builder(context)
-                .setVideoMimeType(MimeTypes.VIDEO_H264)
-                .setAudioMimeType(MimeTypes.AUDIO_AAC)
-                .addListener(object : Transformer.Listener {
-                    override fun onTransformationCompleted(inputMediaItem: MediaItem) {
-                        if (continuation.isActive) continuation.resume(output)
-                    }
-                    override fun onTransformationError(inputMediaItem: MediaItem, exception: Exception) {
-                        if (continuation.isActive) continuation.resumeWithException(exception)
-                    }
-                })
-                .build()
-            val mediaItem = EditedMediaItem.Builder(MediaItem.fromUri(input)).build()
-            transformer.start(mediaItem, output.absolutePath)
-            continuation.invokeOnCancellation { transformer.cancel() }
+        try {
+            suspendCancellableCoroutine { continuation ->
+                val transformer = Transformer.Builder(context)
+                    .setVideoMimeType(MimeTypes.VIDEO_H264)
+                    .setAudioMimeType(MimeTypes.AUDIO_AAC)
+                    .addListener(object : Transformer.Listener {
+                        override fun onTransformationCompleted(inputMediaItem: MediaItem) {
+                            if (continuation.isActive) continuation.resume(output)
+                        }
+
+                        override fun onTransformationError(inputMediaItem: MediaItem, exception: Exception) {
+                            output.delete()
+                            if (continuation.isActive) continuation.resumeWithException(exception)
+                        }
+                    })
+                    .build()
+                val mediaItem = EditedMediaItem.Builder(MediaItem.fromUri(input)).build()
+                transformer.start(mediaItem, output.absolutePath)
+                continuation.invokeOnCancellation {
+                    transformer.cancel()
+                    output.delete()
+                }
+            }
+        } catch (error: Throwable) {
+            output.delete()
+            throw error
         }
     }
 }

@@ -67,12 +67,17 @@ fun CleanerApp() {
     val compressionManager = remember { CompressionManager(context, context.contentResolver, database.storageDao()) }
     val adManager = remember { AdManager(context) }
     val consentManager = remember { ConsentManager(context) }
-    val activity = LocalActivity.current
-    LaunchedEffect(activity) { activity?.let { current -> consentManager.requestConsent(current) { if (consentManager.canRequestAds.value) adManager.initialize() } } }
+    val canRequestAds by consentManager.canRequestAds.collectAsStateWithLifecycle()
     val billingManager = remember { BillingManager(context) }
     val isPremium by billingManager.isPremium.collectAsStateWithLifecycle()
     val billingMessage by billingManager.message.collectAsStateWithLifecycle()
-    LaunchedEffect(isPremium) { if (isPremium) adManager.disable() }
+    val activity = LocalActivity.current
+    LaunchedEffect(activity) {
+        activity?.let { current ->
+            consentManager.requestConsent(current) { adManager.setCanRequestAds(canRequestAds && !isPremium) }
+        }
+    }
+    LaunchedEffect(canRequestAds, isPremium) { adManager.setCanRequestAds(canRequestAds && !isPremium) }
     val consentError by consentManager.error.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val fileCount by database.storageDao().observeFileCount().collectAsStateWithLifecycle(initialValue = 0)
