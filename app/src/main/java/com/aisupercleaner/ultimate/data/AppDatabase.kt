@@ -41,6 +41,9 @@ interface StorageDao {
     @Query("SELECT * FROM file_metadata WHERE relativePath LIKE '%Download%' OR LOWER(displayName) LIKE '%.apk' ORDER BY modifiedEpochSeconds ASC")
     fun observeDownloads(): Flow<List<FileMetadataEntity>>
 
+    @Query("SELECT * FROM file_metadata WHERE mediaType IN ('document', 'archive', 'apk', 'other') ORDER BY sizeBytes DESC")
+    fun observeGeneralFiles(): Flow<List<FileMetadataEntity>>
+
     @Query("UPDATE file_metadata SET contentHash = :contentHash, perceptualHash = :perceptualHash, blurScore = :blurScore, isScreenshot = :isScreenshot, analysisVersion = :analysisVersion WHERE uri = :uri")
     suspend fun updateAnalysis(uri: String, contentHash: String?, perceptualHash: String?, blurScore: Double?, isScreenshot: Boolean, analysisVersion: Int)
 
