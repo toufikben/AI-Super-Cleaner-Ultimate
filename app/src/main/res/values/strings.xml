@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">AI Super Cleaner Ultimate</string>
+    <string name="notification_channel_name">Cleaner insights</string>
+    <string name="notification_channel_description">Optional storage and cleanup opportunities</string>
+    <string name="notifications_title">Notification center</string>
+    <string name="notifications_summary">Optional alerts with a maximum of one alert per category every 24 hours.</string>
+    <string name="notifications_enable">Enable notifications</string>
+    <string name="notifications_permission_required">Android notification permission is required. You can change it later in system settings.</string>
+    <string name="notification_alert_storage">Excessive storage usage</string>
+    <string name="notification_alert_large_files">Many large files</string>
+    <string name="notification_alert_trash">Growing Trash</string>
+    <string name="notification_alert_ram">Heavy RAM usage</string>
+    <string name="notification_alert_opportunity">Cleanup opportunity</string>
+    <string name="notifications_disabled">Notifications are disabled. No alerts will be posted.</string>
 </resources>

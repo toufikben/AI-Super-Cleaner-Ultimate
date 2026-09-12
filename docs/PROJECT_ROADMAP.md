@@ -339,3 +339,81 @@
 | 18 | [ ] لم تبدأ | — | — |
 
 **سياسة تحديث الخطة:** عند إنهاء أي مرحلة، تُشغّل فحوصات Check الخاصة بها، ثم تتحول خانتها إلى `[x]` مع إضافة commit وتقرير النتيجة. إذا فشل Check تبقى `[ ]` وتُسجل المشكلة بدل إعلان نجاح غير مثبت.
+
+## مسار التوسع العالمي — Global Expansion Workstream
+
+هذا المسار يضيف الوظائف الجديدة فوق البنية الحالية تدريجيًا، مع إبقاء الميزات الموجودة (duplicates، similar photos، blurry photos، screenshots، وضغط الفيديو/الصور) دون تغيير سلوكي غير مقصود. التنظيم المقترح هو صفحات حسب قرب الوظيفة بدل قائمة أدوات مسطحة:
+
+1. **Storage & Device Insights:** Storage Analyzer، Large Files، RAM Monitor للعرض فقط، Battery Insights، ثم Trash Manager في نفس السياق.
+2. **Safe Cleanup:** Junk Cleaner وBrowser Cleaner، مع تعريف واضح لما يسمح به Android، وSAF/MediaStore فقط، ومسار Trash الافتراضي.
+3. **Apps & Files:** App Manager، APK review، uninstall/settings shortcuts، وملفات المستخدم الكبيرة، دون ادعاء حذف cache الخاص بتطبيقات أخرى بلا صلاحية نظام.
+4. **Dashboard & Notifications:** لوحة موجزة قابلة للنقر، حالات loading/empty/result، مركز إشعارات اختياري بحدود تكرار وdeep links، مع احترام POST_NOTIFICATIONS وPremium/ads.
+5. **Identity, Themes & Localization:** app icon/logo، light/dark، accents محدودة، ثم موارد localization للغات الاثنتي عشرة المطلوبة مع RTL للعربية؛ لا تُضاف لغة قبل توفر مراجعة ترجمة قابلة للصيانة.
+
+### أول slice منفذ — Storage & Device Insights `[~]`
+
+- [x] إضافة aggregate queries محلية حسب نوع الملف إلى Room.
+- [x] إضافة بطاقة Storage Breakdown مرئية داخل صفحة Analyze مع نسب وأحجام حقيقية من الملفات المفهرسة.
+- [x] إضافة Large Files surface الحالية ضمن نفس الصفحة، مع الإبقاء على إعادة التحقق وTrash الآمن.
+- [x] إضافة RAM available وBattery percentage/charging من Android APIs، دون زر أو ادعاء “RAM cleaning”.
+- [x] إضافة اختصارات قابلة للتراجع إلى System Settings وBattery Settings.
+- [ ] نقل النصوص الجديدة إلى موارد localization وإضافة اختبارات Compose/RTL.
+- [ ] فحص الجهاز الفعلي لنتائج battery broadcast وmemory pressure وsettings intents.
+- **Check الإغلاق:** build/unit/lint محليًا، ثم device verification قبل تحويل `[~]` إلى `[x]`.
+
+### ترتيب الشرائح التالية
+
+- **Slice 2 — Junk & Browser Cleaner:** سيبدأ بعد تثبيت عقد الصلاحيات ومصادر الملفات، وسيقتصر على removable leftovers التي يمكن Android كشفها وحذفها بأمان.
+- **Slice 3 — App Manager:** يبدأ بعد مراجعة PackageManager وواجهات uninstall/settings، مع إظهار ما لا يمكن تنفيذه بدل زر وهمي.
+- **Slice 4 — Notification Center:** يبدأ بعد إضافة preference model، permission flow، frequency limiter، وfeature deep links.
+- **Slice 5 — Localization and visual identity:** يبدأ بعد تثبيت مفاتيح النصوص والشاشات، لتجنب ترجمة واجهات مؤقتة وإعادة العمل.
+
+### Slice 2 progress — App Manager and Trash Manager `[~]`
+
+- [x] App Manager يعرض التطبيقات المرئية التي يسمح بها PackageManager، مرتبة حسب حجم APK المعروف.
+- [x] إضافة اختصار App details لكل تطبيق، واختصار uninstall للتطبيقات غير النظامية فقط.
+- [x] توضيح أن private app data/cache لا يمكن تقديرها أو حذفها عالميًا بأمان من التطبيق.
+- [x] Trash Manager يعرض الحجم الحالي في Trash وعدد/تفاصيل العناصر مع Restore وPermanent Delete.
+- [x] تسجيل recovered bytes تراكميًا فقط بعد نجاح الحذف الدائم الذي يؤكده Android؛ لا يُحسب النقل إلى Trash كمساحة مستعادة.
+- [ ] إضافة اختبارات PackageManager وTrash metrics وdevice verification لمسارات uninstall/settings وMediaStore.
+
+### Slice 2 progress — Junk Cleaner and Browser Cleaner `[~]`
+
+- [x] Junk Cleaner يعمل على ملفات general التي يكشفها MediaStore فقط، وليس على cache الخاص بالتطبيقات الأخرى أو ملفات غير مرئية.
+- [x] وضع حد مراجعة محافظ: temporary-looking files بعمر 7 أيام على الأقل وحجم لا يتجاوز 50 MB.
+- [x] وضع حد APK review بعمر 30 يومًا، مع إبقائه اقتراح مراجعة وليس حكمًا بأنه غير ضروري.
+- [x] لا يوجد اختيار تلقائي؛ العناصر تمر عبر revalidation ثم Trash القابل للاستعادة.
+- [x] Browser Cleaner يكتشف المتصفحات المرئية فقط ويفتح App info؛ لا يدّعي مسح cache/cookies دون صلاحية Android.
+- [x] إضافة تحذيرات واضحة حول حدود Android قبل أي إجراء.
+- [ ] إضافة اختبار PackageManager فعلي واختبار جهاز لمسارات المتصفحات وMediaStore permissions.
+
+### Slice 4 progress — Notification Center and localization foundation `[~]`
+
+- [x] الإشعارات اختيارية ومغلقة افتراضيًا، مع إعداد مستقل لكل فئة.
+- [x] احترام `POST_NOTIFICATIONS` على Android 13+، وعدم نشر أي إشعار عند رفض الإذن.
+- [x] إضافة قناة Android واحدة ووضع حد تكرار 24 ساعة لكل فئة لتجنب الإزعاج.
+- [x] دعم deep links من الإشعار إلى Home/Analyze/Tools عبر `MainActivity.EXTRA_DESTINATION`.
+- [x] ربط تنبيهات storage المرتفع وTrash الكبير بالبيانات الفعلية، دون ادعاءات RAM أو تنظيف وهمية.
+- [x] إضافة موارد Android للغات: English، Arabic RTL، French، Spanish، German، Portuguese، Italian، Turkish، Indonesian، Hindi، Japanese، Korean، وSimplified Chinese.
+- [ ] نقل بقية النصوص القديمة في `MainActivity` إلى مفاتيح موارد تدريجيًا، وإكمال مراجعة RTL وCompose accessibility على جهاز.
+- **Check الإغلاق:** build/unit/lint محليًا، ثم device verification للإذن والقنوات وdeep links.
+
+### Slice 1 progress — Storage Analyzer and Large Files `[~]`
+
+- [x] إضافة reactive inventory كامل من Room بدل تجميع قوائم منفصلة قد تكرر الملفات.
+- [x] عرض breakdown بصري حقيقي حسب نوع الملف مع النسبة والحجم والعدد.
+- [x] إضافة Top folders عندما يكشف Android المسار النسبي، مع توضيح حدود الرؤية.
+- [x] إضافة حد Large Files قابل للتغيير: 100 MB، 500 MB، أو 1 GB.
+- [x] إضافة فرز ذكي حسب Largest، Recently changed، أو By type.
+- [x] الحفاظ على الاختيار اليدوي وإعادة التحقق ومسار Trash الآمن.
+- [ ] إضافة اختبار Compose/device للفرز والعرض وملفات 1,000+، ثم إغلاق الشريحة بعد device verification.
+
+### QA review and modern theme update — 12 سبتمبر 2026 `[~]`
+
+- [x] إضافة Light/Dark palettes حديثة مع accents Teal/Violet/Coral قابلة للحفظ داخل Preferences.
+- [x] تشغيل `testDebugUnitTest`, `lintDebug`, `assembleDebug`, و`assembleRelease` بنجاح بعد تحديث الثيم.
+- [x] تشغيل `scripts/qa_release.sh` بنجاح بدون `QA_ALLOW_TEST_ADS`.
+- [x] تشغيل `scripts/verify_release.sh` بنجاح مع `ANDROID_HOME=/home/ubuntu/android-sdk`؛ unsigned release artifact وversionCode `101` اجتازا الفحص.
+- [ ] Instrumentation وmanual visual/accessibility review؛ لا يوجد `adb` أو جهاز/Emulator في البيئة الحالية.
+- [ ] signed AAB/APK وLive AdMob/UMP/Billing/License Tester verification؛ تتطلب secrets وPlay/AdMob Console.
+- **الدليل:** `docs/QA_ROADMAP_REVIEW_2026-09-12.md`.

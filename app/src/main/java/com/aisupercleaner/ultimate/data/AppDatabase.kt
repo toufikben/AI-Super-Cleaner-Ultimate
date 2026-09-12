@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.Flow
 
 data class StorageAggregate(val fileCount: Int, val totalBytes: Long)
 
+data class StorageCategoryAggregate(val mediaType: String, val fileCount: Int, val totalBytes: Long)
+
 @Dao
 interface StorageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,6 +27,9 @@ interface StorageDao {
 
     @Query("SELECT * FROM file_metadata ORDER BY sizeBytes DESC")
     suspend fun allFiles(): List<FileMetadataEntity>
+
+    @Query("SELECT * FROM file_metadata ORDER BY sizeBytes DESC")
+    fun observeAllFiles(): Flow<List<FileMetadataEntity>>
 
     @Query("SELECT * FROM file_metadata WHERE uri = :uri LIMIT 1")
     suspend fun findFile(uri: String): FileMetadataEntity?
@@ -55,6 +60,9 @@ interface StorageDao {
 
     @Query("SELECT COALESCE(SUM(sizeBytes), 0) FROM file_metadata")
     fun observeTotalBytes(): Flow<Long>
+
+    @Query("SELECT mediaType, COUNT(*) AS fileCount, COALESCE(SUM(sizeBytes), 0) AS totalBytes FROM file_metadata GROUP BY mediaType ORDER BY totalBytes DESC")
+    fun observeCategoryAggregates(): Flow<List<StorageCategoryAggregate>>
 
     @Query("SELECT COUNT(*) FROM file_metadata WHERE mediaType = :mediaType")
     fun observeCountByType(mediaType: String): Flow<Int>
