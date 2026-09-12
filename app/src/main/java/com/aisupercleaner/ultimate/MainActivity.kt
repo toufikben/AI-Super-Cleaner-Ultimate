@@ -86,7 +86,8 @@ fun CleanerApp() {
     val imageCount by database.storageDao().observeCountByType("image").collectAsStateWithLifecycle(initialValue = 0)
     val videoCount by database.storageDao().observeCountByType("video").collectAsStateWithLifecycle(initialValue = 0)
     val audioCount by database.storageDao().observeCountByType("audio").collectAsStateWithLifecycle(initialValue = 0)
-    val statFs = remember { StatFs(Environment.getDataDirectory().path) }
+    var storageRefreshToken by remember { mutableIntStateOf(0) }
+    val statFs = remember(storageRefreshToken) { StatFs(Environment.getDataDirectory().path) }
     val freeBytes = remember { statFs.availableBytes }
     val totalStorageBytes = remember { statFs.totalBytes }
     var selected by remember { mutableIntStateOf(0) }
@@ -132,10 +133,10 @@ fun CleanerApp() {
     val navItems = listOf(NavItem("Home", Icons.Default.Home), NavItem("Clean", Icons.Default.AutoAwesome), NavItem("Analyze", Icons.Default.PieChart), NavItem("Tools", Icons.Default.Build), NavItem("Settings", Icons.Default.Settings))
     Scaffold(containerColor = MaterialTheme.colorScheme.background, bottomBar = { NavigationBar(containerColor = MaterialTheme.colorScheme.surface) { navItems.forEachIndexed { index, item -> NavigationBarItem(selected = selected == index, onClick = { selected = index }, icon = { Icon(item.icon, item.label) }, label = { Text(item.label, fontSize = 11.sp) }) } } }) { padding ->
         when (selected) {
-            0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, database, cleanupManager, onInvalidated = { mediaReport = null; report = null }, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
-            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, isPremium, onInvalidated = { mediaReport = null; report = null }, onAdvancedScan = { showPermissionEducation = true })
-            2 -> AnalyzeScreen(Modifier.padding(padding), database, cleanupManager, onInvalidated = { mediaReport = null; report = null })
-            3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager, onInvalidated = { mediaReport = null; report = null })
+            0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, database, cleanupManager, onInvalidated = { mediaReport = null; report = null; storageRefreshToken++ }, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
+            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, isPremium, onInvalidated = { mediaReport = null; report = null; storageRefreshToken++ }, onAdvancedScan = { showPermissionEducation = true })
+            2 -> AnalyzeScreen(Modifier.padding(padding), database, cleanupManager, onInvalidated = { mediaReport = null; report = null; storageRefreshToken++ })
+            3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager, onInvalidated = { mediaReport = null; report = null; storageRefreshToken++ })
             4 -> Column(Modifier.padding(padding)) { PremiumPaywall(billingManager, isPremium); PrivacyOptionsEntry(consentManager); PrivacyCenterScreen(Modifier.weight(1f), preferences) }
             else -> PlaceholderScreen(navItems[selected].label, Modifier.padding(padding))
         }

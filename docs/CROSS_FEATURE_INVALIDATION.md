@@ -31,3 +31,9 @@ The explicit invalidation graph has unit tests for Scan, Move to Trash, Restore,
 ```
 
 Instrumentation on a real Android provider is still required to verify MediaStore trash-query visibility, URI permission changes, and restore/delete behavior on supported API levels.
+
+## Dashboard and Cleanup Score refresh audit — 12 September 2026
+
+The audit found that Room counters were reactive, but `StatFs` had been remembered only once. After a cleanup operation, the indexed file count and recommendation report could refresh while the dashboard's used/free storage snapshot remained stale. Cleanup invalidation now increments a storage refresh token, recreates `StatFs`, clears in-memory reports, and lets the existing Room-backed `fileCount`/`totalBytes` effect recompute the Cleanup Score from current data.
+
+The refresh callback is wired from Home recommendation cleanup, Analyze candidate cleanup, Clean duplicate cleanup, and Tools Trash/Restore/Permanent Delete. This makes both the dashboard counters and score recompute immediately after each completed or attempted mutation. The operating-system free-space value may still reflect Android's actual Trash semantics; moving an item to recoverable Trash is not guaranteed to free physical bytes until permanent deletion.

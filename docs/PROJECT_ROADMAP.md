@@ -335,7 +335,7 @@
 | 14 | [~] قيد التنفيذ | `docs/PHASE_14_QA_REPORT.md` | Clean/Unit/Lint/Debug/Release-R8 وartifact checks وGitHub Actions run `34689216133` نجحت؛ signed AAB وInstrumentation متبقية. |
 | 15 | [~] قيد التنفيذ | `docs/PHASE_15_TEST_SUITE_REPORT.md` | Unit وcompileDebugAndroidTestKotlin وDatabase/MediaStore test sources أضيفت وhost checks نجحت؛ CI emulator أقلع لكن instrumentation بدأ 0 tests ثم انهار، وأضيف جمع diagnostics قبل إعادة المحاولة. |
 | 16 | [~] قيد التنفيذ | `docs/PHASE_16_PRODUCT_IMPROVEMENTS.md`, `docs/SHARED_CANDIDATE_SELECTION.md`, `docs/RECOMMENDATION_SELECTION.md` | أضيفت Checkboxes لكل ملف داخل Recommendation Cards لـ Large videos/photos وScreenshots مع Move selected to Trash وإعادة استخدام URI/metadata revalidation وcross-feature invalidation؛ device verification وside-by-side/exclusions/themes/localization متبقية. |
-| 17 | [~] قيد التنفيذ | `docs/CROSS_FEATURE_INVALIDATION.md` | Revalidation قبل cleanup وRoom/cache invalidation بعد Trash/Restore/Permanent Delete وCompose report clearing أضيفت؛ اختبارات MediaStore الفعلية وdiagnostic logging الكامل متبقية. |
+| 17 | [~] قيد التنفيذ | `docs/CROSS_FEATURE_INVALIDATION.md` | Revalidation قبل cleanup وRoom/cache invalidation بعد Trash/Restore/Permanent Delete وCompose report clearing وStatFs refresh للـDashboard/Score أضيفت؛ اختبارات MediaStore الفعلية وdiagnostic logging الكامل متبقية. |
 | 18 | [ ] لم تبدأ | — | — |
 
 **سياسة تحديث الخطة:** عند إنهاء أي مرحلة، تُشغّل فحوصات Check الخاصة بها، ثم تتحول خانتها إلى `[x]` مع إضافة commit وتقرير النتيجة. إذا فشل Check تبقى `[ ]` وتُسجل المشكلة بدل إعلان نجاح غير مثبت.
