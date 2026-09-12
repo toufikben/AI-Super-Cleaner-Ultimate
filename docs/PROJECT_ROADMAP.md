@@ -154,13 +154,14 @@
 
 **قاعدة التنفيذ:** لا تُعلَّم أي مرحلة `[x]` إلا بعد تعديل الكود أو إضافة الاختبارات المطلوبة، وتشغيل فحوصات المرحلة، وتسجيل النتيجة في تقرير أو commit. المراحل مرتبة حسب اعتمادها على بعضها، ويمكن تنفيذ كل مرحلة كدفعة مستقلة.
 
-### المرحلة 0 — خط أساس وتدقيق المستودع
+### المرحلة 0 — خط أساس وتدقيق المستودع `[x]`
 
-- [ ] فحص شجرة المستودع كاملة، Kotlin، Gradle، Manifest، الموارد، Room، Compose، الخدمات، Ads، Billing، UMP، R8، GitHub Actions، والاختبارات.
-- [ ] تشغيل clean build وUnit tests وLint وRelease build، وتشغيل Instrumentation إذا توفر جهاز أو Emulator.
-- [ ] حصر TODO/FIXME والـstubs والـplaceholder والكود الميت والقيم المكررة والاستثناءات العامة والعمل على Main thread ومشاكل lifecycle/coroutines.
-- [ ] إنشاء تقرير baseline يفرق بين الخلل المؤكد، والتحسين المقترح، والاختبار غير الممكن في البيئة الحالية.
-- **Check الإغلاق:** `./gradlew clean testDebugUnitTest lintDebug assembleDebug assembleRelease` ووجود تقرير baseline وcommit مستقل.
+- [x] فحص شجرة المستودع كاملة، Kotlin، Gradle، Manifest، الموارد، Room، Compose، الخدمات، Ads، Billing، UMP، R8، GitHub Actions، والاختبارات.
+- [x] تشغيل clean build وUnit tests وLint وRelease build وAAB؛ Instrumentation غير منفذ لأن `adb` غير مثبت ولا يوجد جهاز أو Emulator.
+- [x] حصر TODO/FIXME والـstubs والـplaceholder والكود الميت والقيم المكررة والاستثناءات العامة والعمل على Main thread ومشاكل lifecycle/coroutines.
+- [x] إنشاء تقرير baseline يفرق بين الخلل المؤكد، والتحسين المقترح، والاختبار غير الممكن في البيئة الحالية.
+- **Check الإغلاق:** ناجح — `./gradlew clean testDebugUnitTest lintDebug assembleDebug assembleRelease bundleRelease` ثم `./scripts/qa_release.sh` و`git diff --check`.
+- **الدليل:** `docs/PHASE_0_BASELINE_AUDIT.md`، والـcommit التالي.
 
 ### المرحلة 1 — نموذج مصدر الحقيقة للتخزين والحالة
 
@@ -309,7 +310,7 @@
 
 | المرحلة | الحالة | Commit/الدليل | ملاحظات |
 |---|---|---|---|
-| 0 | [ ] لم تبدأ | — | — |
+| 0 | [x] مكتملة | `docs/PHASE_0_BASELINE_AUDIT.md` | Build/Unit/Lint/Release/AAB/QA ناجحة؛ Instrumentation محجوب بيئيًا لغياب adb والجهاز. |
 | 1 | [ ] لم تبدأ | — | — |
 | 2 | [ ] لم تبدأ | — | — |
 | 3 | [ ] لم تبدأ | — | — |
