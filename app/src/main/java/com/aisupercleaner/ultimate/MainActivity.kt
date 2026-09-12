@@ -86,8 +86,9 @@ fun CleanerApp() {
     var selected by remember { mutableIntStateOf(0) }
     var showPermissionEducation by remember { mutableStateOf(false) }
     var permissionMessage by remember { mutableStateOf<String?>(null) }
-    var scanProgress by remember { mutableStateOf<ScanProgress?>(null) }
-    var isScanning by remember { mutableStateOf(false) }
+    var scanState by remember { mutableStateOf<ScanUiState>(ScanUiState.Idle) }
+    val isScanning = scanState.isBusy()
+    val scanProgress = (scanState as? ScanUiState.Scanning)?.progress
     var report by remember { mutableStateOf<SmartCleanupReport?>(null) }
     var mediaReport by remember { mutableStateOf<MediaAnalysisReport?>(null) }
     LaunchedEffect(fileCount, totalBytes, isScanning) {
@@ -97,11 +98,23 @@ fun CleanerApp() {
     }
     val startScan: () -> Unit = {
         if (!isScanning) scope.launch {
-            isScanning = true
-            try { scanner.scan { progress -> scanProgress = progress }; mediaReport = duplicateEngine.analyze(); permissionMessage = "Scan complete. Results are saved locally for review." }
-            catch (_: SecurityException) { permissionMessage = "Media access was denied. Nothing was scanned." }
-            catch (_: Exception) { permissionMessage = "The scan could not finish. No destructive action was taken." }
-            finally { isScanning = false; scanProgress = null }
+            scanState = ScanUiState.Scanning()
+            try {
+                scanner.scan { progress -> scanState = ScanUiState.Scanning(progress) }
+                scanState = ScanUiState.Analyzing
+                mediaReport = duplicateEngine.analyze()
+                scanState = ScanUiState.Success("Scan complete. Results are saved locally for review.")
+                permissionMessage = (scanState as ScanUiState.Success).message
+            } catch (_: SecurityException) {
+                scanState = ScanUiState.PermissionRequired
+                permissionMessage = "Media access was denied. Nothing was scanned."
+            } catch (_: kotlinx.coroutines.CancellationException) {
+                scanState = ScanUiState.Cancelled
+                permissionMessage = "Scan cancelled. No destructive action was taken."
+            } catch (_: Exception) {
+                scanState = ScanUiState.Error("The scan could not finish. No destructive action was taken.")
+                permissionMessage = (scanState as ScanUiState.Error).message
+            }
         }
     }
     val permissionLauncher = androidx.activity.compose.rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
@@ -134,6 +147,7 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     LazyColumn(modifier.fillMaxSize().padding(horizontal = 20.dp), contentPadding = PaddingValues(top = 24.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item { Header() }
         item { ScoreCard(fileCount, totalBytes, freeBytes, totalStorageBytes, report) }
+        if (report != null) item { Text("Storage pressure ${report.health.pressurePercent}% · Review potential ${formatBytes(report.health.cleanupPotentialBytes)} · Recommendations are review-only", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
         item { PrimaryActions(onSmartScan, onQuickClean, isScanning) }
         if (progress != null) item { ScanProgressCard(progress) }
         if (report != null) {

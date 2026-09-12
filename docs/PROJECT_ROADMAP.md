@@ -238,22 +238,22 @@
 - [ ] اختبار 1k و10k و50k مع قياس الذاكرة والوقت على جهاز.
 - **Check الإغلاق:** جزئي — compile/Unit/Lint ناجحة؛ اختبارات الضغط والذاكرة والجهاز متبقية.
 
-### المرحلة 10 — Compose/UI Architecture وUX
+### المرحلة 10 — Compose/UI Architecture وUX `[~] قيد التنفيذ`
 
-- [ ] تفكيك `MainActivity` إلى screens/components/ViewModels/use cases عند الحاجة دون over-engineering.
-- [ ] استبدال Boolean flags المتعارضة بنموذج صريح: Idle/Scanning/Analyzing/Success/PartialSuccess/Error/PermissionRequired/Cancelled.
-- [ ] إزالة fake progress، وتوضيح حدود الفحص ورسائل الخطأ والنتائج الجزئية.
-- [ ] مراجعة first launch وpermissions وscan/results/cleanup/trash/restore/premium/ads.
-- [ ] مراجعة RTL والعربية والإنجليزية، TalkBack، content descriptions، touch targets، contrast، والخطوط الكبيرة.
-- **Check الإغلاق:** Compose tests للحالات الرئيسية، ودورة rotation/background/foreground، ومراجعة يدوية للـRTL/accessibility.
+- [~] تم إدخال `ScanUiState` صريح وفصل حالات Idle/PermissionRequired/Scanning/Analyzing/Success/Error/Cancelled.
+- [x] إزالة Boolean flags المتعارضة الأساسية، وتمييز busy/progress من الحالة.
+- [x] توضيح حدود الفحص ورسائل النتائج الجزئية، وعرض Storage Pressure وReview Potential منفصلين.
+- [ ] تفكيك `MainActivity` ومراجعة RTL/TalkBack/rotation/background يدويًا.
+- **Check الإغلاق:** جزئي — compile/Unit/Lint ناجحة؛ Compose/device/accessibility review متبقية.
 
-### المرحلة 11 — Permissions وPrivacy وSecurity
+### المرحلة 11 — Permissions وPrivacy وSecurity `[~] قيد التنفيذ`
 
-- [ ] مراجعة Android 13+ full/partial media access وAndroid 12 وأقل، وطلب الحد الأدنى في الوقت المناسب.
-- [ ] التأكد من عدم تسجيل filenames/paths/URI lists أو بيانات وسائط حساسة بلا ضرورة.
-- [ ] تدقيق exported components وintents وURI permissions وpath traversal وmalformed media وsecrets وWebView إن وجد.
-- [ ] مراجعة Data Safety وPrivacy Policy وSDK data collection وanalytics/crash logs.
-- **Check الإغلاق:** اختبار permission revoke/partial access، وفحص Manifest/secret scan، وعدم وجود log حساس في Release.
+- [x] مراجعة صلاحيات Android 13+ وAndroid 14 visual selected وAndroid 12 وأقل، دون إضافة صلاحيات واسعة.
+- [x] لا توجد سجلات حساسة أو Log/println/stack traces في كود الإنتاج.
+- [x] تدقيق exported components وManifest؛ لا يوجد WebView أو FileProvider أو MANAGE_EXTERNAL_STORAGE.
+- [x] ضبط `allowBackup=false` و`usesCleartextTraffic=false`.
+- [ ] اختبار permission revoke/partial access وData Safety/Privacy SDK review ميدانيًا.
+- **Check الإغلاق:** جزئي — static security scan وcompile/Unit/Lint ناجحة؛ device/privacy-console review متبقية.
 
 ### المرحلة 12 — AdMob وUMP وBilling
 
@@ -322,8 +322,8 @@
 | 7 | [~] قيد التنفيذ | `docs/PHASE_7_8_9_IMPLEMENTATION.md` | فصل الدرجات وStorageHealth واختبارات الحدود؛ UI/device review متبقي. |
 | 8 | [~] قيد التنفيذ | `docs/PHASE_7_8_9_IMPLEMENTATION.md` | PartialSuccess وTrash safety وأخطاء URI؛ integration scenario متبقٍ. |
 | 9 | [~] قيد التنفيذ | `docs/PHASE_7_8_9_IMPLEMENTATION.md` | Mutex وcancellation وbounded work؛ اختبارات الضغط والذاكرة متبقية. |
-| 10 | [ ] لم تبدأ | — | — |
-| 11 | [ ] لم تبدأ | — | — |
+| 10 | [~] قيد التنفيذ | `docs/PHASE_10_11_IMPLEMENTATION.md` | ScanUiState وUX metrics؛ Compose/accessibility/device review متبقية. |
+| 11 | [~] قيد التنفيذ | `docs/PHASE_10_11_IMPLEMENTATION.md` | Manifest/security/log audit ناجحة؛ permission/device/console review متبقية. |
 | 12 | [ ] لم تبدأ | — | — |
 | 13 | [ ] لم تبدأ | — | — |
 | 14 | [ ] لم تبدأ | — | — |
