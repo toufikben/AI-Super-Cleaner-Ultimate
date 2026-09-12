@@ -3,7 +3,7 @@
 
 
 
-آخر تحديث: 12 سبتمبر 2026
+آخر تحديث: 12 سبتمبر 2026 — آخر commit: `553d36a`
 
 
 
@@ -13,7 +13,13 @@
 
 
 
-المشروع في **Release Candidate قابل للبناء**. تم إنشاء منتج الشراء مدى الحياة في Play Console، وتبقى تهيئته النهائية واختبار الشراء عبر حساب License Tester وتوقيع AAB ورفع نسخة Internal Testing.
+المشروع في **Release Candidate قابل للبناء**. آخر تحديثات Cross-feature invalidation وGeneral File Scan مسجلة على GitHub. تشغيل الإصدار الموقّع لآخر commit هو `Android Release` run `34697917656` وما زال قيد التنفيذ وقت هذا التحديث.
+
+## GitHub build pipeline
+
+- `Android build`: يعمل تلقائيًا مع Push/PR، ويشغّل QA وUnit/Lint ويفحص Release artifact غير الموقّع. هو فحص البناء المستمر، وليس مسار نشر النسخة النهائية الموقّعة.
+- `Android Release`: يعمل يدويًا أو مع tag من نوع `v*`، ويبني `app-release.aab` و`app-release.apk` موقّعين ويتحقق من التوقيع وR8 mapping. هذا هو Workflow المسؤول عن آخر نسخة Release قابلة للرفع إلى Google Play.
+- `Android instrumentation`: يعمل يدويًا/Nightly أو عند تغييرات التطبيق ذات الصلة، ويشغّل اختبارات Emulator مع smoke tests وdiagnostics؛ لا يُستخدم لإنتاج AAB النهائي.
 
 
 
