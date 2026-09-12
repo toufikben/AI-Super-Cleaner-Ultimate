@@ -326,7 +326,7 @@
 | 11 | [~] قيد التنفيذ | `docs/PHASE_10_11_IMPLEMENTATION.md` | Manifest/security/log audit ناجحة؛ permission/device/console review متبقية. |
 | 12 | [~] قيد التنفيذ | `docs/PHASE_12_REVALIDATION_2026-09-12.md` | Consent gating وBilling reconnect/entitlement تحسنت؛ Gradle/device/Console verification متبقية. |
 | 13 | [~] قيد التنفيذ | `docs/PHASE_13_COMPRESSION_REVALIDATION_2026-09-12.md` | Structured errors وEXIF وcodec policies واختبارات أضيفت؛ Gradle/device codec verification متبقية. |
-| 14 | [~] قيد التنفيذ | `docs/PHASE_14_QA_REPORT.md` | Clean/Unit/Lint/Debug/Release-R8 وartifact checks نجحت؛ signed AAB وInstrumentation وCI run متبقية. |
+| 14 | [~] قيد التنفيذ | `docs/PHASE_14_QA_REPORT.md` | Clean/Unit/Lint/Debug/Release-R8 وartifact checks وGitHub Actions run `34689216133` نجحت؛ signed AAB وInstrumentation متبقية. |
 | 15 | [ ] لم تبدأ | — | — |
 | 16 | [ ] لم تبدأ | — | — |
 | 17 | [ ] لم تبدأ | — | — |

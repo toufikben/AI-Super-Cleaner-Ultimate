@@ -23,6 +23,7 @@ R8 rules were narrowed to the application's Room reflection contracts. AndroidX,
 | Release/R8 APK | Passed | `assembleRelease` completed successfully with minification and resource shrinking |
 | Release artifact policy checks | Passed | `scripts/verify_release.sh` passed; positive versionCode `101`, Manifest check passed |
 | R8 mapping | Passed | `app/build/outputs/mapping/release/mapping.txt` generated, approximately 54 MB |
+| GitHub Actions Android build | Passed | Run `34689216133` completed successfully on commit `7adb6f5`; SDK install, QA, unsigned release build, and artifact verification all passed |
 | Instrumentation | Not executed | `adb devices -l` has no connected device or emulator |
 | Signed APK/AAB | Not executed locally | Protected release keystore secrets are intentionally unavailable in the sandbox |
 
@@ -34,4 +35,4 @@ The build also reports a deprecated Compose `InsertDriveFile` icon, KAPT fallbac
 
 ## Release gate status
 
-Phase 14 is **partially verified**. Host-side clean, test, lint, debug, release/R8, versionCode, Manifest, mapping, and CI configuration checks are complete. It cannot be marked fully complete until a connected API 26+ device or emulator runs instrumentation tests and a protected signing environment produces and verifies the signed AAB/APK. CI must also run successfully on GitHub after the workflow changes.
+Phase 14 is **partially verified**. Host-side clean, test, lint, debug, release/R8, versionCode, Manifest, mapping, CI configuration, and the new GitHub Actions run are complete. It cannot be marked fully complete until a connected API 26+ device or emulator runs instrumentation tests and a protected signing environment produces and verifies the signed AAB/APK.
