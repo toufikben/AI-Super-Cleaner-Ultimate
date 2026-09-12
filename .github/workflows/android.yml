@@ -48,7 +48,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## Android build"
-            echo "- Commit: \\`${GITHUB_SHA}\`"
-            echo "- QA, unit tests, lint, and unsigned release checks were attempted."
-          } >> "$GITHUB_STEP_SUMMARY"
+            echo '## Android build'
+            echo "- Commit: ${GITHUB_SHA}"
+            echo '- QA, unit tests, lint, and unsigned release checks were attempted.'
+          } >> "${GITHUB_STEP_SUMMARY:-/dev/null}"
