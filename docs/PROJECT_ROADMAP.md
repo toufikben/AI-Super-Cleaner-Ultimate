@@ -173,11 +173,11 @@
 
 ### المرحلة 2 — إعادة هيكلة Storage Scanning وMediaStore `[~] قيد التنفيذ`
 
-- [~] تم تحسين حدود MediaStore query ومعالجة provider failure كخطأ آمن؛ لم تبدأ بعد إعادة فصل المكونات.
-- [ ] فصل مسؤوليات `StorageScanner` وMediaStore والفحص الكبير وDuplicate/Screenshot/Blur عند الحاجة دون إضافة تعقيد غير ضروري.
-- [ ] دعم Images/Videos/Audio، وتقييم Documents/Downloads/Archives/APK عبر Android APIs وSAF فقط حيث يسمح النظام والسياسة.
-- [ ] التعامل مع permission changes وinvalid URI وprovider errors وعدم الوصول إلى مجلدات محمية بشكل كامل.
-- [ ] تحديث رسائل UI لتوضح نطاق الفحص الحقيقي.
+- [x] تم تحسين حدود MediaStore query ومعالجة provider failure كخطأ آمن.
+- [x] فصل قائمة مصادر MediaStore في `MediaStoreInventory` دون خلطها مع محركات التحليل.
+- [x] دعم Images/Videos/Audio، مع توضيح أن النطاق هو Android MediaStore؛ دعم Documents/Archives/APK عبر SAF متبقٍ.
+- [~] التعامل مع permission changes وinvalid URI وprovider errors في الكود؛ الاختبار الفعلي للصلاحيات محجوب لغياب الجهاز.
+- [x] تحديث رسائل التقدم والنطاق لتوضح مصدر الفحص الحقيقي.
 - **Check الإغلاق:** غير مكتمل؛ لا تتحول المرحلة إلى `[x]` حتى تضاف الاختبارات والفصل الوظيفي المطلوب.
 
 ### المرحلة 3 — مزامنة MediaStore وRoom `[x]`
@@ -201,17 +201,18 @@
 - [x] إبقاء grouping بالحجم والنوع كمرشح أول فقط.
 - [x] استخدام SHA-256 عبر streaming، وعدم اعتبار الاسم أو الحجم أو الوقت دليل تطابق.
 - [x] تجنب إعادة hash للنتائج الحالية، ودعم الملفات غير القابلة للقراءة والتقدم والإلغاء.
-- [ ] إضافة integration tests بملفات متساوية الحجم بمحتوى مختلف وملفات متطابقة وملف كبير.
+- [x] استخراج `DuplicateGrouping` وإضافة unit tests لملفات ذات hash مختلف ومتساوٍ وحساب recoverable bytes.
+- [ ] إضافة integration tests عبر ContentResolver بملفات متساوية الحجم بمحتوى مختلف وملفات متطابقة وملف كبير.
 - **Check الإغلاق:** جزئي — Unit test لـSHA-256 ناجح؛ اختبار ContentResolver/Mediastore الحقيقي متبقٍ.
 
-### المرحلة 6 — Similarity وBlur وScreenshot
+### المرحلة 6 — Similarity وBlur وScreenshot `[~] قيد التنفيذ`
 
-- [ ] فصل `EXACT_DUPLICATE` عن `VERY_SIMILAR` و`POSSIBLY_SIMILAR`.
+- [x] فصل exact duplicate عن similarity باستبعاد URIs الموجودة في exact groups.
 - [ ] جعل similarity score لكل زوج/عضو، مع buckets أو pre-filter لتقليل O(n²).
-- [ ] تحسين blur إلى heuristic باسم “Potentially blurry” مع score/confidence/version، وتجنب false positives للسماء والليل والبورتريه والبokeh والرسومات.
-- [ ] تحسين screenshot detection عبر filename/path/dimensions/aspect/MIME مع classification/confidence.
-- [ ] منع أي حذف تلقائي بناءً على similarity أو blur أو screenshot.
-- **Check الإغلاق:** اختبارات resize/compression/crop/burst/unrelated/night/portrait/screenshots والنتائج المفسرة للمستخدم.
+- [x] تحسين blur إلى heuristic باسم “Potentially blurry” مع score/confidence، دون حذف تلقائي.
+- [x] تحسين screenshot detection عبر filename/path/MIME مع classification/confidence.
+- [x] منع أي حذف تلقائي بناءً على similarity أو blur أو screenshot.
+- **Check الإغلاق:** جزئي — unit tests للتصنيف والتجميع ناجحة؛ اختبارات الصور الحقيقية resize/compression/crop/night/portrait متبقية.
 
 ### المرحلة 7 — Recommendation وStorage Health
 
@@ -317,8 +318,8 @@
 | 2 | [~] قيد التنفيذ | — | تم تنفيذ حماية جزئية في StorageScanner، وباقي الفصل والاختبارات متبقٍ. |
 | 3 | [x] مكتملة | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | Reconciliation وRoom migration وbatching؛ Unit/Lint ناجحة. |
 | 4 | [x] مكتملة | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | Cache metadata/version invalidation واختبارات جديدة ناجحة. |
-| 5 | [~] قيد التنفيذ | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | SHA-256 streaming وreuse وhandling للأخطاء؛ integration tests متبقية. |
-| 6 | [ ] لم تبدأ | — | — |
+| 5 | [~] قيد التنفيذ | `docs/PHASE_5_6_IMPLEMENTATION.md` | Grouping وSHA-256 وunit tests؛ integration tests عبر ContentResolver متبقية. |
+| 6 | [~] قيد التنفيذ | `docs/PHASE_5_6_IMPLEMENTATION.md` | تصنيف blur/screenshot وفصل exact عن similar؛ اختبارات الصور الحقيقية وتحسين similarity متبقية. |
 | 7 | [ ] لم تبدأ | — | — |
 | 8 | [ ] لم تبدأ | — | — |
 | 9 | [ ] لم تبدأ | — | — |

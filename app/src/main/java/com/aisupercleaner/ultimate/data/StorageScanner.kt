@@ -21,12 +21,10 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
         var cacheHits = 0
         var cacheMisses = 0
         try {
-            val sources = listOf(
-                Triple(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image", "Scanning photos"),
-                Triple(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "video", "Scanning videos"),
-                Triple(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "audio", "Scanning audio")
-            )
-            for ((collection, mediaType, stage) in sources) {
+            for (source in MediaStoreInventory.supportedSources) {
+                val collection = source.collection
+                val mediaType = source.mediaType
+                val stage = source.progressLabel
                 coroutineContext.ensureActive()
                 val changedBatch = ArrayList<FileMetadataEntity>(200)
                 val seenBatch = ArrayList<String>(200)

@@ -18,12 +18,12 @@ import kotlin.math.abs
 
 data class DuplicateGroup(val hash: String, val files: List<FileMetadataEntity>, val recoverableBytes: Long)
 data class SimilarGroup(val anchorUri: String, val files: List<FileMetadataEntity>, val similarity: Int)
-data class MediaAnalysisReport(val duplicateGroups: List<DuplicateGroup>, val similarGroups: List<SimilarGroup>, val blurredFiles: List<FileMetadataEntity>, val screenshotFiles: List<FileMetadataEntity>)
+data class MediaAnalysisReport(val duplicateGroups: List<DuplicateGroup>, val similarGroups: List<SimilarGroup>, val blurredFiles: List<MediaFinding>, val screenshotFiles: List<MediaFinding>)
 
 class DuplicateEngine(private val resolver: ContentResolver, private val dao: StorageDao) {
     suspend fun analyze(): MediaAnalysisReport = withContext(Dispatchers.IO) {
         val files = dao.allFiles()
-        val exactCandidates = files.filter { it.sizeBytes > 0 }.groupBy { it.mediaType to it.sizeBytes }.values.filter { it.size > 1 }
+        val exactCandidates = DuplicateGrouping.candidateGroups(files)
         val hashToFiles = linkedMapOf<String, MutableList<FileMetadataEntity>>()
         for (candidateGroup in exactCandidates) {
             for (file in candidateGroup) {
@@ -33,29 +33,31 @@ class DuplicateEngine(private val resolver: ContentResolver, private val dao: St
                 hashToFiles.getOrPut(hash) { mutableListOf() }.add(file.copy(contentHash = hash))
             }
         }
-        val duplicateGroups = hashToFiles.values.filter { it.size > 1 }.map { group -> DuplicateGroup(group.first().contentHash ?: "", group, group.drop(1).sumOf { it.sizeBytes }) }
+        val duplicateGroups = DuplicateGrouping.exactGroups(hashToFiles.values.flatten())
         val imageFiles = files.filter { it.mediaType == "image" }
+        val exactUris = duplicateGroups.asSequence().flatMap { it.files.asSequence() }.map { it.uri }.toSet()
         val imageHashes = mutableListOf<Pair<FileMetadataEntity, Long>>()
-        val blurred = mutableListOf<FileMetadataEntity>()
-        val screenshots = mutableListOf<FileMetadataEntity>()
+        val blurred = mutableListOf<MediaFinding>()
+        val screenshots = mutableListOf<MediaFinding>()
         val semaphore = Semaphore(2)
         imageFiles.chunked(32).forEach { chunk ->
             coroutineContext.ensureActive()
             coroutineScope {
                 chunk.map { file -> async(Dispatchers.IO) { semaphore.withPermit { file to if (ScanCachePolicy.analysisIsCurrent(file) && file.perceptualHash != null && file.blurScore != null) null else analyzeImage(file.uri) } } }.awaitAll().forEach { (file, analysis) ->
-                    val isScreenshot = if (analysis != null) screenshotName(file.displayName) else file.isScreenshot
+                    val screenshotFinding = if (analysis != null) MediaClassification.screenshotFinding(file) else if (file.isScreenshot) MediaFinding(file, "Potential screenshot", 90, "Previously matched a screenshot filename or path pattern.") else null
+                    val isScreenshot = screenshotFinding != null
                     val perceptualHash = analysis?.hash ?: file.perceptualHash
                     val blurScore = analysis?.blurScore ?: file.blurScore
                     if (analysis != null) dao.updateAnalysis(file.uri, file.contentHash, analysis.hash, analysis.blurScore, isScreenshot, ScanCachePolicy.CURRENT_ANALYSIS_VERSION)
                     if (perceptualHash != null && blurScore != null) {
                         imageHashes += file.copy(perceptualHash = perceptualHash, blurScore = blurScore, isScreenshot = isScreenshot) to perceptualHash.toULong(16).toLong()
-                        if (blurScore < 0.10) blurred += file.copy(blurScore = blurScore)
+                        MediaClassification.blurFinding(file, blurScore)?.let { blurred += it }
                     }
-                    if (isScreenshot) screenshots += file.copy(isScreenshot = true)
+                    screenshotFinding?.let { screenshots += it }
                 }
             }
         }
-        val similarGroups = buildSimilarGroups(imageHashes)
+        val similarGroups = buildSimilarGroups(imageHashes.filterNot { it.first.uri in exactUris })
         MediaAnalysisReport(duplicateGroups, similarGroups, blurred, screenshots)
     }
 
@@ -89,8 +91,6 @@ class DuplicateEngine(private val resolver: ContentResolver, private val dao: St
         for (y in 0 until 7) for (x in 0 until 7) total += abs(gray[y * 8 + x] - gray[y * 8 + x + 1]) + abs(gray[y * 8 + x] - gray[(y + 1) * 8 + x])
         return (total / (49.0 * 510.0)).coerceIn(0.0, 1.0)
     }
-
-    private fun screenshotName(name: String): Boolean { val normalized = name.lowercase(); return normalized.contains("screenshot") || normalized.contains("screen_shot") || normalized.contains("screen-shot") || normalized.contains("screen shot") }
 
     private fun buildSimilarGroups(items: List<Pair<FileMetadataEntity, Long>>): List<SimilarGroup> {
         val used = mutableSetOf<String>(); val output = mutableListOf<SimilarGroup>()
