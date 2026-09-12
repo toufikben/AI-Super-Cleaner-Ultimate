@@ -110,7 +110,7 @@ fun CleanerApp() {
     Scaffold(containerColor = MaterialTheme.colorScheme.background, bottomBar = { NavigationBar(containerColor = MaterialTheme.colorScheme.surface) { navItems.forEachIndexed { index, item -> NavigationBarItem(selected = selected == index, onClick = { selected = index }, icon = { Icon(item.icon, item.label) }, label = { Text(item.label, fontSize = 11.sp) }) } } }) { padding ->
         when (selected) {
             0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
-            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, onAdvancedScan = { showPermissionEducation = true })
+            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, isPremium, onAdvancedScan = { showPermissionEducation = true })
             2 -> AnalyzeScreen(Modifier.padding(padding), database)
             3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager)
             4 -> Column(Modifier.padding(padding)) { PremiumPaywall(billingManager, isPremium); PrivacyOptionsEntry(consentManager); PrivacyCenterScreen(Modifier.weight(1f), preferences) }
@@ -193,14 +193,14 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     }
     resultMessage?.let { AlertDialog(onDismissRequest = { resultMessage = null }, confirmButton = { TextButton(onClick = { resultMessage = null }) { Text("OK") } }, title = { Text("Compression status") }, text = { Text(it) }) }
 }
-@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, adManager: AdManager, onAdvancedScan: () -> Unit) {
+@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, adManager: AdManager, isPremium: Boolean, onAdvancedScan: () -> Unit) {
     val candidates by database.storageDao().observeDuplicateCandidates().collectAsStateWithLifecycle(initialValue = emptyList())
     val scope = rememberCoroutineScope(); var selected by remember { mutableStateOf(setOf<String>()) }; var confirm by remember { mutableStateOf(false) }; var message by remember { mutableStateOf<String?>(null) }
     val selectedItems = candidates.filter { it.uri in selected }; val activity = LocalActivity.current
     LazyColumn(modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 24.dp)) {
         item { Text("Clean safely", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold); Text("Quick Clean shows only exact-hash candidates. Advanced Smart Scan adds broader analysis for review.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         item { OutlinedButton(onClick = onAdvancedScan, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) { Icon(Icons.Default.AutoAwesome, null); Spacer(Modifier.width(8.dp)); Text("Run Advanced Smart Scan") } }
-        item { TextButton(onClick = { activity?.let { adManager.showRewardedAd(it, onReward = onAdvancedScan, onUnavailable = { message = "Rewarded Ad is unavailable. Advanced Smart Scan remains available without an ad." }) } }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Default.PlayCircle, null); Spacer(Modifier.width(8.dp)); Text("Watch a short ad to unlock one Advanced Scan (optional)") } }
+        if (!isPremium) item { TextButton(onClick = { activity?.let { adManager.showRewardedAd(it, isPremium, onReward = onAdvancedScan, onUnavailable = { message = "Rewarded Ad is unavailable. Advanced Smart Scan remains available without an ad." }) } }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Default.PlayCircle, null); Spacer(Modifier.width(8.dp)); Text("Watch a short ad to unlock one Advanced Scan (optional)") } }
         item { Text("${selectedItems.size} selected · ${formatBytes(selectedItems.sumOf { it.sizeBytes })}", fontWeight = FontWeight.SemiBold) }
         if (candidates.isEmpty()) item { EmptyState("No analyzed duplicate candidates yet", "Run Smart Scan first. Nothing is selected by default.") }
         items(candidates) { item ->
@@ -209,7 +209,7 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
         }
         item { Button(onClick = { confirm = true }, enabled = selectedItems.isNotEmpty(), modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) { Icon(Icons.Default.DeleteSweep, null); Spacer(Modifier.width(8.dp)); Text("Move selected to Trash") } }
     }
-    if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("Move to Trash?") }, text = { Text("You selected ${selectedItems.size} files (${formatBytes(selectedItems.sumOf { it.sizeBytes })}). Android will retain recoverable items where supported. Nothing will be permanently deleted now.") }, confirmButton = { Button(onClick = { confirm = false; scope.launch { when (val result = cleanupManager.moveToTrash(selectedItems)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> { message = "${result.itemsMoved} items moved to Trash."; selected = emptySet() }; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> message = result.message } } }) { Text("Move to Trash") } }, dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancel") } })
+    if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("Move to Trash?") }, text = { Text("You selected ${selectedItems.size} files (${formatBytes(selectedItems.sumOf { it.sizeBytes })}). Android will retain recoverable items where supported. Nothing will be permanently deleted now.") }, confirmButton = { Button(onClick = { confirm = false; scope.launch { when (val result = cleanupManager.moveToTrash(selectedItems)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> { message = "${result.itemsMoved} items moved to Trash."; selected = emptySet(); activity?.let { adManager.showInterstitialAfterCleanup(it, isPremium) {} } }; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> message = result.message } } }) { Text("Move to Trash") } }, dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancel") } })
     message?.let { AlertDialog(onDismissRequest = { message = null }, confirmButton = { TextButton(onClick = { message = null }) { Text("OK") } }, title = { Text("Clean status") }, text = { Text(it) }) }
 }
 

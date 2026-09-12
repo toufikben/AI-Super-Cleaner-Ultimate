@@ -18,7 +18,11 @@ class AdManager(context: Context) {
     private var rewarded: RewardedAd? = null
     private var interstitial: InterstitialAd? = null
 
-    fun initialize() { MobileAds.initialize(appContext); preloadRewarded() }
+    fun initialize() {
+        MobileAds.initialize(appContext)
+        preloadRewarded()
+        loadInterstitialIfAllowed()
+    }
 
     fun preloadRewarded() {
         RewardedAd.load(appContext, REWARDED_PRODUCTION_UNIT, AdRequest.Builder().build(), object : RewardedAdLoadCallback() {
@@ -27,7 +31,8 @@ class AdManager(context: Context) {
         })
     }
 
-    fun showRewardedAd(activity: Activity, onReward: () -> Unit, onUnavailable: () -> Unit) {
+    fun showRewardedAd(activity: Activity, isPremium: Boolean, onReward: () -> Unit, onUnavailable: () -> Unit) {
+        if (isPremium) { onUnavailable(); return }
         val ad = rewarded
         if (ad == null) { onUnavailable(); preloadRewarded(); return }
         rewarded = null
@@ -53,7 +58,8 @@ class AdManager(context: Context) {
         })
     }
 
-    fun showInterstitialAfterCleanup(activity: Activity, onUnavailable: () -> Unit) {
+    fun showInterstitialAfterCleanup(activity: Activity, isPremium: Boolean, onUnavailable: () -> Unit) {
+        if (isPremium) { onUnavailable(); return }
         val ad = interstitial
         if (ad == null || !canShowInterstitialAfterCleanup()) { onUnavailable(); return }
         interstitial = null
