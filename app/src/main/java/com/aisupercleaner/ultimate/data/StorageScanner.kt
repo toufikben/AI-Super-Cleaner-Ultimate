@@ -9,12 +9,13 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import kotlin.coroutines.coroutineContext
 
-data class ScanProgress(val stage: String, val scannedFiles: Int, val discoveredBytes: Long, val cacheHits: Int = 0)
-data class ScanResult(val filesScanned: Int, val totalBytes: Long, val cacheHits: Int, val cacheMisses: Int)
+ data class ScanProgress(val stage: String, val scannedFiles: Int, val discoveredBytes: Long, val cacheHits: Int = 0)
+data class ScanResult(val filesScanned: Int, val totalBytes: Long, val cacheHits: Int, val cacheMisses: Int, val staleFilesRemoved: Int = 0)
 
 class StorageScanner(private val resolver: ContentResolver, private val dao: StorageDao) {
     suspend fun scan(onProgress: (ScanProgress) -> Unit): ScanResult = withContext(Dispatchers.IO) {
         val startedAt = System.currentTimeMillis()
+        val scanToken = startedAt
         var totalFiles = 0
         var totalBytes = 0L
         var cacheHits = 0
@@ -27,7 +28,8 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
             )
             for ((collection, mediaType, stage) in sources) {
                 coroutineContext.ensureActive()
-                val batch = ArrayList<FileMetadataEntity>(200)
+                val changedBatch = ArrayList<FileMetadataEntity>(200)
+                val seenBatch = ArrayList<String>(200)
                 val projection = arrayOf(
                     MediaStore.MediaColumns._ID,
                     MediaStore.MediaColumns.DISPLAY_NAME,
@@ -37,7 +39,9 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                     MediaStore.MediaColumns.DURATION,
                     MediaStore.MediaColumns.RELATIVE_PATH
                 )
-                resolver.query(collection, projection, null, null, null)?.use { cursor ->
+                val cursor = resolver.query(collection, projection, null, null, null)
+                    ?: throw IOException("MediaStore query returned no cursor for $mediaType")
+                cursor.use { cursor ->
                     val idIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
                     val nameIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
                     val mimeIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.MIME_TYPE)
@@ -49,32 +53,48 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                         coroutineContext.ensureActive()
                         val id = cursor.getLong(idIndex)
                         val size = cursor.getLong(sizeIndex).coerceAtLeast(0L)
+                        val uri = ContentUris.withAppendedId(collection, id).toString()
                         val metadata = FileMetadataEntity(
-                            uri = ContentUris.withAppendedId(collection, id).toString(),
+                            uri = uri,
                             displayName = cursor.getString(nameIndex) ?: "Unnamed file",
                             mimeType = cursor.getString(mimeIndex) ?: "application/octet-stream",
                             sizeBytes = size,
                             modifiedEpochSeconds = cursor.getLong(modifiedIndex),
                             mediaType = mediaType,
                             durationMillis = if (durationIndex >= 0 && !cursor.isNull(durationIndex)) cursor.getLong(durationIndex) else 0L,
-                            relativePath = if (pathIndex >= 0 && !cursor.isNull(pathIndex)) cursor.getString(pathIndex) else null
+                            relativePath = if (pathIndex >= 0 && !cursor.isNull(pathIndex)) cursor.getString(pathIndex) else null,
+                            lastSeenScanToken = scanToken
                         )
-                        val cached = dao.findFile(metadata.uri)
-                        if (ScanCachePolicy.isUnchanged(cached, metadata)) cacheHits++ else { batch += metadata; cacheMisses++ }
+                        val cached = dao.findFile(uri)
+                        if (ScanCachePolicy.isUnchanged(cached, metadata)) {
+                            seenBatch += uri
+                            cacheHits++
+                        } else {
+                            changedBatch += metadata
+                            cacheMisses++
+                        }
                         totalFiles++
                         totalBytes += size
-                        if (batch.size == 200) {
-                            dao.upsertFiles(batch.toList())
-                            batch.clear()
-                            onProgress(ScanProgress(stage, totalFiles, totalBytes, cacheHits))
+                        if (changedBatch.size == 200) {
+                            dao.upsertFiles(changedBatch.toList())
+                            changedBatch.clear()
                         }
+                        if (seenBatch.size == 200) {
+                            dao.markFilesSeen(seenBatch.toList(), scanToken)
+                            seenBatch.clear()
+                        }
+                        if ((totalFiles % 200) == 0) onProgress(ScanProgress(stage, totalFiles, totalBytes, cacheHits))
                     }
                 }
-                if (batch.isNotEmpty()) dao.upsertFiles(batch)
+                if (changedBatch.isNotEmpty()) dao.upsertFiles(changedBatch)
+                if (seenBatch.isNotEmpty()) dao.markFilesSeen(seenBatch, scanToken)
                 onProgress(ScanProgress(stage, totalFiles, totalBytes, cacheHits))
             }
+            // Reconcile only after every source completed successfully. A partial/failed scan
+            // must never delete records merely because a provider query stopped early.
+            val staleFilesRemoved = dao.removeFilesNotSeenInScan(scanToken)
             dao.insertScanHistory(ScanHistoryEntity(startedAtEpochMillis = startedAt, completedAtEpochMillis = System.currentTimeMillis(), filesScanned = totalFiles, totalBytes = totalBytes, status = "completed"))
-            ScanResult(totalFiles, totalBytes, cacheHits, cacheMisses)
+            ScanResult(totalFiles, totalBytes, cacheHits, cacheMisses, staleFilesRemoved)
         } catch (e: SecurityException) {
             dao.insertScanHistory(ScanHistoryEntity(startedAtEpochMillis = startedAt, completedAtEpochMillis = System.currentTimeMillis(), filesScanned = totalFiles, totalBytes = totalBytes, status = "permission_denied"))
             throw e

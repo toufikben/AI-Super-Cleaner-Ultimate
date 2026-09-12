@@ -17,6 +17,12 @@ interface StorageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertFiles(files: List<FileMetadataEntity>)
 
+    @Query("UPDATE file_metadata SET lastSeenScanToken = :scanToken WHERE uri IN (:uris)")
+    suspend fun markFilesSeen(uris: List<String>, scanToken: Long)
+
+    @Query("DELETE FROM file_metadata WHERE lastSeenScanToken != :scanToken")
+    suspend fun removeFilesNotSeenInScan(scanToken: Long): Int
+
     @Query("SELECT * FROM file_metadata ORDER BY sizeBytes DESC")
     suspend fun allFiles(): List<FileMetadataEntity>
 
@@ -78,7 +84,7 @@ interface StorageDao {
     fun observeCompressionHistory(): Flow<List<CompressionHistoryEntity>>
 }
 
-@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class, CompressionHistoryEntity::class], version = 5, exportSchema = false)
+@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class, CompressionHistoryEntity::class], version = 6, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun storageDao(): StorageDao
 
@@ -86,8 +92,7 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile private var instance: AppDatabase? = null
         fun get(context: Context): AppDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "storage_intelligence.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
-                .fallbackToDestructiveMigration()
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                 .build().also { instance = it }
         }
 
@@ -117,6 +122,13 @@ abstract class AppDatabase : RoomDatabase() {
         private val MIGRATION_4_5 = object : androidx.room.migration.Migration(4, 5) {
             override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
                 db.execSQL("CREATE TABLE IF NOT EXISTS compression_history (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, inputUri TEXT NOT NULL, outputUri TEXT, mediaType TEXT NOT NULL, preset TEXT NOT NULL, originalBytes INTEGER NOT NULL, outputBytes INTEGER NOT NULL, status TEXT NOT NULL, createdAtEpochMillis INTEGER NOT NULL)")
+            }
+        }
+
+        private val MIGRATION_5_6 = object : androidx.room.migration.Migration(5, 6) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN lastSeenScanToken INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_file_metadata_lastSeenScanToken ON file_metadata(lastSeenScanToken)")
             }
         }
     }

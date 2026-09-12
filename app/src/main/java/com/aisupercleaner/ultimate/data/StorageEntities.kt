@@ -3,7 +3,11 @@ package com.aisupercleaner.ultimate.data
 import androidx.room.Entity
 import androidx.room.Index
 
-@Entity(tableName = "file_metadata", primaryKeys = ["uri"], indices = [Index("mediaType"), Index("sizeBytes"), Index("modifiedEpochSeconds")])
+@Entity(
+    tableName = "file_metadata",
+    primaryKeys = ["uri"],
+    indices = [Index("mediaType"), Index("sizeBytes"), Index("modifiedEpochSeconds"), Index("lastSeenScanToken")]
+)
 data class FileMetadataEntity(
     val uri: String,
     val displayName: String,
@@ -16,7 +20,8 @@ data class FileMetadataEntity(
     val blurScore: Double? = null,
     val isScreenshot: Boolean = false,
     val durationMillis: Long = 0L,
-    val relativePath: String? = null
+    val relativePath: String? = null,
+    val lastSeenScanToken: Long = 0L
 )
 
 @Entity(tableName = "scan_history")
