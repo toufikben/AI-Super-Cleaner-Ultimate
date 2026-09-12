@@ -20,6 +20,6 @@ The result was `BUILD SUCCESSFUL`; 38 unit tests completed successfully in the c
 
 ## Device/CI verification status
 
-The local environment has no connected Android device or running emulator, so `connectedDebugAndroidTest` has not been executed locally. The emulator job is configured but must run on GitHub Actions after the workflow is pushed. Database migration upgrade tests from historical Room versions, permission revoke/partial access, MediaStore insertion/trash/restore, Compose interaction, Billing, and large real-media performance remain device-level checks.
+The local environment has no connected Android device or running emulator, so `connectedDebugAndroidTest` has not been executed locally. The first GitHub Actions emulator run (`34689720559`) passed the build job but the instrumentation job failed before tests because the API 35 emulator did not report boot completion before the action timeout. The workflow was hardened with a 1200-second boot timeout, no snapshot restore, and software GPU mode; it must be rerun to distinguish emulator startup reliability from test failures. Database migration upgrade tests from historical Room versions, permission revoke/partial access, MediaStore insertion/trash/restore, Compose interaction, Billing, and large real-media performance remain device-level checks.
 
 Accordingly, phase 15 remains **in progress** until the emulator CI job completes and any failures are corrected. No claim is made that device tests passed before that run.
