@@ -48,7 +48,7 @@
 
 
 
-هذه هي المرحلة النشطة الآن. هدفها تحويل Release Candidate إلى نسخة Internal Testing قابلة للمراجعة.
+هذه هي المرحلة النشطة الآن. هدفها تحويل Release Candidate إلى نسخة Internal Testing قابلة للمراجعة. تقرير التدقيق البرمجي: `docs/PHASE_15_AUDIT.md`.
 
 
 
@@ -67,6 +67,7 @@
 - تشغيل `./scripts/qa_release.sh` بدون `QA_ALLOW_TEST_ADS` بنجاح.
 - رفع التحديث إلى GitHub في Commit `a8e883c`.
 - تأكيد أن AdMob account/app قيد المراجعة.
+- تدقيق AdMob وUMP وBilling وProduct IDs والصلاحيات وRelease؛ إصلاح Premium gating والتحقق من Product IDs في commit `238dfa7`.
 
 
 
@@ -76,8 +77,8 @@
 
 
 
-- إنشاء UMP Privacy & messaging message في AdMob Console.
-- إضافة Privacy Policy URL عام وثابت إلى AdMob وPlay Console.
+- التحقق من نشر UMP Privacy & messaging message في AdMob Console بعد ربطه بتطبيق الإنتاج.
+- التحقق من إدخال Privacy Policy URL العام والثابت في AdMob وPlay Console: `https://toufikben.github.io/AI-Super-Cleaner-Privacy-Policy/`.
 - انتظار قبول AdMob account/app ومراجعة Policy Center.
 - اختيار/إنشاء Google Play developer app.
 - إنشاء تطبيق Play Console بالـpackage name `com.aisupercleaner.ultimate`.
@@ -86,9 +87,9 @@
 - إعداد أسعار وبلدان المنتجات.
 - إضافة License Tester بحساب Google مخصص للاختبار.
 - إعداد Internal Testing track.
-- إنشاء AAB موقع باستخدام Secrets آمنة.
+- إنشاء AAB موقع باستخدام Secrets آمنة ورفع النسخة الجديدة بعد commit `238dfa7`.
 - تشغيل Instrumentation على جهاز أو Emulator.
-- تنفيذ Billing/UMP/Ads tests على نسخة Internal.
+- تنفيذ Billing/UMP/Ads tests على نسخة Internal الجديدة؛ الاختبارات الآلية ناجحة، والاختبار الميداني ما زال متبقيًا.
 - اختبار شراء `premium_lifetime` واستعادة المشتريات بحساب License Tester.
 - لا يوجد حالياً نظام حسابات أو تسجيل دخول داخل التطبيق؛ إنشاء حساب اختبار للتطبيق يتطلب أولاً إضافة Backend/Auth، لذلك لا يُنشأ حساب وهمي في هذه المرحلة.
 - إدخال Data Safety النهائي في Play Console.

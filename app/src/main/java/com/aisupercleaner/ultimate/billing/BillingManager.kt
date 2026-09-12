@@ -86,7 +86,7 @@ class BillingManager(context: Context) : BillingClientStateListener, PurchasesUp
     }
 
     private fun process(purchases: List<Purchase>) {
-        purchases.forEach { purchase ->
+        purchases.filter { purchase -> purchase.products.any { it == MONTHLY || it == LIFETIME } }.forEach { purchase ->
             when (purchase.purchaseState) {
                 Purchase.PurchaseState.PURCHASED -> {
                     _isPremium.value = true

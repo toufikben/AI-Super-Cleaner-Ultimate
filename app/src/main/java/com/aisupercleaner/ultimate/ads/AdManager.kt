@@ -24,6 +24,11 @@ class AdManager(context: Context) {
         loadInterstitialIfAllowed()
     }
 
+    fun disable() {
+        rewarded = null
+        interstitial = null
+    }
+
     fun preloadRewarded() {
         RewardedAd.load(appContext, REWARDED_PRODUCTION_UNIT, AdRequest.Builder().build(), object : RewardedAdLoadCallback() {
             override fun onAdLoaded(ad: RewardedAd) { rewarded = ad }

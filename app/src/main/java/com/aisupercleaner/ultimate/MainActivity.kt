@@ -72,6 +72,7 @@ fun CleanerApp() {
     val billingManager = remember { BillingManager(context) }
     val isPremium by billingManager.isPremium.collectAsStateWithLifecycle()
     val billingMessage by billingManager.message.collectAsStateWithLifecycle()
+    LaunchedEffect(isPremium) { if (isPremium) adManager.disable() }
     val consentError by consentManager.error.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val fileCount by database.storageDao().observeFileCount().collectAsStateWithLifecycle(initialValue = 0)
