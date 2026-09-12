@@ -38,8 +38,8 @@ interface StorageDao {
     @Query("SELECT * FROM file_metadata WHERE relativePath LIKE '%Download%' OR LOWER(displayName) LIKE '%.apk' ORDER BY modifiedEpochSeconds ASC")
     fun observeDownloads(): Flow<List<FileMetadataEntity>>
 
-    @Query("UPDATE file_metadata SET contentHash = :contentHash, perceptualHash = :perceptualHash, blurScore = :blurScore, isScreenshot = :isScreenshot WHERE uri = :uri")
-    suspend fun updateAnalysis(uri: String, contentHash: String?, perceptualHash: String?, blurScore: Double?, isScreenshot: Boolean)
+    @Query("UPDATE file_metadata SET contentHash = :contentHash, perceptualHash = :perceptualHash, blurScore = :blurScore, isScreenshot = :isScreenshot, analysisVersion = :analysisVersion WHERE uri = :uri")
+    suspend fun updateAnalysis(uri: String, contentHash: String?, perceptualHash: String?, blurScore: Double?, isScreenshot: Boolean, analysisVersion: Int)
 
     @Query("DELETE FROM file_metadata")
     suspend fun clearFiles()
@@ -84,7 +84,7 @@ interface StorageDao {
     fun observeCompressionHistory(): Flow<List<CompressionHistoryEntity>>
 }
 
-@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class, CompressionHistoryEntity::class], version = 6, exportSchema = false)
+@Database(entities = [FileMetadataEntity::class, ScanHistoryEntity::class, TrashItemEntity::class, CompressionHistoryEntity::class], version = 7, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun storageDao(): StorageDao
 
@@ -92,7 +92,7 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile private var instance: AppDatabase? = null
         fun get(context: Context): AppDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "storage_intelligence.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                 .build().also { instance = it }
         }
 
@@ -129,6 +129,13 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE file_metadata ADD COLUMN lastSeenScanToken INTEGER NOT NULL DEFAULT 0")
                 db.execSQL("CREATE INDEX IF NOT EXISTS index_file_metadata_lastSeenScanToken ON file_metadata(lastSeenScanToken)")
+            }
+        }
+
+        private val MIGRATION_6_7 = object : androidx.room.migration.Migration(6, 7) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE file_metadata ADD COLUMN analysisVersion INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("UPDATE file_metadata SET contentHash = NULL, perceptualHash = NULL, blurScore = NULL, isScreenshot = 0, analysisVersion = 0")
             }
         }
     }

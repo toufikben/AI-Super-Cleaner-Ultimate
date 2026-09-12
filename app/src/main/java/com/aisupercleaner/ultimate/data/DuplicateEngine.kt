@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import java.io.BufferedInputStream
-import java.security.MessageDigest
+import java.io.IOException
 import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 
@@ -28,8 +28,8 @@ class DuplicateEngine(private val resolver: ContentResolver, private val dao: St
         for (candidateGroup in exactCandidates) {
             for (file in candidateGroup) {
                 coroutineContext.ensureActive()
-                val hash = sha256(file.uri) ?: continue
-                dao.updateAnalysis(file.uri, hash, file.perceptualHash, file.blurScore, file.isScreenshot)
+                val hash = file.contentHash ?: sha256(file.uri) ?: continue
+                if (file.contentHash == null) dao.updateAnalysis(file.uri, hash, file.perceptualHash, file.blurScore, file.isScreenshot, ScanCachePolicy.CURRENT_ANALYSIS_VERSION)
                 hashToFiles.getOrPut(hash) { mutableListOf() }.add(file.copy(contentHash = hash))
             }
         }
@@ -42,12 +42,14 @@ class DuplicateEngine(private val resolver: ContentResolver, private val dao: St
         imageFiles.chunked(32).forEach { chunk ->
             coroutineContext.ensureActive()
             coroutineScope {
-                chunk.map { file -> async(Dispatchers.IO) { semaphore.withPermit { file to analyzeImage(file.uri) } } }.awaitAll().forEach { (file, analysis) ->
-                    val isScreenshot = screenshotName(file.displayName)
-                    if (analysis != null) {
-                        dao.updateAnalysis(file.uri, file.contentHash, analysis.hash, analysis.blurScore, isScreenshot)
-                        imageHashes += file.copy(perceptualHash = analysis.hash, blurScore = analysis.blurScore, isScreenshot = isScreenshot) to analysis.hash.toULong(16).toLong()
-                        if (analysis.blurScore < 0.10) blurred += file.copy(blurScore = analysis.blurScore)
+                chunk.map { file -> async(Dispatchers.IO) { semaphore.withPermit { file to if (ScanCachePolicy.analysisIsCurrent(file) && file.perceptualHash != null && file.blurScore != null) null else analyzeImage(file.uri) } } }.awaitAll().forEach { (file, analysis) ->
+                    val isScreenshot = if (analysis != null) screenshotName(file.displayName) else file.isScreenshot
+                    val perceptualHash = analysis?.hash ?: file.perceptualHash
+                    val blurScore = analysis?.blurScore ?: file.blurScore
+                    if (analysis != null) dao.updateAnalysis(file.uri, file.contentHash, analysis.hash, analysis.blurScore, isScreenshot, ScanCachePolicy.CURRENT_ANALYSIS_VERSION)
+                    if (perceptualHash != null && blurScore != null) {
+                        imageHashes += file.copy(perceptualHash = perceptualHash, blurScore = blurScore, isScreenshot = isScreenshot) to perceptualHash.toULong(16).toLong()
+                        if (blurScore < 0.10) blurred += file.copy(blurScore = blurScore)
                     }
                     if (isScreenshot) screenshots += file.copy(isScreenshot = true)
                 }
@@ -57,11 +59,14 @@ class DuplicateEngine(private val resolver: ContentResolver, private val dao: St
         MediaAnalysisReport(duplicateGroups, similarGroups, blurred, screenshots)
     }
 
-    private fun sha256(uri: String): String? = resolver.openInputStream(android.net.Uri.parse(uri))?.use { input ->
-        val digest = MessageDigest.getInstance("SHA-256")
-        val buffer = ByteArray(64 * 1024)
-        while (true) { val read = input.read(buffer); if (read <= 0) break; digest.update(buffer, 0, read) }
-        digest.digest().joinToString("") { "%02x".format(it) }
+    private fun sha256(uri: String): String? = try {
+        resolver.openInputStream(android.net.Uri.parse(uri))?.use { input ->
+            ContentHasher.sha256(input)
+        }
+    } catch (_: IOException) {
+        null
+    } catch (_: SecurityException) {
+        null
     }
 
     private data class ImageAnalysis(val hash: String, val blurScore: Double)

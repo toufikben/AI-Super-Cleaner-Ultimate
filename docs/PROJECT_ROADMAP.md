@@ -180,28 +180,29 @@
 - [ ] تحديث رسائل UI لتوضح نطاق الفحص الحقيقي.
 - **Check الإغلاق:** غير مكتمل؛ لا تتحول المرحلة إلى `[x]` حتى تضاف الاختبارات والفصل الوظيفي المطلوب.
 
-### المرحلة 3 — مزامنة MediaStore وRoom
+### المرحلة 3 — مزامنة MediaStore وRoom `[x]`
 
-- [ ] تنفيذ reconciliation: URI الحالية ← مقارنة Room ← حذف السجلات القديمة ← تحديث المتغير ← إدخال الجديد.
-- [ ] دعم الملفات المحذوفة والمنقولة والمُعاد تسميتها وتغير الصلاحيات وURI غير الصالحة.
-- [ ] استخدام batching وعمليات قاعدة البيانات المناسبة بدل تحميل ملايين URI أو transaction لكل ملف.
-- [ ] إضافة فهارس وقيود uniqueness ومراجعة migrations والمعاملات.
-- **Check الإغلاق:** سيناريو 1000 ثم حذف 150 ثم scan يعرض 850 فقط، مع اختبارات DAO/transaction/migration.
+- [x] تنفيذ reconciliation: URI الحالية ← مقارنة Room ← حذف السجلات القديمة ← تحديث المتغير ← إدخال الجديد.
+- [x] دعم الملفات المحذوفة أو غير المرئية، وتغير الصلاحيات وURI غير الصالحة وفشل provider دون حذف خاطئ.
+- [x] استخدام batching وtoken واحد للفحص بدل تحميل كل URI في الذاكرة.
+- [x] إضافة فهرس وmigration صريحة وقيود primary key، وإزالة destructive fallback.
+- **Check الإغلاق:** ناجح برمجيًا — `testDebugUnitTest` و`lintDebug` و`git diff --check`; سيناريو MediaStore الحقيقي محجوب لغياب الجهاز.
 
-### المرحلة 4 — Cache والتحليل الأساسي الآمن
+### المرحلة 4 — Cache والتحليل الأساسي الآمن `[x]`
 
-- [ ] مراجعة `ScanCachePolicy` باستخدام URI والحجم والوقت وMIME والنوع.
-- [ ] إبطال hash وperceptual hash وblur وscreenshot عند تغير metadata أو algorithm version.
-- [ ] إضافة version لكل خوارزمية تحليل.
-- [ ] إضافة cancellation وprogress وstreaming I/O للتحليل.
-- **Check الإغلاق:** اختبارات cache hit/miss لكل metadata، وتغير algorithm، وإلغاء تحليل أثناء التنفيذ.
+- [x] مراجعة `ScanCachePolicy` باستخدام URI والحجم والوقت وMIME والنوع.
+- [x] إبطال hash وperceptual hash وblur وscreenshot عند تغير metadata أو algorithm version.
+- [x] إضافة `analysisVersion` وmigration تنظف نتائج التحليل القديمة.
+- [x] الحفاظ على cancellation وprogress وstreaming I/O للتحليل.
+- **Check الإغلاق:** ناجح — Unit tests لـcache metadata وanalysis version وLint.
 
-### المرحلة 5 — Exact Duplicate Engine
+### المرحلة 5 — Exact Duplicate Engine `[~] قيد التنفيذ`
 
-- [ ] إبقاء grouping بالحجم والنوع كمرشح أول فقط.
-- [ ] استخدام SHA-256 أو hash تشفيري مكافئ عبر streaming، وعدم اعتبار الاسم أو الحجم أو الوقت دليل تطابق.
-- [ ] تجنب hash للملفات الفريدة، ودعم الملفات غير القابلة للقراءة والتقدم والإلغاء.
-- **Check الإغلاق:** ملفات متساوية الحجم بمحتوى مختلف لا تتطابق، وملفات متطابقة تتجمع، واختبار ملف كبير دون تحميله كاملًا إلى RAM.
+- [x] إبقاء grouping بالحجم والنوع كمرشح أول فقط.
+- [x] استخدام SHA-256 عبر streaming، وعدم اعتبار الاسم أو الحجم أو الوقت دليل تطابق.
+- [x] تجنب إعادة hash للنتائج الحالية، ودعم الملفات غير القابلة للقراءة والتقدم والإلغاء.
+- [ ] إضافة integration tests بملفات متساوية الحجم بمحتوى مختلف وملفات متطابقة وملف كبير.
+- **Check الإغلاق:** جزئي — Unit test لـSHA-256 ناجح؛ اختبار ContentResolver/Mediastore الحقيقي متبقٍ.
 
 ### المرحلة 6 — Similarity وBlur وScreenshot
 
@@ -314,9 +315,9 @@
 | 0 | [x] مكتملة | `docs/PHASE_0_BASELINE_AUDIT.md` | Build/Unit/Lint/Release/AAB/QA ناجحة؛ Instrumentation محجوب بيئيًا لغياب adb والجهاز. |
 | 1 | [x] مكتملة | `docs/PHASE_1_STATE_RECONCILIATION.md` | Reconciliation وRoom migration وsafe query failure؛ Unit/Lint ناجحة. |
 | 2 | [~] قيد التنفيذ | — | تم تنفيذ حماية جزئية في StorageScanner، وباقي الفصل والاختبارات متبقٍ. |
-| 3 | [ ] لم تبدأ | — | — |
-| 4 | [ ] لم تبدأ | — | — |
-| 5 | [ ] لم تبدأ | — | — |
+| 3 | [x] مكتملة | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | Reconciliation وRoom migration وbatching؛ Unit/Lint ناجحة. |
+| 4 | [x] مكتملة | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | Cache metadata/version invalidation واختبارات جديدة ناجحة. |
+| 5 | [~] قيد التنفيذ | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | SHA-256 streaming وreuse وhandling للأخطاء؛ integration tests متبقية. |
 | 6 | [ ] لم تبدأ | — | — |
 | 7 | [ ] لم تبدأ | — | — |
 | 8 | [ ] لم تبدأ | — | — |

@@ -21,7 +21,8 @@ data class FileMetadataEntity(
     val isScreenshot: Boolean = false,
     val durationMillis: Long = 0L,
     val relativePath: String? = null,
-    val lastSeenScanToken: Long = 0L
+    val lastSeenScanToken: Long = 0L,
+    val analysisVersion: Int = 0
 )
 
 @Entity(tableName = "scan_history")

@@ -10,8 +10,7 @@ class ScanCachePolicyTest {
     private val cached = FileMetadataEntity("content://media/1", "photo.jpg", "image/jpeg", 1024, 100, "image")
 
     @Test fun unchangedMetadataIsCacheHit() {
-        val current = cached.copy()
-        assertTrue(ScanCachePolicy.isUnchanged(cached, current))
+        assertTrue(ScanCachePolicy.isUnchanged(cached, cached.copy()))
     }
 
     @Test fun changedSizeIsCacheMiss() {
@@ -22,7 +21,19 @@ class ScanCachePolicyTest {
         assertFalse(ScanCachePolicy.isUnchanged(cached, cached.copy(modifiedEpochSeconds = 101)))
     }
 
+    @Test fun changedMediaTypeIsCacheMiss() {
+        assertFalse(ScanCachePolicy.isUnchanged(cached, cached.copy(mediaType = "video")))
+    }
+
     @Test fun missingCacheIsCacheMiss() {
         assertFalse(ScanCachePolicy.isUnchanged(null, cached))
+    }
+
+    @Test fun oldAnalysisVersionIsInvalidated() {
+        assertFalse(ScanCachePolicy.analysisIsCurrent(cached))
+    }
+
+    @Test fun currentAnalysisVersionIsReusable() {
+        assertTrue(ScanCachePolicy.analysisIsCurrent(cached.copy(analysisVersion = ScanCachePolicy.CURRENT_ANALYSIS_VERSION)))
     }
 }
