@@ -63,6 +63,13 @@ jobs:
       - name: Set up Android SDK
       
         uses: android-actions/setup-android@v3
+
+      - name: Install required Android SDK packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
         
 
 
@@ -160,7 +167,7 @@ jobs:
           
           jarsigner -verify -verbose -certs "$AAB" >/dev/null
           
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose "$APK"
           
           ls -lh "$AAB" "$APK"
           
@@ -205,7 +212,6 @@ jobs:
 # ANDROID_KEY_ALIAS
 
 # ANDROID_KEY_PASSWORD
-
 
 
 

@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: android-build-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,11 +23,20 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+          cache: gradle
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+      - name: Install required Android SDK packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v4
       - name: Run release QA checks
-        uses: gradle/actions/setup-gradle@v4
-      - run: QA_ALLOW_TEST_ADS=1 ./scripts/qa_release.sh
+        run: ./scripts/qa_release.sh
       - name: Build unsigned release artifact
-        uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease --no-daemon
+      - name: Verify release artifact
+        run: ./scripts/verify_release.sh app/build/outputs/apk/release/app-release-unsigned.apk

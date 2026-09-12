@@ -1,11 +1,8 @@
-# Keep Room generated implementations and model annotations.
--keep class androidx.room.** { *; }
+# Keep Room entities and model annotations used by generated database code.
 -keep @androidx.room.Entity class * { *; }
 
-# Keep Media3 Transformer callbacks and Google SDK callback types.
--keep class androidx.media3.** { *; }
--keep class com.google.android.gms.ads.** { *; }
--keep class com.google.android.ump.** { *; }
--keep class com.android.billingclient.** { *; }
+# Keep the application's Room database contract and generated implementation.
+-keep class com.aisupercleaner.ultimate.data.AppDatabase { *; }
+-keep class com.aisupercleaner.ultimate.data.AppDatabase_Impl { *; }
 
 -dontwarn javax.annotation.**
