@@ -4,7 +4,7 @@
 
 ## المرحلة 2 — StorageScanner وMediaStore
 
-تم فصل قائمة مصادر MediaStore في `MediaStoreInventory` لتكون مصدرًا واحدًا لنطاق الفحص، مع رسائل تقدم صريحة توضح أن المصدر هو Android MediaStore وأن النطاق Images/Videos/Audio. بقي دعم Documents وArchives وAPK عبر SAF خارج هذه الدفعة، كما بقي اختبار الصلاحيات الفعلي محجوبًا لغياب جهاز.
+تم فصل قائمة مصادر MediaStore في `MediaStoreInventory` لتكون مصدرًا واحدًا لنطاق الفحص، وأضيف مصدر `MediaStore.Files` للملفات غير الإعلامية مع تصنيف Documents وArchives وAPK وDownloads. يظل الوصول محصورًا بما يعرضه Android MediaStore تحت الصلاحيات الممنوحة؛ الملفات الخاصة أو غير المفهرسة تحتاج SAF ولا يُدّعى مسحها تلقائيًا. بقي اختبار الصلاحيات والرؤية الفعلية محجوبًا لغياب جهاز.
 
 ## المرحلة 5 — Exact Duplicate Engine
 

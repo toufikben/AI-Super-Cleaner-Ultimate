@@ -314,7 +314,7 @@
 |---|---|---|---|
 | 0 | [x] مكتملة | `docs/PHASE_0_BASELINE_AUDIT.md` | Build/Unit/Lint/Release/AAB/QA ناجحة؛ Instrumentation محجوب بيئيًا لغياب adb والجهاز. |
 | 1 | [x] مكتملة | `docs/PHASE_1_STATE_RECONCILIATION.md` | Reconciliation وRoom migration وsafe query failure؛ Unit/Lint ناجحة. |
-| 2 | [~] قيد التنفيذ | — | تم تنفيذ حماية جزئية في StorageScanner، وباقي الفصل والاختبارات متبقٍ. |
+| 2 | [~] قيد التنفيذ | `docs/GENERAL_FILE_SCAN_IMPLEMENTATION.md` | أضيف MediaStore.Files للملفات غير الإعلامية وتصنيف Documents/Archives/APK/Downloads؛ رؤية الملفات والصلاحيات تحتاج Instrumentation فعليًا. |
 | 3 | [x] مكتملة | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | Reconciliation وRoom migration وbatching؛ Unit/Lint ناجحة. |
 | 4 | [x] مكتملة | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | Cache metadata/version invalidation واختبارات جديدة ناجحة. |
 | 5 | [~] قيد التنفيذ | `docs/PHASE_5_6_IMPLEMENTATION.md` | Grouping وSHA-256 وunit tests؛ integration tests عبر ContentResolver متبقية. |

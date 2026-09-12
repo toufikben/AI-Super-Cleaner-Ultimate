@@ -43,7 +43,7 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                     MediaStore.MediaColumns.DURATION,
                     MediaStore.MediaColumns.RELATIVE_PATH
                 )
-                val cursor = resolver.query(collection, projection, null, null, null)
+                val cursor = resolver.query(collection, projection, source.selection, source.selectionArgs, null)
                     ?: throw IOException("MediaStore query returned no cursor for $mediaType")
                 cursor.use { cursor ->
                     val idIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
@@ -58,15 +58,19 @@ class StorageScanner(private val resolver: ContentResolver, private val dao: Sto
                         val id = cursor.getLong(idIndex)
                         val size = cursor.getLong(sizeIndex).coerceAtLeast(0L)
                         val uri = ContentUris.withAppendedId(collection, id).toString()
+                        val displayName = cursor.getString(nameIndex) ?: "Unnamed file"
+                        val mimeType = cursor.getString(mimeIndex) ?: "application/octet-stream"
+                        val relativePath = if (pathIndex >= 0 && !cursor.isNull(pathIndex)) cursor.getString(pathIndex) else null
+                        val resolvedMediaType = if (mediaType == "file") FileTypePolicy.classify(displayName, mimeType, relativePath) else mediaType
                         val metadata = FileMetadataEntity(
                             uri = uri,
-                            displayName = cursor.getString(nameIndex) ?: "Unnamed file",
-                            mimeType = cursor.getString(mimeIndex) ?: "application/octet-stream",
+                            displayName = displayName,
+                            mimeType = mimeType,
                             sizeBytes = size,
                             modifiedEpochSeconds = cursor.getLong(modifiedIndex),
-                            mediaType = mediaType,
+                            mediaType = resolvedMediaType,
                             durationMillis = if (durationIndex >= 0 && !cursor.isNull(durationIndex)) cursor.getLong(durationIndex) else 0L,
-                            relativePath = if (pathIndex >= 0 && !cursor.isNull(pathIndex)) cursor.getString(pathIndex) else null,
+                            relativePath = relativePath,
                             lastSeenScanToken = scanToken
                         )
                         val cached = dao.findFile(uri)
