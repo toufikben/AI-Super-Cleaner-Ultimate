@@ -6,7 +6,7 @@ Unit coverage now includes exact duplicate grouping versus same-size candidates,
 
 Instrumentation coverage now includes an in-memory Room database test for file upsert, scan-token reconciliation, analysis updates, scan history, Trash persistence/removal, and compression history. Additional device tests verify MediaStore collection availability and the absence of `MANAGE_EXTERNAL_STORAGE`. The phase 13 JPEG/EXIF device tests remain included in the instrumentation source set.
 
-The GitHub Actions Android workflow now contains a separate emulator-backed instrumentation job using API 35 Google APIs. It installs the emulator image and runs `connectedDebugAndroidTest` after the emulator boots.
+The GitHub Actions Android workflow now contains a separate emulator-backed instrumentation job using API 35 Google APIs. It installs the emulator image, boots the emulator, runs `connectedDebugAndroidTest`, and uploads logcat, Gradle instrumentation output, and Android test reports when the job fails.
 
 ## Host verification
 
@@ -20,6 +20,6 @@ The result was `BUILD SUCCESSFUL`; 38 unit tests completed successfully in the c
 
 ## Device/CI verification status
 
-The local environment has no connected Android device or running emulator, so `connectedDebugAndroidTest` has not been executed locally. The first GitHub Actions emulator run (`34689720559`) passed the build job but the instrumentation job failed before tests because the API 35 emulator did not report boot completion before the action timeout. The workflow was hardened with a 1200-second boot timeout, no snapshot restore, and software GPU mode; it must be rerun to distinguish emulator startup reliability from test failures. Database migration upgrade tests from historical Room versions, permission revoke/partial access, MediaStore insertion/trash/restore, Compose interaction, Billing, and large real-media performance remain device-level checks.
+The local environment has no connected Android device or running emulator, so `connectedDebugAndroidTest` has not been executed locally. The first GitHub Actions emulator run (`34689720559`) failed before tests because API 35 did not report boot completion before the action timeout. The second run (`34690515922`) booted successfully, but Gradle reported `Starting 0 tests`, then the instrumentation process crashed. No individual test result was produced. The workflow now collects logcat and AndroidTest reports so the next run can identify the runner or process failure.
 
-Accordingly, phase 15 remains **in progress** until the emulator CI job completes and any failures are corrected. No claim is made that device tests passed before that run.
+Database migration upgrade tests from historical Room versions, permission revoke/partial access, MediaStore insertion/trash/restore, Compose interaction, Billing, and large real-media performance remain device-level checks. Phase 15 remains **in progress** until the emulator diagnostics identify and resolve the instrumentation crash or establish a documented environment limitation.

@@ -327,7 +327,7 @@
 | 12 | [~] قيد التنفيذ | `docs/PHASE_12_REVALIDATION_2026-09-12.md` | Consent gating وBilling reconnect/entitlement تحسنت؛ Gradle/device/Console verification متبقية. |
 | 13 | [~] قيد التنفيذ | `docs/PHASE_13_COMPRESSION_REVALIDATION_2026-09-12.md` | Structured errors وEXIF وcodec policies واختبارات أضيفت؛ Gradle/device codec verification متبقية. |
 | 14 | [~] قيد التنفيذ | `docs/PHASE_14_QA_REPORT.md` | Clean/Unit/Lint/Debug/Release-R8 وartifact checks وGitHub Actions run `34689216133` نجحت؛ signed AAB وInstrumentation متبقية. |
-| 15 | [~] قيد التنفيذ | `docs/PHASE_15_TEST_SUITE_REPORT.md` | Unit وcompileDebugAndroidTestKotlin وDatabase/MediaStore test sources أضيفت وhost checks نجحت؛ emulator CI وmigration/device edge cases متبقية. |
+| 15 | [~] قيد التنفيذ | `docs/PHASE_15_TEST_SUITE_REPORT.md` | Unit وcompileDebugAndroidTestKotlin وDatabase/MediaStore test sources أضيفت وhost checks نجحت؛ CI emulator أقلع لكن instrumentation بدأ 0 tests ثم انهار، وأضيف جمع diagnostics قبل إعادة المحاولة. |
 | 16 | [ ] لم تبدأ | — | — |
 | 17 | [ ] لم تبدأ | — | — |
 | 18 | [ ] لم تبدأ | — | — |
