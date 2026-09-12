@@ -132,7 +132,7 @@ fun CleanerApp() {
     val navItems = listOf(NavItem("Home", Icons.Default.Home), NavItem("Clean", Icons.Default.AutoAwesome), NavItem("Analyze", Icons.Default.PieChart), NavItem("Tools", Icons.Default.Build), NavItem("Settings", Icons.Default.Settings))
     Scaffold(containerColor = MaterialTheme.colorScheme.background, bottomBar = { NavigationBar(containerColor = MaterialTheme.colorScheme.surface) { navItems.forEachIndexed { index, item -> NavigationBarItem(selected = selected == index, onClick = { selected = index }, icon = { Icon(item.icon, item.label) }, label = { Text(item.label, fontSize = 11.sp) }) } } }) { padding ->
         when (selected) {
-            0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
+            0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, database, cleanupManager, onInvalidated = { mediaReport = null; report = null }, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
             1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, isPremium, onInvalidated = { mediaReport = null; report = null }, onAdvancedScan = { showPermissionEducation = true })
             2 -> AnalyzeScreen(Modifier.padding(padding), database, cleanupManager, onInvalidated = { mediaReport = null; report = null })
             3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager, onInvalidated = { mediaReport = null; report = null })
@@ -147,27 +147,54 @@ fun CleanerApp() {
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount: Int, videoCount: Int, audioCount: Int, freeBytes: Long, totalStorageBytes: Long, report: SmartCleanupReport?, mediaReport: MediaAnalysisReport?, progress: ScanProgress?, isScanning: Boolean, onSmartScan: () -> Unit, onQuickClean: () -> Unit) {
+fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount: Int, videoCount: Int, audioCount: Int, freeBytes: Long, totalStorageBytes: Long, report: SmartCleanupReport?, mediaReport: MediaAnalysisReport?, progress: ScanProgress?, isScanning: Boolean, database: AppDatabase, cleanupManager: CleanupManager, onInvalidated: () -> Unit, onSmartScan: () -> Unit, onQuickClean: () -> Unit) {
     val findings = listOf(
         Finding("Photos", "$imageCount items · From MediaStore", "—", Icons.Default.PhotoLibrary, SoftMint),
         Finding("Videos", "$videoCount items · From MediaStore", "—", Icons.Default.VideoLibrary, SoftBlue),
         Finding("Audio", "$audioCount items · From MediaStore", "—", Icons.Default.Audiotrack, SoftLavender)
     )
-    LazyColumn(modifier.fillMaxSize().padding(horizontal = 20.dp), contentPadding = PaddingValues(top = 24.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        item { Header() }
-        item { ScoreCard(fileCount, totalBytes, freeBytes, totalStorageBytes, report) }
-        if (report != null) item { Text("Storage pressure ${report.health.pressurePercent}% · Review potential ${formatBytes(report.health.cleanupPotentialBytes)} · Recommendations are review-only", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-        item { PrimaryActions(onSmartScan, onQuickClean, isScanning) }
-        if (progress != null) item { ScanProgressCard(progress) }
-        if (report != null) {
-            item { ExplainableSummary(report) }
-            items(report.recommendations) { RecommendationCard(it) }
+    var indexedFiles by remember { mutableStateOf(emptyList<com.aisupercleaner.ultimate.data.FileMetadataEntity>()) }
+    var selectedUris by remember { mutableStateOf(setOf<String>()) }
+    var confirm by remember { mutableStateOf(false) }
+    var message by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(report) { indexedFiles = if (report == null) emptyList() else database.storageDao().allFiles() }
+    val selectedItems = indexedFiles.filter { it.uri in selectedUris }
+    Column(modifier.fillMaxSize()) {
+        LazyColumn(Modifier.weight(1f).padding(horizontal = 20.dp), contentPadding = PaddingValues(top = 24.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            item { Header() }
+            item { ScoreCard(fileCount, totalBytes, freeBytes, totalStorageBytes, report) }
+            if (report != null) item { Text("Storage pressure ${report.health.pressurePercent}% · Review potential ${formatBytes(report.health.cleanupPotentialBytes)} · Select recommendations for review", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            item { PrimaryActions(onSmartScan, onQuickClean, isScanning) }
+            if (progress != null) item { ScanProgressCard(progress) }
+            if (report != null) {
+                item { ExplainableSummary(report) }
+                items(report.recommendations) { recommendation ->
+                    val candidates = indexedFiles.filter { com.aisupercleaner.ultimate.data.RecommendationCandidatePolicy.matches(recommendation.category, it) }
+                    RecommendationCard(recommendation, candidates, selectedUris) { uri, checked -> selectedUris = if (checked) selectedUris + uri else selectedUris - uri }
+                }
+            }
+            if (mediaReport != null) item { MediaAnalysisSummary(mediaReport) }
+            item { SectionTitle("On-device inventory", "Live counts from Android MediaStore") }
+            items(findings) { FindingCard(it) }
+            item { TrustNote() }
         }
-        if (mediaReport != null) item { MediaAnalysisSummary(mediaReport) }
-        item { SectionTitle("On-device inventory", "Live counts from Android MediaStore") }
-        items(findings) { FindingCard(it) }
-        item { TrustNote() }
+        if (selectedItems.isNotEmpty()) {
+            Text("${selectedItems.size} recommendation files selected · ${formatBytes(selectedItems.sumOf { it.sizeBytes })}", fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
+            Button(onClick = { confirm = true }, modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp), shape = RoundedCornerShape(14.dp)) { Icon(Icons.Default.DeleteSweep, null); Spacer(Modifier.width(8.dp)); Text("Move selected to Trash") }
+        }
     }
+    if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("Move recommendation files to Trash?") }, text = { Text("${selectedItems.size} selected files (${formatBytes(selectedItems.sumOf { it.sizeBytes })}) will be revalidated before the safe Trash operation.") }, confirmButton = { Button(onClick = { confirm = false; scope.launch { when (val result = cleanupManager.moveToTrash(selectedItems)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> { message = "${result.itemsMoved} items moved to Trash."; selectedUris = emptySet() }; is com.aisupercleaner.ultimate.data.CleanupResult.PartialSuccess -> { message = result.message; selectedUris = emptySet() }; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> message = result.message }; onInvalidated() } }) { Text("Move to Trash") } }, dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancel") } })
+    message?.let { AlertDialog(onDismissRequest = { message = null }, confirmButton = { TextButton(onClick = { message = null }) { Text("OK") } }, title = { Text("Recommendation cleanup status") }, text = { Text(it) }) }
+}
+
+@Composable private fun RecommendationCard(recommendation: com.aisupercleaner.ultimate.data.Recommendation, candidates: List<com.aisupercleaner.ultimate.data.FileMetadataEntity>, selectedUris: Set<String>, onSelectedChange: (String, Boolean) -> Unit) {
+    Card(shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { Column(Modifier.weight(1f)) { Text(recommendation.category, fontWeight = FontWeight.SemiBold); Text("${recommendation.fileCount} files · ${recommendation.confidencePercent}% confidence", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.secondary) }; Text(formatBytes(recommendation.estimatedBytes), fontWeight = FontWeight.Bold) }
+        Text(recommendation.reason, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (candidates.isEmpty()) Text("No current file rows match this recommendation. Run Smart Scan again.", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+        candidates.take(50).forEach { file -> Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(checked = file.uri in selectedUris, onCheckedChange = { onSelectedChange(file.uri, it) }); Column { Text(file.displayName, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold); Text(formatBytes(file.sizeBytes), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) } } }
+    } }
 }
 
 @Composable private fun Header() { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) { Column { Text("Good afternoon", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.secondary); Text("Your storage, simplified.", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold) }; IconButton(onClick = {}) { Icon(Icons.Default.NotificationsNone, "Notifications") } } }
@@ -182,7 +209,6 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
 
 @Composable private fun ScanProgressCard(progress: ScanProgress) { Card(colors = CardDefaults.cardColors(containerColor = SoftBlue), shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { Row(verticalAlignment = Alignment.CenterVertically) { CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp); Spacer(Modifier.width(10.dp)); Text(progress.stage, fontWeight = FontWeight.SemiBold) }; Text("${progress.scannedFiles} files indexed · ${formatBytes(progress.discoveredBytes)}", style = MaterialTheme.typography.bodySmall); if (progress.cacheHits > 0) Text("${progress.cacheHits} unchanged files reused from cache", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary) } } }
 @Composable private fun ExplainableSummary(report: SmartCleanupReport) { Card(colors = CardDefaults.cardColors(containerColor = SoftMint), shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) { Row(verticalAlignment = Alignment.CenterVertically) { Icon(Icons.Default.AutoAwesome, null, tint = ScoreAccent); Spacer(Modifier.width(8.dp)); Text("Explainable analysis", fontWeight = FontWeight.SemiBold) }; Text(if (report.potentialReviewBytes > 0) "Potentially recoverable for review: ${formatBytes(report.potentialReviewBytes)}" else "No high-confidence review category found", fontWeight = FontWeight.Bold); Text(report.explanation, style = MaterialTheme.typography.bodySmall) } } }
-@Composable private fun RecommendationCard(recommendation: com.aisupercleaner.ultimate.data.Recommendation) { Card(shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { Text(recommendation.category, fontWeight = FontWeight.SemiBold); Text(formatBytes(recommendation.estimatedBytes), fontWeight = FontWeight.Bold) }; Text("${recommendation.fileCount} files · ${recommendation.confidencePercent}% confidence", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.secondary); Text(recommendation.reason, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) } } }
 @Composable private fun MediaAnalysisSummary(report: MediaAnalysisReport) { Card(colors = CardDefaults.cardColors(containerColor = SoftLavender), shape = RoundedCornerShape(18.dp)) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) { Row(verticalAlignment = Alignment.CenterVertically) { Icon(Icons.Default.PhotoFilter, null, tint = MaterialTheme.colorScheme.secondary); Spacer(Modifier.width(8.dp)); Text("Media analysis", fontWeight = FontWeight.SemiBold) }; Text("${report.duplicateGroups.size} exact duplicate groups · ${report.similarGroups.size} similar groups", fontWeight = FontWeight.Bold); Text("${report.blurredFiles.size} potentially blurry photos · ${report.screenshotFiles.size} screenshots", style = MaterialTheme.typography.bodySmall); Text("Groups are shown for review. Nothing is selected or deleted automatically.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) } } }
 @Composable private fun AnalyzeScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, onInvalidated: () -> Unit) {
     val largeFiles by database.storageDao().observeLargeFiles(500L * 1024L * 1024L).collectAsStateWithLifecycle(initialValue = emptyList())
