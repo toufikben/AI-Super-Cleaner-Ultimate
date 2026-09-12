@@ -6,6 +6,8 @@ import android.provider.MediaStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.io.IOException
 import kotlin.coroutines.coroutineContext
 
@@ -13,7 +15,11 @@ import kotlin.coroutines.coroutineContext
 data class ScanResult(val filesScanned: Int, val totalBytes: Long, val cacheHits: Int, val cacheMisses: Int, val staleFilesRemoved: Int = 0)
 
 class StorageScanner(private val resolver: ContentResolver, private val dao: StorageDao) {
-    suspend fun scan(onProgress: (ScanProgress) -> Unit): ScanResult = withContext(Dispatchers.IO) {
+    private val scanMutex = Mutex()
+
+    suspend fun scan(onProgress: (ScanProgress) -> Unit): ScanResult = scanMutex.withLock { scanInternal(onProgress) }
+
+    private suspend fun scanInternal(onProgress: (ScanProgress) -> Unit): ScanResult = withContext(Dispatchers.IO) {
         val startedAt = System.currentTimeMillis()
         val scanToken = startedAt
         var totalFiles = 0

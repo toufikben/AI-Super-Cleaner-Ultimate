@@ -214,30 +214,29 @@
 - [x] منع أي حذف تلقائي بناءً على similarity أو blur أو screenshot.
 - **Check الإغلاق:** جزئي — unit tests للتصنيف والتجميع ناجحة؛ اختبارات الصور الحقيقية resize/compression/crop/night/portrait متبقية.
 
-### المرحلة 7 — Recommendation وStorage Health
+### المرحلة 7 — Recommendation وStorage Health `[~] قيد التنفيذ`
 
-- [ ] فصل recommendation score عن classification confidence عن storage impact وsafety level.
-- [ ] إزالة أرقام الثقة غير المثبتة أو تسميتها بوضوح كـheuristic.
-- [ ] عدم اعتبار large/old/screenshot وحدها junk.
-- [ ] فصل Storage Pressure عن Cleanup Potential وDuplicates وSafety Confidence، أو شرح أي score موحد حسابيًا.
-- **Check الإغلاق:** اختبارات الحدود والقيم، وUI يشرح سبب كل توصية ولا يدعي AI certainty.
+- [x] فصل recommendation score عن classification confidence عن storage impact وsafety level.
+- [x] إزالة ادعاء أن confidence دليل حذف، وتسميتها review-only/heuristic.
+- [x] عدم اعتبار large/old/screenshot وحدها junk.
+- [x] فصل Storage Pressure عن Cleanup Potential وHealth Score.
+- [~] Check جزئي ناجح — Unit tests للحسابات؛ عرض كل الحقول في UI ومراجعة جهازية متبقيان.
 
-### المرحلة 8 — Cleanup Safety وTrash Reconciliation
+### المرحلة 8 — Cleanup Safety وTrash Reconciliation `[~] قيد التنفيذ`
 
-- [ ] إضافة نموذج candidate يحتوي URI والاسم والحجم والسبب والفئة والثقة والمخاطر واختيار المستخدم ونمط الحذف.
-- [ ] التحقق من وجود URI وmetadata قبل التنفيذ، والتعامل مع الملف المتغير أو المفقود.
-- [ ] جعل Trash/recoverable deletion هو المسار الافتراضي، ومنع permanent delete التلقائي.
-- [ ] تحسين move/restore/deletePermanently مع partial success وprovider/permission/storage errors.
-- [ ] مزامنة Room Trash مع حالة MediaStore الفعلية وإزالة السجلات القديمة.
-- **Check الإغلاق:** اختيار 15 ينتج 12 moved و2 gone و1 failed بشكل دقيق، ولا تظهر رسالة نجاح كلية خاطئة.
+- [x] التحقق من URI لكل عنصر ومعالجة الملف المتغير أو المفقود وأخطاء الصلاحيات/provider.
+- [x] جعل Trash/recoverable deletion هو المسار الافتراضي، ومنع permanent delete التلقائي.
+- [x] إضافة `PartialSuccess` وإظهارها في UI بدل رسالة نجاح كلية.
+- [x] حماية Room Trash: لا يزال السجل حتى تنجح العملية، ومحاولة restore عند فشل تسجيل Trash.
+- [~] Check جزئي — Unit test للنتيجة الجزئية؛ سيناريو 15 عنصرًا يحتاج integration test ميدانيًا.
 
-### المرحلة 9 — Coroutines وPerformance
+### المرحلة 9 — Coroutines وPerformance `[~] قيد التنفيذ`
 
-- [ ] منع blocking I/O على Main، ودعم structured concurrency وcancellation وlifecycle-safe jobs.
-- [ ] منع double scan وdouble cleanup، وضبط race بين scan/analysis/cleanup/UI.
-- [ ] إضافة batching وbounded concurrency وpaging/downsampling وعدم إنشاء قوائم ضخمة.
-- [ ] اختبار 1k و10k و50k حيث تسمح البيئة، مع قياس الذاكرة والوقت.
-- **Check الإغلاق:** اختبار الضغط والإلغاء والنقر المزدوج، وعدم تجمد Compose أو ارتفاع الذاكرة غير المنضبط.
+- [x] إبقاء I/O على Dispatchers.IO ودعم structured cancellation و`ensureActive`.
+- [x] منع double scan عبر Mutex داخل StorageScanner، مع bounded concurrency وchunking للتحليل.
+- [x] استخدام batching وdownsampling وعدم تحميل الصور كاملة للتحليل.
+- [ ] اختبار 1k و10k و50k مع قياس الذاكرة والوقت على جهاز.
+- **Check الإغلاق:** جزئي — compile/Unit/Lint ناجحة؛ اختبارات الضغط والذاكرة والجهاز متبقية.
 
 ### المرحلة 10 — Compose/UI Architecture وUX
 
@@ -320,9 +319,9 @@
 | 4 | [x] مكتملة | `docs/PHASE_2_3_4_IMPLEMENTATION.md` | Cache metadata/version invalidation واختبارات جديدة ناجحة. |
 | 5 | [~] قيد التنفيذ | `docs/PHASE_5_6_IMPLEMENTATION.md` | Grouping وSHA-256 وunit tests؛ integration tests عبر ContentResolver متبقية. |
 | 6 | [~] قيد التنفيذ | `docs/PHASE_5_6_IMPLEMENTATION.md` | تصنيف blur/screenshot وفصل exact عن similar؛ اختبارات الصور الحقيقية وتحسين similarity متبقية. |
-| 7 | [ ] لم تبدأ | — | — |
-| 8 | [ ] لم تبدأ | — | — |
-| 9 | [ ] لم تبدأ | — | — |
+| 7 | [~] قيد التنفيذ | `docs/PHASE_7_8_9_IMPLEMENTATION.md` | فصل الدرجات وStorageHealth واختبارات الحدود؛ UI/device review متبقي. |
+| 8 | [~] قيد التنفيذ | `docs/PHASE_7_8_9_IMPLEMENTATION.md` | PartialSuccess وTrash safety وأخطاء URI؛ integration scenario متبقٍ. |
+| 9 | [~] قيد التنفيذ | `docs/PHASE_7_8_9_IMPLEMENTATION.md` | Mutex وcancellation وbounded work؛ اختبارات الضغط والذاكرة متبقية. |
 | 10 | [ ] لم تبدأ | — | — |
 | 11 | [ ] لم تبدأ | — | — |
 | 12 | [ ] لم تبدأ | — | — |
