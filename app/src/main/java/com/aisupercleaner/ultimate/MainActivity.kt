@@ -97,7 +97,9 @@ fun CleanerApp() {
     val scanProgress = (scanState as? ScanUiState.Scanning)?.progress
     var report by remember { mutableStateOf<SmartCleanupReport?>(null) }
     var mediaReport by remember { mutableStateOf<MediaAnalysisReport?>(null) }
+    var mediaReportFileCount by remember { mutableIntStateOf(0) }
     LaunchedEffect(fileCount, totalBytes, isScanning) {
+        if (!isScanning && mediaReport != null && mediaReportFileCount != fileCount) mediaReport = null
         if (!isScanning && fileCount > 0) {
             report = recommendationEngine.analyze(totalStorageBytes - freeBytes, freeBytes)
         }
@@ -109,6 +111,7 @@ fun CleanerApp() {
                 scanner.scan { progress -> scanState = ScanUiState.Scanning(progress) }
                 scanState = ScanUiState.Analyzing
                 mediaReport = duplicateEngine.analyze()
+                mediaReportFileCount = database.storageDao().allFiles().size
                 scanState = ScanUiState.Success("Scan complete. Results are saved locally for review.")
                 permissionMessage = (scanState as ScanUiState.Success).message
             } catch (_: SecurityException) {
@@ -130,9 +133,9 @@ fun CleanerApp() {
     Scaffold(containerColor = MaterialTheme.colorScheme.background, bottomBar = { NavigationBar(containerColor = MaterialTheme.colorScheme.surface) { navItems.forEachIndexed { index, item -> NavigationBarItem(selected = selected == index, onClick = { selected = index }, icon = { Icon(item.icon, item.label) }, label = { Text(item.label, fontSize = 11.sp) }) } } }) { padding ->
         when (selected) {
             0 -> HomeScreen(Modifier.padding(padding), fileCount, totalBytes, imageCount, videoCount, audioCount, freeBytes, totalStorageBytes, report, mediaReport, scanProgress, isScanning, onSmartScan = { showPermissionEducation = true }, onQuickClean = { selected = 1 })
-            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, isPremium, onAdvancedScan = { showPermissionEducation = true })
+            1 -> CleanScreen(Modifier.padding(padding), database, cleanupManager, adManager, isPremium, onInvalidated = { mediaReport = null; report = null }, onAdvancedScan = { showPermissionEducation = true })
             2 -> AnalyzeScreen(Modifier.padding(padding), database)
-            3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager)
+            3 -> ToolsScreen(Modifier.padding(padding), database, cleanupManager, compressionManager, onInvalidated = { mediaReport = null; report = null })
             4 -> Column(Modifier.padding(padding)) { PremiumPaywall(billingManager, isPremium); PrivacyOptionsEntry(consentManager); PrivacyCenterScreen(Modifier.weight(1f), preferences) }
             else -> PlaceholderScreen(navItems[selected].label, Modifier.padding(padding))
         }
@@ -195,7 +198,7 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
     }
 }
 @Composable private fun AnalysisFileRow(item: com.aisupercleaner.ultimate.data.FileMetadataEntity, label: String) { Card(shape = RoundedCornerShape(16.dp)) { Row(Modifier.fillMaxWidth().padding(14.dp), verticalAlignment = Alignment.CenterVertically) { Icon(if (item.mediaType == "video") Icons.Default.VideoFile else if (item.mediaType == "audio") Icons.Default.AudioFile else Icons.Default.InsertDriveFile, null, tint = MaterialTheme.colorScheme.secondary); Spacer(Modifier.width(10.dp)); Column(Modifier.weight(1f)) { Text(item.displayName, fontWeight = FontWeight.SemiBold); Text("$label · ${formatBytes(item.sizeBytes)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant); if (item.durationMillis > 0) Text("Duration ${item.durationMillis / 1000}s", style = MaterialTheme.typography.labelSmall) } } } }
-@Composable private fun ToolsScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, compressionManager: CompressionManager) {
+@Composable private fun ToolsScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, compressionManager: CompressionManager, onInvalidated: () -> Unit) {
     val compressionHistory by database.storageDao().observeCompressionHistory().collectAsStateWithLifecycle(initialValue = emptyList())
     var selectedVideo by remember { mutableStateOf<android.net.Uri?>(null) }; var selectedImage by remember { mutableStateOf<android.net.Uri?>(null) }; var isCompressing by remember { mutableStateOf(false) }; var resultMessage by remember { mutableStateOf<String?>(null) }; val scope = rememberCoroutineScope()
     val picker = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.GetContent()) { uri -> selectedVideo = uri }
@@ -210,11 +213,11 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
             if (compressionHistory.isEmpty()) item { EmptyState("No compression history", "Completed and failed attempts will be recorded locally.") }
             items(compressionHistory) { item -> Card(shape = RoundedCornerShape(16.dp)) { Row(Modifier.fillMaxWidth().padding(14.dp), verticalAlignment = Alignment.CenterVertically) { Icon(if (item.mediaType == "video") Icons.Default.VideoFile else Icons.Default.Image, null, tint = MaterialTheme.colorScheme.secondary); Spacer(Modifier.width(10.dp)); Column(Modifier.weight(1f)) { Text("${item.mediaType.replaceFirstChar { it.uppercase() }} · ${item.preset}", fontWeight = FontWeight.SemiBold); Text("${formatBytes(item.originalBytes)} → ${formatBytes(item.outputBytes)} · ${item.status}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) } } } }
         }
-        TrashScreen(Modifier.weight(1f), database, cleanupManager)
+        TrashScreen(Modifier.weight(1f), database, cleanupManager, onInvalidated)
     }
     resultMessage?.let { AlertDialog(onDismissRequest = { resultMessage = null }, confirmButton = { TextButton(onClick = { resultMessage = null }) { Text("OK") } }, title = { Text("Compression status") }, text = { Text(it) }) }
 }
-@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, adManager: AdManager, isPremium: Boolean, onAdvancedScan: () -> Unit) {
+@Composable private fun CleanScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, adManager: AdManager, isPremium: Boolean, onInvalidated: () -> Unit, onAdvancedScan: () -> Unit) {
     val candidates by database.storageDao().observeDuplicateCandidates().collectAsStateWithLifecycle(initialValue = emptyList())
     val scope = rememberCoroutineScope(); var selected by remember { mutableStateOf(setOf<String>()) }; var confirm by remember { mutableStateOf(false) }; var message by remember { mutableStateOf<String?>(null) }
     val selectedItems = candidates.filter { it.uri in selected }; val activity = LocalActivity.current
@@ -230,18 +233,18 @@ fun HomeScreen(modifier: Modifier, fileCount: Int, totalBytes: Long, imageCount:
         }
         item { Button(onClick = { confirm = true }, enabled = selectedItems.isNotEmpty(), modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) { Icon(Icons.Default.DeleteSweep, null); Spacer(Modifier.width(8.dp)); Text("Move selected to Trash") } }
     }
-    if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("Move to Trash?") }, text = { Text("You selected ${selectedItems.size} files (${formatBytes(selectedItems.sumOf { it.sizeBytes })}). Android will retain recoverable items where supported. Nothing will be permanently deleted now.") }, confirmButton = { Button(onClick = { confirm = false; scope.launch { when (val result = cleanupManager.moveToTrash(selectedItems)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> { message = "${result.itemsMoved} items moved to Trash."; selected = emptySet(); activity?.let { adManager.showInterstitialAfterCleanup(it, isPremium) {} } }; is com.aisupercleaner.ultimate.data.CleanupResult.PartialSuccess -> { message = result.message; selected = emptySet() }; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> message = result.message } } }) { Text("Move to Trash") } }, dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancel") } })
+    if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("Move to Trash?") }, text = { Text("You selected ${selectedItems.size} files (${formatBytes(selectedItems.sumOf { it.sizeBytes })}). Android will retain recoverable items where supported. Nothing will be permanently deleted now.") }, confirmButton = { Button(onClick = { confirm = false; scope.launch { when (val result = cleanupManager.moveToTrash(selectedItems)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> { message = "${result.itemsMoved} items moved to Trash."; selected = emptySet(); onInvalidated(); activity?.let { adManager.showInterstitialAfterCleanup(it, isPremium) {} } }; is com.aisupercleaner.ultimate.data.CleanupResult.PartialSuccess -> { message = result.message; selected = emptySet(); onInvalidated() }; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> { message = result.message; onInvalidated() } } } }) { Text("Move to Trash") } }, dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancel") } })
     message?.let { AlertDialog(onDismissRequest = { message = null }, confirmButton = { TextButton(onClick = { message = null }) { Text("OK") } }, title = { Text("Clean status") }, text = { Text(it) }) }
 }
 
-@Composable private fun TrashScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager) {
+@Composable private fun TrashScreen(modifier: Modifier, database: AppDatabase, cleanupManager: CleanupManager, onInvalidated: () -> Unit) {
     val itemsInTrash by database.storageDao().observeTrash().collectAsStateWithLifecycle(initialValue = emptyList()); val scope = rememberCoroutineScope(); var permanentTarget by remember { mutableStateOf<com.aisupercleaner.ultimate.data.TrashItemEntity?>(null) }; var message by remember { mutableStateOf<String?>(null) }
     LazyColumn(modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 24.dp)) {
         item { Text("Trash", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold); Text("Restore items or permanently delete them after review.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         if (itemsInTrash.isEmpty()) item { EmptyState("Trash is empty", "Items moved through the safe workflow will appear here.") }
-        items(itemsInTrash) { item -> Card(shape = RoundedCornerShape(16.dp)) { Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { Column(Modifier.weight(1f)) { Text(item.displayName, fontWeight = FontWeight.SemiBold); Text(formatBytes(item.sizeBytes), style = MaterialTheme.typography.bodySmall); Text("About ${TrashPolicy.remainingDays(item.trashedAtEpochMillis, System.currentTimeMillis())} days remaining", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary) }; TextButton(onClick = { scope.launch { when (val result = cleanupManager.restore(item)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> message = "Item restored."; is com.aisupercleaner.ultimate.data.CleanupResult.PartialSuccess -> message = result.message; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> message = result.message } } }) { Text("Restore") } }; OutlinedButton(onClick = { permanentTarget = item }, modifier = Modifier.fillMaxWidth()) { Text("Delete permanently") } } } }
+        items(itemsInTrash) { item -> Card(shape = RoundedCornerShape(16.dp)) { Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { Column(Modifier.weight(1f)) { Text(item.displayName, fontWeight = FontWeight.SemiBold); Text(formatBytes(item.sizeBytes), style = MaterialTheme.typography.bodySmall); Text("About ${TrashPolicy.remainingDays(item.trashedAtEpochMillis, System.currentTimeMillis())} days remaining", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary) }; TextButton(onClick = { scope.launch { when (val result = cleanupManager.restore(item)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> { message = "Item restored."; onInvalidated() }; is com.aisupercleaner.ultimate.data.CleanupResult.PartialSuccess -> { message = result.message; onInvalidated() }; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> { message = result.message; onInvalidated() } } } }) { Text("Restore") } }; OutlinedButton(onClick = { permanentTarget = item }, modifier = Modifier.fillMaxWidth()) { Text("Delete permanently") } } } }
     }
-    permanentTarget?.let { target -> AlertDialog(onDismissRequest = { permanentTarget = null }, title = { Text("Delete permanently?") }, text = { Text("This action cannot be undone. Delete ${target.displayName} permanently?") }, confirmButton = { Button(onClick = { permanentTarget = null; scope.launch { when (val result = cleanupManager.deletePermanently(target)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> message = "Item deleted permanently."; is com.aisupercleaner.ultimate.data.CleanupResult.PartialSuccess -> message = result.message; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> message = result.message } } }) { Text("Delete permanently") } }, dismissButton = { TextButton(onClick = { permanentTarget = null }) { Text("Cancel") } }) }
+    permanentTarget?.let { target -> AlertDialog(onDismissRequest = { permanentTarget = null }, title = { Text("Delete permanently?") }, text = { Text("This action cannot be undone. Delete ${target.displayName} permanently?") }, confirmButton = { Button(onClick = { permanentTarget = null; scope.launch { when (val result = cleanupManager.deletePermanently(target)) { is com.aisupercleaner.ultimate.data.CleanupResult.Success -> { message = "Item deleted permanently."; onInvalidated() }; is com.aisupercleaner.ultimate.data.CleanupResult.PartialSuccess -> { message = result.message; onInvalidated() }; is com.aisupercleaner.ultimate.data.CleanupResult.Failure -> { message = result.message; onInvalidated() } } } }) { Text("Delete permanently") } }, dismissButton = { TextButton(onClick = { permanentTarget = null }) { Text("Cancel") } }) }
     message?.let { AlertDialog(onDismissRequest = { message = null }, confirmButton = { TextButton(onClick = { message = null }) { Text("OK") } }, title = { Text("Trash status") }, text = { Text(it) }) }
 }
 
