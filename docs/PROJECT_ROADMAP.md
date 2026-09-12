@@ -13,7 +13,7 @@
 
 
 
-المشروع في **Release Candidate قابل للبناء**. الكود يطابق منتجات Billing المطلوبة، لكن إعداد منتجات Play Console وتوقيع AAB واختبارات الشراء ما زالت تحتاج تحققاً نهائياً.
+المشروع في **Release Candidate قابل للبناء**. تم إنشاء منتج الشراء مدى الحياة في Play Console، وتبقى تهيئته النهائية واختبار الشراء عبر حساب License Tester وتوقيع AAB ورفع نسخة Internal Testing.
 
 
 
@@ -81,13 +81,16 @@
 - انتظار قبول AdMob account/app ومراجعة Policy Center.
 - اختيار/إنشاء Google Play developer app.
 - إنشاء تطبيق Play Console بالـpackage name `com.aisupercleaner.ultimate`.
-- إنشاء Billing products بالمعرفين `premium_monthly` و`premium_lifetime`.
+- تأكيد/تفعيل منتج الاشتراك `premium_monthly`.
+- إنشاء منتج الشراء مدى الحياة `premium_lifetime` في Play Console (تم الإنشاء؛ يلزم تأكيد السعر والتفعيل).
 - إعداد أسعار وبلدان المنتجات.
-- إضافة License Testers.
+- إضافة License Tester بحساب Google مخصص للاختبار.
 - إعداد Internal Testing track.
 - إنشاء AAB موقع باستخدام Secrets آمنة.
 - تشغيل Instrumentation على جهاز أو Emulator.
 - تنفيذ Billing/UMP/Ads tests على نسخة Internal.
+- اختبار شراء `premium_lifetime` واستعادة المشتريات بحساب License Tester.
+- لا يوجد حالياً نظام حسابات أو تسجيل دخول داخل التطبيق؛ إنشاء حساب اختبار للتطبيق يتطلب أولاً إضافة Backend/Auth، لذلك لا يُنشأ حساب وهمي في هذه المرحلة.
 - إدخال Data Safety النهائي في Play Console.
 
 
@@ -140,5 +143,7 @@
 - تم تحديث التطبيق إلى Google Play Billing Library 8.0.0 وtarget/compile SDK 36.
 - الكود يستخدم `premium_monthly` للاشتراك و`premium_lifetime` للشراء لمرة واحدة.
 - تم إنشاء سجل الاشتراك `premium_monthly` في Play Console؛ يلزم تأكيد Base plan `monthly` بسعر 2.99 وتفعيله.
-- يلزم إنشاء وتفعيل `premium_lifetime` بسعر 19.99 من صفحة One-time products.
-- بعد ذلك: توليد AAB موقّع، رفعه إلى Internal Testing، ثم التحقق من ظهور المنتجات في paywall.
+- تم إنشاء `premium_lifetime` في Play Console؛ يلزم تأكيد السعر والتفعيل من صفحة One-time products.
+- الخطوة التالية: إضافة حساب Google كـ License Tester، ثم توليد AAB موقّع ورفعه إلى Internal Testing.
+- بعد التثبيت من مسار الاختبار: التحقق من ظهور Lifetime في paywall، تنفيذ Test purchase، ثم اختبار Restore/إعادة فتح التطبيق.
+- ملاحظة الحسابات: التطبيق الحالي يعمل محلياً ولا يملك تسجيل دخول أو Backend؛ حساب الاختبار المطلوب هنا هو حساب Google في Play Console، وليس حساب مستخدم داخل التطبيق.
