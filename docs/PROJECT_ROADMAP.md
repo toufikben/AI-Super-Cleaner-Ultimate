@@ -1,12 +1,27 @@
 # خارطة مشروع AI Super Cleaner Ultimate
 
-آخر تحديث: 11 سبتمبر 2026
+
+
+
+آخر تحديث: 12 سبتمبر 2026
+
+
+
 
 ## الحالة العامة
 
-المشروع في **Release Candidate قابل للبناء**. المستودع خاص على GitHub، وآخر تحديثات AdMob الإنتاجية مرفوعة. لم يتم رفع AAB إلى Google Play بعد، ولم يبدأ النشر العام.
+
+
+
+المشروع في **Release Candidate قابل للبناء**. الكود يطابق منتجات Billing المطلوبة، لكن إعداد منتجات Play Console وتوقيع AAB واختبارات الشراء ما زالت تحتاج تحققاً نهائياً.
+
+
+
 
 ## سجل المراحل السابقة
+
+
+
 
 | المرحلة | النطاق | الحالة | الدليل أو Commit |
 |---|---|---|---|
@@ -25,11 +40,23 @@
 | 13 | UMP Consent وPrivacy Options وPrivacy/Data Safety | مكتملة برمجياً، إعداد Console متبقٍ | `docs/PRIVACY_POLICY.md` و`docs/DATA_SAFETY.md` |
 | 14 | Unit/Instrumentation source وQA وRelease وCI | مكتملة محلياً، device execution متبقٍ | `docs/PHASE_14_QA_REPORT.md` |
 
+
+
+
 ## المرحلة الحالية: 15 — إعداد الحسابات والإصدار التجريبي
+
+
+
 
 هذه هي المرحلة النشطة الآن. هدفها تحويل Release Candidate إلى نسخة Internal Testing قابلة للمراجعة.
 
+
+
+
 ### المكتمل في المرحلة 15
+
+
+
 
 - الريبو خاص ومزامن على GitHub.
 - إنشاء تطبيق AdMob باسم AI Super Cleaner Ultimate.
@@ -41,7 +68,13 @@
 - رفع التحديث إلى GitHub في Commit `a8e883c`.
 - تأكيد أن AdMob account/app قيد المراجعة.
 
+
+
+
 ### المتبقي في المرحلة 15
+
+
+
 
 - إنشاء UMP Privacy & messaging message في AdMob Console.
 - إضافة Privacy Policy URL عام وثابت إلى AdMob وPlay Console.
@@ -57,9 +90,18 @@
 - تنفيذ Billing/UMP/Ads tests على نسخة Internal.
 - إدخال Data Safety النهائي في Play Console.
 
+
+
+
 ## المرحلة 16 — Device QA وInternal Testing
 
+
+
+
 لا تبدأ إلا بعد إتمام المرحلة 15.
+
+
+
 
 - `connectedDebugAndroidTest` على API 26+.
 - اختبار أول تشغيل والموافقة والرفض وتعديل Privacy Options.
@@ -76,7 +118,13 @@
 - اختبار Premium monthly وLifetime وrestore/cancel/expiry عبر License Testers.
 - تسجيل كل فشل في Issue أو Commit، ثم تحديث هذه الخارطة وعدم إعادة الاختبار الناجح بلا سبب.
 
+
+
+
 ## المرحلة 17 — Store Compliance Review
+
+
+
 
 - إكمال Privacy Policy URL.
 - إكمال Data Safety طبقاً لـSDKs الفعلية.
@@ -86,42 +134,11 @@
 - إكمال Ads declaration.
 - إكمال Financial features/subscription disclosures عند طلبها.
 - إضافة screenshots وfeature graphic وicon وstore listing.
-- فحص Content rating.
-- إعداد countries/regions وpricing.
-- مراجعة Crash/ANR وPlay pre-launch report.
 
-## المرحلة 18 — Closed Testing ثم Production
+## سجل تحقق Billing — 12 سبتمبر 2026
 
-- إصلاح نتائج Internal Testing.
-- الانتقال إلى Closed Testing عند جاهزية المتطلبات.
-- مراقبة crashes وANR وconsent وbilling وad policy.
-- إعداد staged rollout بنسبة صغيرة.
-- عدم تنفيذ Production rollout قبل موافقة المستخدم النهائية على الإصدار العام.
-- مراقبة الأداء والإعلانات والشكاوى بعد الإطلاق.
-
-## قواعد عدم تكرار العمل
-
-- كل بند ينتقل إلى `مكتمل` فقط بعد دليل قابل للتحقق.
-- كل إصلاح يرفع في Commit مستقل أو مع رسالة واضحة.
-- كل نتيجة جهاز تحفظ في تقرير QA مع التاريخ وإصدار التطبيق والجهاز.
-- لا نعيد أي اختبار ناجح إلا إذا تغير الكود أو البيئة أو ظهر عطل مرتبط.
-- لا نعتبر إعداداً في Console مكتملاً بناءً على النية؛ يجب وجود شاشة نجاح أو حالة محفوظة.
-- بعد كل تحديث، يحدث هذا الملف و`PRE_RELEASE_CHECKLIST.md` قبل رفع Commit.
-
-## آخر نتائج التحقق
-
-- `QA_ALLOW_TEST_ADS=1 ./scripts/qa_release.sh`: ناجح سابقاً للتطوير.
-- `./scripts/qa_release.sh`: ناجح بعد استبدال IDs الإنتاجية.
-- `assembleDebug`: ناجح.
-- `lintDebug`: ناجح.
-- `assembleRelease`: ناجح، وأنتج APK غير موقع.
-- Instrumentation execution: لم يُنفذ بعد لعدم وجود جهاز/Emulator متصل في بيئة البناء.
-
-## الحالة التي تنتظر إجراء المستخدم
-
-- تسجيل الدخول أو اختيار حساب Google Play Console عند ظهور CAPTCHA أو إعادة المصادقة.
-- أسرار التوقيع في GitHub/بيئة إصدار آمنة.
-- رابط Privacy Policy العام.
-- اختبار الجهاز أو Emulator.
-- License Tester purchases.
-- الموافقة النهائية قبل أي Production rollout.
+- تم تحديث التطبيق إلى Google Play Billing Library 8.0.0 وtarget/compile SDK 36.
+- الكود يستخدم `premium_monthly` للاشتراك و`premium_lifetime` للشراء لمرة واحدة.
+- تم إنشاء سجل الاشتراك `premium_monthly` في Play Console؛ يلزم تأكيد Base plan `monthly` بسعر 2.99 وتفعيله.
+- يلزم إنشاء وتفعيل `premium_lifetime` بسعر 19.99 من صفحة One-time products.
+- بعد ذلك: توليد AAB موقّع، رفعه إلى Internal Testing، ثم التحقق من ظهور المنتجات في paywall.
