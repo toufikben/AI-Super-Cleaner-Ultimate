@@ -325,7 +325,7 @@
 | 10 | [~] قيد التنفيذ | `docs/PHASE_10_11_IMPLEMENTATION.md` | ScanUiState وUX metrics؛ Compose/accessibility/device review متبقية. |
 | 11 | [~] قيد التنفيذ | `docs/PHASE_10_11_IMPLEMENTATION.md` | Manifest/security/log audit ناجحة؛ permission/device/console review متبقية. |
 | 12 | [~] قيد التنفيذ | `docs/PHASE_12_REVALIDATION_2026-09-12.md` | Consent gating وBilling reconnect/entitlement تحسنت؛ Gradle/device/Console verification متبقية. |
-| 13 | [~] قيد التنفيذ | `app/src/main/java/com/aisupercleaner/ultimate/data/VideoCompressor.kt` | Cleanup/cancellation safety تحسنت؛ codecs/EXIF/error model tests متبقية. |
+| 13 | [~] قيد التنفيذ | `docs/PHASE_13_COMPRESSION_REVALIDATION_2026-09-12.md` | Structured errors وEXIF وcodec policies واختبارات أضيفت؛ Gradle/device codec verification متبقية. |
 | 14 | [ ] لم تبدأ | — | — |
 | 15 | [ ] لم تبدأ | — | — |
 | 16 | [ ] لم تبدأ | — | — |
