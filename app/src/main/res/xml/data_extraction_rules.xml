@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="ai_super_cleaner_prefs.xml" />
+        <exclude domain="database" path="ai_super_cleaner.db" />
+        <exclude domain="file" path="vault" />
+        <exclude domain="file" path="datastore/ai_super_cleaner_prefs.preferences_pb" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="ai_super_cleaner_prefs.xml" />
+        <exclude domain="database" path="ai_super_cleaner.db" />
+        <exclude domain="file" path="vault" />
+        <exclude domain="file" path="datastore/ai_super_cleaner_prefs.preferences_pb" />
+    </device-transfer>
+</data-extraction-rules>

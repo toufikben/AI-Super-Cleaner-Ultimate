@@ -2,13 +2,17 @@ package com.aisupercleaner.ultimate.privacy
 
 import android.app.Activity
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ConsentManager(context: Context) {
+@Singleton
+class ConsentManager @Inject constructor(@ApplicationContext context: Context) {
     private val appContext = context.applicationContext
     private val information = UserMessagingPlatform.getConsentInformation(appContext)
     private val _privacyOptionsRequired = MutableStateFlow(false)

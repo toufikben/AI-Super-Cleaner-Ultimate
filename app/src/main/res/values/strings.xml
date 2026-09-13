@@ -1,15 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AI Super Cleaner Ultimate</string>
-    <string name="notification_channel_name">Cleaner insights</string>
-    <string name="notification_channel_description">Optional storage and cleanup opportunities</string>
-    <string name="notifications_title">Notification center</string>
-    <string name="notifications_summary">Optional alerts with a maximum of one alert per category every 24 hours.</string>
-    <string name="notifications_enable">Enable notifications</string>
-    <string name="notifications_permission_required">Android notification permission is required. You can change it later in system settings.</string>
-    <string name="notification_alert_storage">Excessive storage usage</string>
-    <string name="notification_alert_large_files">Many large files</string>
-    <string name="notification_alert_trash">Growing Trash</string>
-    <string name="notification_alert_ram">Heavy RAM usage</string>
-    <string name="notification_alert_opportunity">Cleanup opportunity</string>
-    <string name="notifications_disabled">Notifications are disabled. No alerts will be posted.</string>
+    <string name="app_name">AI Super Cleaner</string>
+
+    <!-- Channels -->
+    <string name="channel_auto_clean">Auto Cleanup</string>
+    <string name="channel_auto_clean_desc">Scheduled automatic cleanup reminders</string>
+    <string name="channel_alerts">Smart Alerts</string>
+    <string name="channel_alerts_desc">Storage and battery alerts</string>
+    <string name="channel_vault">Vault</string>
+    <string name="channel_vault_desc">Private vault notifications</string>
+
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="retry">Retry</string>
+    <string name="continue_label">Continue</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">Clean, Speed up, Protect</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_1_title">Smart cleaning in one tap</string>
+    <string name="onboarding_1_desc">Find duplicates, large files, and junk — free up massive space.</string>
+    <string name="onboarding_2_title">Speed up your device</string>
+    <string name="onboarding_2_desc">Free RAM, reduce battery drain, and stop background apps.</string>
+    <string name="onboarding_3_title">Total privacy</string>
+    <string name="onboarding_3_desc">Encrypted vault, secure delete, and biometric lock.</string>
+
+    <!-- Tabs -->
+    <string name="tab_dashboard">Home</string>
+    <string name="tab_junk">Cleaner</string>
+    <string name="tab_tools">Tools</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_storage_title">Storage Used</string>
+    <string name="dashboard_quick_actions">Quick Actions</string>
+    <string name="refresh">Refresh</string>
+    <string name="stat_total_cleaned">Total freed</string>
+    <string name="stat_cleanups">Cleanups</string>
+    <string name="stat_last_clean">Last clean</string>
+
+    <string name="action_quick_clean">Quick Clean</string>
+    <string name="action_quick_clean_sub">Free space instantly</string>
+    <string name="action_duplicates">Duplicates</string>
+    <string name="action_duplicates_sub">Find copies</string>
+    <string name="action_large_files">Large Files</string>
+    <string name="action_large_files_sub">Over 100MB</string>
+    <string name="action_vault">Private Vault</string>
+    <string name="action_vault_sub">Encrypt &amp; hide</string>
+
+    <!-- Junk Categories -->
+    <string name="junk_cache">Cache Files</string>
+    <string name="junk_temp">Temporary Files</string>
+    <string name="junk_logs">System Logs</string>
+    <string name="junk_thumbnails">Thumbnails</string>
+    <string name="junk_empty_folders">Empty Folders</string>
+    <string name="junk_apk">Old APKs</string>
+    <string name="junk_downloads">Download Residue</string>
+    <string name="junk_obsolete">Obsolete Files</string>
+
+    <!-- Junk Screen -->
+    <string name="junk_idle_title">Ready to scan</string>
+    <string name="junk_idle_desc">We\'ll find temp files, cache, and logs — in one tap.</string>
+    <string name="start_scan">Start Scan</string>
+    <string name="rescan">Rescan</string>
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
+    <string name="clean_now">Clean Now</string>
+    <string name="cleaning_in_progress">Cleaning…</string>
+    <string name="junk_selected_title">Selected for deletion</string>
+    <string name="junk_selected_count">%1$d items</string>
+
+    <string name="scan_idle">Idle</string>
+    <string name="scan_enumerating">Preparing lists…</string>
+    <string name="scan_scanning">Scanning…</string>
+    <string name="scan_finalizing">Finishing up…</string>
+    <string name="scan_completed">Completed</string>
+    <string name="scan_cancelled">Cancelled</string>
+    <string name="scan_error">An error occurred</string>
+
+    <string name="cleanup_done">Cleaned!</string>
+    <string name="freed_space">Space freed</string>
+    <string name="cleanup_summary">%1$d deleted, %2$d failed</string>
+    <string name="confirm_cleanup_title">Confirm deletion</string>
+    <string name="confirm_cleanup_message">Delete %1$d files (%2$s)? This cannot be undone.</string>
+
+    <!-- Permissions -->
+    <string name="perm_screen_title">Permissions</string>
+    <string name="perm_intro_title">Before we start</string>
+    <string name="perm_intro_desc">We need a few permissions. We never collect your data.</string>
+    <string name="perm_progress">%1$d of %2$d granted</string>
+    <string name="perm_granted">Granted</string>
+    <string name="perm_denied">Denied</string>
+    <string name="perm_blocked">Blocked — open settings</string>
+    <string name="perm_needed">Required</string>
+    <string name="perm_not_applicable">Not supported</string>
+    <string name="perm_grant">Grant</string>
+    <string name="perm_open_settings">Settings</string>
+    <string name="perm_required">Required</string>
+    <string name="perm_required_hint">⚠️ Grant the critical permission to continue</string>
+
+    <string name="perm_storage_title">Read Files</string>
+    <string name="perm_storage_desc">To scan images, videos, and duplicates.</string>
+    <string name="perm_all_files_title">Full File Access</string>
+    <string name="perm_all_files_desc">To scan all device files (Android 11+).</string>
+    <string name="perm_notif_title">Notifications</string>
+    <string name="perm_notif_desc">Alert you when storage is low.</string>
+    <string name="perm_query_title">Read Installed Apps</string>
+    <string name="perm_query_desc">To scan each app\'s cache and data.</string>
+    <string name="perm_biometric_title">Fingerprint / Face</string>
+    <string name="perm_biometric_desc">To secure and unlock your private vault.</string>
+
+    <!-- Duplicates -->
+    <string name="duplicates_title">Duplicate Files</string>
+    <string name="duplicates_intro_title">Find duplicates</string>
+    <string name="duplicates_intro_desc">We\'ll find identical or similar files.</string>
+    <string name="duplicates_scan_button">Start Scan</string>
+    <string name="duplicates_empty">No duplicates found 🎉</string>
+    <string name="duplicates_empty_sub">Your device is spotless.</string>
+    <string name="duplicates_found_groups">%1$d groups</string>
+    <string name="duplicates_found_wasted">%1$s can be freed</string>
+    <string name="duplicates_kind_exact">Exact Match</string>
+    <string name="duplicates_kind_similar">Similar Images</string>
+    <string name="duplicates_items_count">%1$d files</string>
+    <string name="duplicates_wasted_label">Delete: %1$s</string>
+    <string name="duplicates_smart_select">Smart Select</string>
+    <string name="duplicates_keep_oldest">Keep Oldest</string>
+    <string name="duplicates_keep_newest">Keep Newest</string>
+    <string name="duplicates_keep_shortest">Keep Shortest</string>
+    <string name="duplicates_delete_selected">Delete Selected</string>
+    <string name="duplicates_scanning_title">Scanning for duplicates…</string>
+    <string name="duplicates_phase_enumerating">Collecting files…</string>
+    <string name="duplicates_phase_size">Filtering by size…</string>
+    <string name="duplicates_phase_hash">Computing SHA-256…</string>
+    <string name="duplicates_phase_image">Analyzing similar images…</string>
+    <string name="duplicates_kept_label">Kept</string>
+    <string name="duplicates_selected_label">Selected</string>
+    <string name="duplicates_need_permission">We need file read permission to continue</string>
+
+    <!-- Vault -->
+    <string name="vault_title">Private Vault</string>
+    <string name="vault_locked_title">Vault Locked</string>
+    <string name="vault_setup_hint">Create a PIN first to protect your vault</string>
+    <string name="vault_unlock_hint">Enter PIN or use your fingerprint</string>
+    <string name="vault_pin_label">PIN</string>
+    <string name="vault_pin_confirm">Confirm PIN</string>
+    <string name="vault_pin_create">Create PIN</string>
+    <string name="vault_pin_wrong">Wrong PIN</string>
+    <string name="vault_pin_mismatch">PINs don\'t match</string>
+    <string name="vault_setup_pin">Create PIN</string>
+    <string name="vault_unlock">Unlock</string>
+    <string name="vault_use_biometric">Use Biometric</string>
+    <string name="vault_lock">Lock</string>
+    <string name="vault_stats">%1$d files · %2$s</string>
+    <string name="vault_add_files">Add Files</string>
+    <string name="vault_empty_title">Vault is empty</string>
+    <string name="vault_empty_desc">Add your private files — they\'ll be encrypted and hidden.</string>
+    <string name="vault_importing">Importing %1$d/%2$d</string>
+    <string name="vault_delete_title">Remove from vault</string>
+    <string name="vault_delete_message">"%1$s" will be securely erased. Cannot be recovered.</string>
+
+    <!-- Shredder -->
+    <string name="shredder_title">File Shredder</string>
+    <string name="shred_empty_title">No files selected</string>
+    <string name="shred_empty_desc">Add files to securely erase them permanently.</string>
+    <string name="shred_add">Add Files</string>
+    <string name="shred_now">Shred Now</string>
+    <string name="shredding_in_progress">Shredding…</string>
+    <string name="shred_level_label">Security Level</string>
+    <string name="shred_level_fast">Fast</string>
+    <string name="shred_level_fast_desc">Single random pass — for performance.</string>
+    <string name="shred_level_secure">Secure</string>
+    <string name="shred_level_secure_desc">3 passes — DoD 5220.22-M standard.</string>
+    <string name="shred_level_military">Military</string>
+    <string name="shred_level_military_desc">7 passes — maximum security.</string>
+    <string name="shred_confirm_title">Confirm Shredding</string>
+    <string name="shred_confirm_msg">%1$d files (%2$s) will be permanently erased. Cannot be recovered.</string>
+    <string name="shred_confirm_yes">Shred Permanently</string>
+    <string name="shred_done_title">Shredded</string>
+    <string name="shred_done_msg">%1$s securely erased.</string>
+
+    <!-- Privacy -->
+    <string name="privacy_title">Privacy Scanner</string>
+    <string name="privacy_alert">%1$d apps with dangerous permissions</string>
+    <string name="privacy_all_clean">No dangerous apps found</string>
+    <string name="privacy_apps_count">%1$d installed apps</string>
+    <string name="privacy_filter_all">All</string>
+    <string name="privacy_filter_high">High Risk</string>
+    <string name="privacy_filter_medium">Medium+</string>
+    <string name="privacy_perms_count">%1$d dangerous permissions</string>
+    <string name="risk_high">High</string>
+    <string name="risk_medium">Medium</string>
+    <string name="risk_low">Low</string>
+    <string name="risk_safe">Safe</string>
+
+    <!-- Wi-Fi -->
+    <string name="wifi_title">Wi-Fi Security</string>
+    <string name="wifi_risk_high">Unsecured Network!</string>
+    <string name="wifi_risk_medium">Security Warning</string>
+    <string name="wifi_risk_low">Minor Note</string>
+    <string name="wifi_risk_safe">Secure Network</string>
+    <string name="wifi_ssid">Network Name</string>
+    <string name="wifi_security">Encryption</string>
+    <string name="wifi_ip">IP Address</string>
+    <string name="wifi_connected">Connected</string>
+    <string name="wifi_issues">Detected Issues</string>
+
+    <!-- Notifications -->
+    <string name="notif_auto_clean_title">Auto-cleanup complete</string>
+    <string name="notif_auto_clean_text">Freed %1$s by deleting %2$d files</string>
+    <string name="notif_storage_title">⚠️ Storage running low</string>
+    <string name="notif_storage_text">%1$d%% used — only %2$s left</string>
+    <string name="notif_large_files_title">Large files</string>
+    <string name="notif_large_files_text">%1$d files (%2$s) worth reviewing</string>
+
+    <!-- History -->
+    <string name="history_title">Cleanup History</string>
+    <string name="history_empty">No history yet</string>
+    <string name="history_total_freed">Total Freed</string>
+    <string name="history_total_sessions">%1$d cleanup sessions</string>
+
+    <!-- Forecast -->
+    <string name="forecast_critical">⚠️ Storage full in %1$d days</string>
+    <string name="forecast_warning">Full in %1$d days</string>
+    <string name="forecast_attention">Estimated full in %1$d days</string>
+    <string name="forecast_fine">You\'re fine (%1$d days left)</string>
+    <string name="forecast_date">Estimated on %1$s</string>
+
+    <!-- Scheduler -->
+    <string name="scheduler_title">Auto Schedule</string>
+    <string name="scheduler_enable">Auto Cleanup</string>
+    <string name="scheduler_enable_desc">Periodically delete temporary files</string>
+    <string name="scheduler_interval">Interval</string>
+    <string name="scheduler_run_now">Run Now</string>
+
+    <!-- Theme -->
+    <string name="theme_title">Appearance</string>
+    <string name="theme_mode">Mode</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+    <string name="theme_dynamic">Material You colors</string>
+    <string name="theme_dynamic_desc">Use wallpaper-based colors</string>
+    <string name="theme_accent">Accent Color</string>
+    <string name="theme_preview">Preview</string>
+
+    <!-- Accent Names -->
+    <string name="accent_ocean_blue">Ocean Blue</string>
+    <string name="accent_royal_purple">Royal Purple</string>
+    <string name="accent_emerald_green">Emerald Green</string>
+    <string name="accent_sunset_orange">Sunset Orange</string>
+    <string name="accent_crimson_red">Crimson Red</string>
+    <string name="accent_turquoise_teal">Turquoise Teal</string>
+    <string name="accent_rose_pink">Rose Pink</string>
+    <string name="accent_midnight_indigo">Midnight Indigo</string>
+
+    <!-- Settings -->
+    <string name="settings_upgrade_title">Upgrade to PRO</string>
+    <string name="settings_upgrade_sub">Remove ads + exclusive features</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme">Themes &amp; Colors</string>
+    <string name="settings_theme_sub">8 accent styles + dark mode</string>
+    <string name="settings_automation">Automation</string>
+    <string name="settings_auto_clean">Auto Cleanup</string>
+    <string name="settings_auto_clean_sub">Delete temp files periodically</string>
+    <string name="settings_scheduler">Advanced Scheduler</string>
+    <string name="settings_scheduler_sub">Choose interval</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notif_enable">Enable Notifications</string>
+    <string name="settings_notif_enable_sub">Smart storage alerts</string>
+    <string name="settings_alert_threshold">Alert Threshold</string>
+    <string name="settings_alert_threshold_sub">Alert at %1$d%% usage</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_vault">Private Vault</string>
+    <string name="settings_vault_active">Enabled</string>
+    <string name="settings_vault_inactive">Not enabled</string>
+    <string name="settings_data">Data</string>
+    <string name="settings_history">Cleanup History</string>
+    <string name="settings_history_sub">View all past operations</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_sub">Choose your preferred language</string>
+
+    <!-- Rules -->
+    <string name="rules_title">Custom Rules</string>
+    <string name="rules_new">New Rule</string>
+    <string name="rules_empty">No rules yet</string>
+    <string name="rules_empty_desc">Create your first rule to automate cleanup.</string>
+    <string name="rules_settings">Custom Rules Engine</string>
+    <string name="rules_settings_sub">Advanced automation (PRO)</string>
+
+    <!-- Large Files -->
+    <string name="large_files_title">Large Files</string>
+    <string name="large_files_idle_title">Find large files</string>
+    <string name="large_files_idle_desc">Find files larger than %1$d MB</string>
+    <string name="large_files_scanning">Searching large files…</string>
+    <string name="large_files_found">%1$d large files</string>
+    <string name="large_files_empty">No large files found</string>
+
+    <!-- RAM -->
+    <string name="ram_title">RAM Booster</string>
+    <string name="ram_boost">Boost Now</string>
+
+    <!-- Battery -->
+    <string name="battery_title">Battery Info</string>
+
+    <!-- Tools -->
+    <string name="tools_cleaning">Cleaning</string>
+    <string name="tools_security">Security</string>
+    <string name="tools_performance">Performance</string>
+    <string name="tools_automation">Automation</string>
+
+    <!-- Premium -->
+    <string name="premium_title">PRO</string>
+    <string name="premium_headline">Unlock Everything</string>
+    <string name="premium_subtitle">Full ad-free experience with pro tools</string>
+    <string name="premium_feat_1">No ads, ever</string>
+    <string name="premium_feat_2">3× faster cleaning</string>
+    <string name="premium_feat_3">Unlimited encrypted vault</string>
+    <string name="premium_feat_4">Exclusive new features</string>
+    <string name="premium_feat_5">No tracking, no data collection</string>
+    <string name="premium_plan_monthly">Monthly</string>
+    <string name="premium_plan_monthly_price">$2.99</string>
+    <string name="premium_plan_monthly_sub">Auto-renewing</string>
+    <string name="premium_plan_lifetime">Lifetime</string>
+    <string name="premium_plan_lifetime_price">$19.99</string>
+    <string name="premium_plan_lifetime_sub">One-time payment</string>
+    <string name="premium_restore">Restore Purchases</string>
+    <string name="premium_active_title">You\'re PRO 🎉</string>
+    <string name="premium_active_sub">Enjoy all features</string>
+    <string name="premium_legal">Cancel anytime from Google Play settings.</string>
+    <string name="go_premium">Upgrade to PRO</string>
+
+    <!-- Widget -->
+    <string name="widget_title">Storage</string>
+    <string name="widget_free">%1$s free</string>
+    <string name="widget_description">Live storage display</string>
 </resources>

@@ -4,6 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import dagger.hilt.android.qualifiers.ApplicationContext
+import com.aisupercleaner.ultimate.data.preferences.AppPreferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
@@ -24,7 +31,8 @@ private const val LIFETIME = "premium_lifetime"
 
 data class BillingCatalog(val monthly: ProductDetails? = null, val lifetime: ProductDetails? = null)
 
-class BillingManager(context: Context) : BillingClientStateListener, PurchasesUpdatedListener {
+@Singleton
+class BillingManager @Inject constructor(@ApplicationContext context: Context, private val preferences: AppPreferences) : BillingClientStateListener, PurchasesUpdatedListener {
     private val _isPremium = MutableStateFlow(false)
     val isPremium = _isPremium.asStateFlow()
     private val _catalog = MutableStateFlow(BillingCatalog())
@@ -104,6 +112,7 @@ class BillingManager(context: Context) : BillingClientStateListener, PurchasesUp
             purchasedProductIds = valid.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }.flatMap { it.products }.toSet(),
             purchaseCompleted = valid.any { it.purchaseState == Purchase.PurchaseState.PURCHASED }
         )
+        CoroutineScope(Dispatchers.IO).launch { preferences.setPremium(_isPremium.value) }
         valid.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED && !it.isAcknowledged }.forEach { acknowledge(it) }
         if (valid.any { it.purchaseState == Purchase.PurchaseState.PENDING }) _message.value = "Purchase is pending confirmation by Google Play."
     }

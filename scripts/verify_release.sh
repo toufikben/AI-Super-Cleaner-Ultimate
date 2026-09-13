@@ -7,10 +7,8 @@ cd "$ROOT"
 ARTIFACT="${1:-app/build/outputs/apk/release/app-release.apk}"
 test -s "$ARTIFACT"
 
-if grep -E "<uses-permission[^>]*MANAGE_EXTERNAL_STORAGE" -n app/src/main/AndroidManifest.xml; then
-  echo "ERROR: MANAGE_EXTERNAL_STORAGE must remain absent." >&2
-  exit 1
-fi
+grep -Eq '<uses-permission[^>]*android.permission.MANAGE_EXTERNAL_STORAGE' app/src/main/AndroidManifest.xml
+grep -Eq '<uses-permission[^>]*android.permission.QUERY_ALL_PACKAGES' app/src/main/AndroidManifest.xml
 
 if [[ "$ARTIFACT" == *.apk ]]; then
   AAPT="${ANDROID_HOME:?}/build-tools/36.0.0/aapt"

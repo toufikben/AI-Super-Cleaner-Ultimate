@@ -1,1 +1,318 @@
-<resources><string name="app_name">منظف الذكاء الاصطناعي الفائق</string><string name="notification_channel_name">تنبيهات التنظيف</string><string name="notification_channel_description">تنبيهات اختيارية للتخزين وفرص التنظيف</string><string name="notifications_title">مركز الإشعارات</string><string name="notifications_summary">تنبيهات اختيارية بحد أقصى تنبيه واحد لكل فئة خلال 24 ساعة.</string><string name="notifications_enable">تفعيل الإشعارات</string><string name="notifications_permission_required">يتطلب Android إذن الإشعارات. يمكنك تغييره لاحقًا من إعدادات النظام.</string><string name="notification_alert_storage">استخدام مرتفع للتخزين</string><string name="notification_alert_large_files">ملفات كبيرة كثيرة</string><string name="notification_alert_trash">سلة مهملات متزايدة</string><string name="notification_alert_ram">استخدام مرتفع للذاكرة</string><string name="notification_alert_opportunity">فرصة تنظيف</string><string name="notifications_disabled">الإشعارات معطلة. لن يتم إرسال أي تنبيهات.</string></resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Super Cleaner</string>
+
+    <string name="channel_auto_clean">التنظيف التلقائي</string>
+    <string name="channel_auto_clean_desc">تنبيهات التنظيف الدوري</string>
+    <string name="channel_alerts">التنبيهات الذكية</string>
+    <string name="channel_alerts_desc">تنبيهات المساحة والبطارية</string>
+    <string name="channel_vault">الخزنة</string>
+    <string name="channel_vault_desc">إشعارات الخزنة الخاصة</string>
+
+    <string name="ok">حسنًا</string>
+    <string name="cancel">إلغاء</string>
+    <string name="delete">حذف</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="continue_label">متابعة</string>
+    <string name="skip">تخطي</string>
+    <string name="next">التالي</string>
+    <string name="get_started">ابدأ الآن</string>
+
+    <string name="splash_tagline">نظّف، سرّع، واحمِ جهازك</string>
+
+    <string name="onboarding_1_title">تنظيف ذكي بضغطة واحدة</string>
+    <string name="onboarding_1_desc">اكتشف المكرر، الملفات الكبيرة، والمهملة — ووفّر مساحة ضخمة.</string>
+    <string name="onboarding_2_title">سرّع جهازك</string>
+    <string name="onboarding_2_desc">حرّر الذاكرة، وقلل استهلاك البطارية، وأوقف التطبيقات المزعجة.</string>
+    <string name="onboarding_3_title">خصوصية كاملة</string>
+    <string name="onboarding_3_desc">خزنة مشفرة، حذف آمن، وقفل بيومتري.</string>
+
+    <string name="tab_dashboard">الرئيسية</string>
+    <string name="tab_junk">التنظيف</string>
+    <string name="tab_tools">الأدوات</string>
+    <string name="tab_settings">الإعدادات</string>
+
+    <string name="dashboard_storage_title">المساحة المُستخدمة</string>
+    <string name="dashboard_quick_actions">إجراءات سريعة</string>
+    <string name="refresh">تحديث</string>
+    <string name="stat_total_cleaned">إجمالي المُوفَّر</string>
+    <string name="stat_cleanups">مرات التنظيف</string>
+    <string name="stat_last_clean">آخر تنظيف</string>
+
+    <string name="action_quick_clean">تنظيف سريع</string>
+    <string name="action_quick_clean_sub">وفّر مساحة فورًا</string>
+    <string name="action_duplicates">المكرر</string>
+    <string name="action_duplicates_sub">اكتشف النسخ</string>
+    <string name="action_large_files">ملفات كبيرة</string>
+    <string name="action_large_files_sub">أكبر من 100MB</string>
+    <string name="action_vault">الخزنة الخاصة</string>
+    <string name="action_vault_sub">تشفير وإخفاء</string>
+
+    <string name="junk_cache">ملفات الكاش</string>
+    <string name="junk_temp">ملفات مؤقتة</string>
+    <string name="junk_logs">سجلات النظام</string>
+    <string name="junk_thumbnails">الصور المصغرة</string>
+    <string name="junk_empty_folders">مجلدات فارغة</string>
+    <string name="junk_apk">ملفات APK قديمة</string>
+    <string name="junk_downloads">بقايا التنزيلات</string>
+    <string name="junk_obsolete">ملفات مهملة</string>
+
+    <string name="junk_idle_title">جاهز للفحص</string>
+    <string name="junk_idle_desc">سنبحث عن الملفات المؤقتة، الكاش، والسجلات — بضغطة واحدة.</string>
+    <string name="start_scan">ابدأ الفحص</string>
+    <string name="rescan">إعادة الفحص</string>
+    <string name="select_all">تحديد الكل</string>
+    <string name="deselect_all">إلغاء التحديد</string>
+    <string name="clean_now">نظّف الآن</string>
+    <string name="cleaning_in_progress">جاري التنظيف…</string>
+    <string name="junk_selected_title">المحدد للحذف</string>
+    <string name="junk_selected_count">%1$d عنصر</string>
+
+    <string name="scan_idle">في الانتظار</string>
+    <string name="scan_enumerating">جاري تحضير القوائم…</string>
+    <string name="scan_scanning">جاري الفحص…</string>
+    <string name="scan_finalizing">لمسات أخيرة…</string>
+    <string name="scan_completed">اكتمل</string>
+    <string name="scan_cancelled">أُلغي</string>
+    <string name="scan_error">حدث خطأ</string>
+
+    <string name="cleanup_done">تم التنظيف!</string>
+    <string name="freed_space">مساحة تم تحريرها</string>
+    <string name="cleanup_summary">تم حذف %1$d، فشل %2$d</string>
+    <string name="confirm_cleanup_title">تأكيد الحذف</string>
+    <string name="confirm_cleanup_message">سيتم حذف %1$d ملف بحجم %2$s. لا يمكن التراجع.</string>
+
+    <string name="perm_screen_title">الصلاحيات</string>
+    <string name="perm_intro_title">قبل أن نبدأ</string>
+    <string name="perm_intro_desc">نحتاج بعض الصلاحيات لكي يعمل التطبيق بكفاءة. لا نجمع أي بيانات.</string>
+    <string name="perm_progress">%1$d من %2$d ممنوحة</string>
+    <string name="perm_granted">ممنوحة</string>
+    <string name="perm_denied">مرفوضة</string>
+    <string name="perm_blocked">محظورة — افتح الإعدادات</string>
+    <string name="perm_needed">مطلوبة</string>
+    <string name="perm_not_applicable">غير مدعومة</string>
+    <string name="perm_grant">منح</string>
+    <string name="perm_open_settings">الإعدادات</string>
+    <string name="perm_required">مطلوبة</string>
+    <string name="perm_required_hint">⚠️ يجب منح الصلاحية الأساسية للمتابعة</string>
+
+    <string name="perm_storage_title">قراءة الملفات</string>
+    <string name="perm_storage_desc">لفحص الصور، الفيديوهات، والملفات المكررة.</string>
+    <string name="perm_all_files_title">الوصول الكامل للملفات</string>
+    <string name="perm_all_files_desc">لفحص جميع ملفات الجهاز (Android 11+).</string>
+    <string name="perm_notif_title">الإشعارات</string>
+    <string name="perm_notif_desc">لتنبيهك عند امتلاء المساحة.</string>
+    <string name="perm_query_title">قراءة التطبيقات المثبتة</string>
+    <string name="perm_query_desc">لفحص كاش وبيانات كل تطبيق.</string>
+    <string name="perm_biometric_title">البصمة / الوجه</string>
+    <string name="perm_biometric_desc">لحماية الخزنة الخاصة وفتحها بأمان.</string>
+
+    <string name="duplicates_title">الملفات المكررة</string>
+    <string name="duplicates_intro_title">اكتشف المكرر</string>
+    <string name="duplicates_intro_desc">سنبحث عن الملفات والصور المتطابقة.</string>
+    <string name="duplicates_scan_button">ابدأ الفحص</string>
+    <string name="duplicates_empty">لا توجد ملفات مكررة 🎉</string>
+    <string name="duplicates_empty_sub">جهازك نظيف تمامًا.</string>
+    <string name="duplicates_found_groups">%1$d مجموعة</string>
+    <string name="duplicates_found_wasted">%1$s يمكن توفيرها</string>
+    <string name="duplicates_kind_exact">متطابقة تمامًا</string>
+    <string name="duplicates_kind_similar">صور متشابهة</string>
+    <string name="duplicates_items_count">%1$d ملف</string>
+    <string name="duplicates_wasted_label">حذف: %1$s</string>
+    <string name="duplicates_smart_select">تحديد ذكي</string>
+    <string name="duplicates_keep_oldest">الإبقاء على الأقدم</string>
+    <string name="duplicates_keep_newest">الإبقاء على الأحدث</string>
+    <string name="duplicates_keep_shortest">الأقصر مسارًا</string>
+    <string name="duplicates_delete_selected">حذف المحدد</string>
+    <string name="duplicates_scanning_title">جاري البحث عن المكرر…</string>
+    <string name="duplicates_phase_enumerating">جمع الملفات…</string>
+    <string name="duplicates_phase_size">فلترة حسب الحجم…</string>
+    <string name="duplicates_phase_hash">فحص البصمة…</string>
+    <string name="duplicates_phase_image">تحليل الصور…</string>
+    <string name="duplicates_kept_label">محفوظ</string>
+    <string name="duplicates_selected_label">المحدد</string>
+    <string name="duplicates_need_permission">نحتاج إذن قراءة الملفات للمتابعة</string>
+
+    <string name="vault_title">الخزنة الخاصة</string>
+    <string name="vault_locked_title">الخزنة مقفلة</string>
+    <string name="vault_setup_hint">أنشئ PIN أولاً لحماية خزنتك</string>
+    <string name="vault_unlock_hint">أدخل PIN أو استخدم بصمتك</string>
+    <string name="vault_pin_label">PIN</string>
+    <string name="vault_pin_confirm">تأكيد PIN</string>
+    <string name="vault_pin_create">إنشاء PIN</string>
+    <string name="vault_pin_wrong">PIN غير صحيح</string>
+    <string name="vault_pin_mismatch">PIN غير متطابق</string>
+    <string name="vault_setup_pin">إنشاء PIN</string>
+    <string name="vault_unlock">فتح</string>
+    <string name="vault_use_biometric">استخدام البصمة</string>
+    <string name="vault_lock">قفل</string>
+    <string name="vault_stats">%1$d ملف · %2$s</string>
+    <string name="vault_add_files">إضافة ملفات</string>
+    <string name="vault_empty_title">الخزنة فارغة</string>
+    <string name="vault_empty_desc">أضف ملفاتك الخاصة — ستُشفَّر ولن تظهر في المعرض.</string>
+    <string name="vault_importing">جاري الاستيراد %1$d/%2$d</string>
+    <string name="vault_delete_title">حذف من الخزنة</string>
+    <string name="vault_delete_message">سيتم محو "%1$s" بشكل آمن نهائيًا. لا يمكن الاسترجاع.</string>
+
+    <string name="shredder_title">الحذف الآمن</string>
+    <string name="shred_empty_title">لا توجد ملفات محددة</string>
+    <string name="shred_empty_desc">أضف ملفات لمسحها بشكل نهائي غير قابل للاسترجاع.</string>
+    <string name="shred_add">إضافة ملفات</string>
+    <string name="shred_now">امسح الآن</string>
+    <string name="shredding_in_progress">جاري المحو الآمن…</string>
+    <string name="shred_level_label">مستوى الأمان</string>
+    <string name="shred_level_fast">سريع</string>
+    <string name="shred_level_fast_desc">كتابة عشوائية واحدة — للأداء.</string>
+    <string name="shred_level_secure">آمن</string>
+    <string name="shred_level_secure_desc">3 مرات — معيار DoD 5220.22-M.</string>
+    <string name="shred_level_military">عسكري</string>
+    <string name="shred_level_military_desc">7 مرات — أقصى حماية.</string>
+    <string name="shred_confirm_title">تأكيد المحو</string>
+    <string name="shred_confirm_msg">سيتم محو %1$d ملف (%2$s) بشكل نهائي. لا يمكن الاسترجاع.</string>
+    <string name="shred_confirm_yes">امسح نهائيًا</string>
+    <string name="shred_done_title">تم المحو</string>
+    <string name="shred_done_msg">تم محو %1$s بشكل غير قابل للاسترجاع.</string>
+
+    <string name="privacy_title">فحص الخصوصية</string>
+    <string name="privacy_alert">%1$d تطبيق بصلاحيات خطرة</string>
+    <string name="privacy_all_clean">لا توجد تطبيقات خطرة</string>
+    <string name="privacy_apps_count">%1$d تطبيق مثبَّت</string>
+    <string name="privacy_filter_all">الكل</string>
+    <string name="privacy_filter_high">خطرة</string>
+    <string name="privacy_filter_medium">متوسطة+</string>
+    <string name="privacy_perms_count">%1$d صلاحية خطرة</string>
+    <string name="risk_high">خطرة</string>
+    <string name="risk_medium">متوسطة</string>
+    <string name="risk_low">منخفضة</string>
+    <string name="risk_safe">آمنة</string>
+
+    <string name="wifi_title">أمان Wi-Fi</string>
+    <string name="wifi_risk_high">شبكة غير آمنة!</string>
+    <string name="wifi_risk_medium">تحذير أمني</string>
+    <string name="wifi_risk_low">ملاحظة بسيطة</string>
+    <string name="wifi_risk_safe">شبكة آمنة</string>
+    <string name="wifi_ssid">اسم الشبكة</string>
+    <string name="wifi_security">نوع التشفير</string>
+    <string name="wifi_ip">عنوان IP</string>
+    <string name="wifi_connected">متصل</string>
+    <string name="wifi_issues">المشاكل المكتشفة</string>
+
+    <string name="notif_auto_clean_title">تم التنظيف التلقائي</string>
+    <string name="notif_auto_clean_text">وفّرنا %1$s بحذف %2$d ملف</string>
+    <string name="notif_storage_title">⚠️ المساحة تنفد</string>
+    <string name="notif_storage_text">%1$d%% مُستخدَم — متبقٍ %2$s فقط</string>
+    <string name="notif_large_files_title">ملفات كبيرة</string>
+    <string name="notif_large_files_text">%1$d ملف بحجم %2$s يمكن مراجعته</string>
+
+    <string name="history_title">سجل التنظيف</string>
+    <string name="history_empty">لا يوجد سجل بعد</string>
+    <string name="history_total_freed">إجمالي المُوفَّر</string>
+    <string name="history_total_sessions">%1$d عملية تنظيف</string>
+
+    <string name="forecast_critical">⚠️ ستمتلئ الذاكرة خلال %1$d يوم</string>
+    <string name="forecast_warning">ستمتلئ خلال %1$d يوم</string>
+    <string name="forecast_attention">تقدير: امتلاء خلال %1$d يوم</string>
+    <string name="forecast_fine">وضعك جيد (%1$d يوم متبقي)</string>
+    <string name="forecast_date">متوقع في %1$s</string>
+
+    <string name="scheduler_title">الجدولة التلقائية</string>
+    <string name="scheduler_enable">التنظيف التلقائي</string>
+    <string name="scheduler_enable_desc">حذف الملفات المؤقتة دوريًا</string>
+    <string name="scheduler_interval">الفاصل الزمني</string>
+    <string name="scheduler_run_now">شغّل الآن</string>
+
+    <string name="theme_title">المظهر</string>
+    <string name="theme_mode">الوضع</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
+    <string name="theme_system">حسب النظام</string>
+    <string name="theme_dynamic">ألوان Material You</string>
+    <string name="theme_dynamic_desc">استخدام ألوان خلفية الشاشة</string>
+    <string name="theme_accent">اللون المميز</string>
+    <string name="theme_preview">معاينة</string>
+
+    <string name="accent_ocean_blue">أزرق محيطي</string>
+    <string name="accent_royal_purple">بنفسجي ملكي</string>
+    <string name="accent_emerald_green">أخضر زمردي</string>
+    <string name="accent_sunset_orange">برتقالي الغروب</string>
+    <string name="accent_crimson_red">أحمر قرمزي</string>
+    <string name="accent_turquoise_teal">فيروزي</string>
+    <string name="accent_rose_pink">وردي</string>
+    <string name="accent_midnight_indigo">نيلي</string>
+
+    <string name="settings_upgrade_title">ترقية إلى PRO</string>
+    <string name="settings_upgrade_sub">إزالة الإعلانات + مزايا حصرية</string>
+    <string name="settings_appearance">المظهر</string>
+    <string name="settings_theme">الثيمات والألوان</string>
+    <string name="settings_theme_sub">8 أنماط لونية + وضع ليلي</string>
+    <string name="settings_automation">الأتمتة</string>
+    <string name="settings_auto_clean">التنظيف التلقائي</string>
+    <string name="settings_auto_clean_sub">حذف الملفات المؤقتة دوريًا</string>
+    <string name="settings_scheduler">الجدولة المتقدمة</string>
+    <string name="settings_scheduler_sub">اختر الفاصل الزمني</string>
+    <string name="settings_notifications">الإشعارات</string>
+    <string name="settings_notif_enable">تفعيل الإشعارات</string>
+    <string name="settings_notif_enable_sub">تنبيهات ذكية عن المساحة</string>
+    <string name="settings_alert_threshold">حد التنبيه</string>
+    <string name="settings_alert_threshold_sub">تنبيه عند %1$d%% استخدام</string>
+    <string name="settings_security">الأمان</string>
+    <string name="settings_vault">الخزنة الخاصة</string>
+    <string name="settings_vault_active">مُفعّلة</string>
+    <string name="settings_vault_inactive">غير مُفعّلة</string>
+    <string name="settings_data">البيانات</string>
+    <string name="settings_history">سجل التنظيف</string>
+    <string name="settings_history_sub">عرض كل العمليات السابقة</string>
+    <string name="settings_about">حول</string>
+    <string name="settings_version">الإصدار</string>
+    <string name="settings_privacy_policy">سياسة الخصوصية</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_language_sub">اختر لغتك المفضلة</string>
+
+    <string name="rules_title">القواعد المخصصة</string>
+    <string name="rules_new">قاعدة جديدة</string>
+    <string name="rules_empty">لا توجد قواعد بعد</string>
+    <string name="rules_empty_desc">أنشئ قاعدتك الأولى لأتمتة التنظيف.</string>
+    <string name="rules_settings">محرك القواعد المخصصة</string>
+    <string name="rules_settings_sub">أتمتة متقدمة (PRO)</string>
+
+    <string name="large_files_title">الملفات الكبيرة</string>
+    <string name="large_files_idle_title">ابحث عن الملفات الكبيرة</string>
+    <string name="large_files_idle_desc">اعثر على الملفات الأكبر من %1$d MB</string>
+    <string name="large_files_scanning">جاري البحث…</string>
+    <string name="large_files_found">%1$d ملف كبير</string>
+    <string name="large_files_empty">لا توجد ملفات كبيرة</string>
+
+    <string name="ram_title">تحرير الذاكرة</string>
+    <string name="ram_boost">حرّر الآن</string>
+
+    <string name="battery_title">معلومات البطارية</string>
+
+    <string name="tools_cleaning">التنظيف</string>
+    <string name="tools_security">الأمان</string>
+    <string name="tools_performance">الأداء</string>
+    <string name="tools_automation">الأتمتة</string>
+
+    <string name="premium_title">PRO</string>
+    <string name="premium_headline">افتح كل المزايا</string>
+    <string name="premium_subtitle">تجربة كاملة بدون إعلانات مع أدوات احترافية</string>
+    <string name="premium_feat_1">بدون إعلانات مطلقًا</string>
+    <string name="premium_feat_2">تنظيف أسرع بـ 3×</string>
+    <string name="premium_feat_3">خزنة مشفرة بلا حدود</string>
+    <string name="premium_feat_4">مزايا حصرية جديدة</string>
+    <string name="premium_feat_5">لا تتبع، لا جمع بيانات</string>
+    <string name="premium_plan_monthly">شهري</string>
+    <string name="premium_plan_monthly_price">$2.99</string>
+    <string name="premium_plan_monthly_sub">يُجدَّد تلقائيًا</string>
+    <string name="premium_plan_lifetime">مدى الحياة</string>
+    <string name="premium_plan_lifetime_price">$9.99</string>
+    <string name="premium_plan_lifetime_sub">دفعة واحدة، للأبد</string>
+    <string name="premium_restore">استرجاع المشتريات</string>
+    <string name="premium_active_title">أنت PRO 🎉</string>
+    <string name="premium_active_sub">استمتع بكل المزايا</string>
+    <string name="premium_legal">يمكنك الإلغاء في أي وقت من إعدادات Google Play.</string>
+    <string name="go_premium">ترقية إلى PRO</string>
+
+    <string name="widget_title">مساحة التخزين</string>
+    <string name="widget_free">متاح %1$s</string>
+    <string name="widget_description">عرض مباشر لمساحة التخزين</string>
+</resources>

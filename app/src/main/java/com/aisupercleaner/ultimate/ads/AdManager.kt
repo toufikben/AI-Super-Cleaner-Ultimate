@@ -2,6 +2,9 @@ package com.aisupercleaner.ultimate.ads
 
 import android.app.Activity
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 import com.aisupercleaner.ultimate.qa.AdFrequencyPolicy
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -12,7 +15,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 
-class AdManager(context: Context) {
+@Singleton
+class AdManager @Inject constructor(@ApplicationContext context: Context) {
     private val appContext = context.applicationContext
     private val preferences = appContext.getSharedPreferences("ad_frequency", Context.MODE_PRIVATE)
     private var rewarded: RewardedAd? = null

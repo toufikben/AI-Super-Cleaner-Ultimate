@@ -4,10 +4,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-if grep -E "<uses-permission[^>]*MANAGE_EXTERNAL_STORAGE" -n app/src/main/AndroidManifest.xml; then
-  echo "ERROR: broad MANAGE_EXTERNAL_STORAGE permission must remain absent from the manifest." >&2
-  exit 1
-fi
+grep -Eq '<uses-permission[^>]*android.permission.MANAGE_EXTERNAL_STORAGE' app/src/main/AndroidManifest.xml
+grep -Eq '<uses-permission[^>]*android.permission.QUERY_ALL_PACKAGES' app/src/main/AndroidManifest.xml
 
 ./gradlew testDebugUnitTest assembleDebug lintDebug --no-daemon
 

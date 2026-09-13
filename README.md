@@ -1,33 +1,40 @@
 # AI Super Cleaner Ultimate
 
-تطبيق Android حقيقي لفهم التخزين وتنظيفه بأمان، مع أولوية للخصوصية والدقة قبل تحقيق الدخل.
+تطبيق Android لتنظيف التخزين وفحص الخصوصية وإدارة الملفات محليًا، مع إعلانات للمستخدم المجاني وميزات Premium عبر Google Play Billing.
 
-## حالة المشروع
+## الهوية والمنتجات
 
-**المراحل 1–13 مكتملة:** تأسيس Android وUI/UX، الخصوصية والصلاحيات، الماسح الحقيقي وRoom، Smart Cleanup Score، محركات التكرار والتشابه، التنظيف الآمن وTrash، ضغط النسخ وسجلها، Quick Clean وAdvanced Smart Scan، Cache، bounded concurrency، AdMob، Rewarded Ads، Google Play Billing، Premium، Paywall، UMP، وسياسة الخصوصية وData Safety.
+- Application ID: `com.aisupercleaner.ultimate`
+- الاشتراك الشهري: `premium_monthly` — السعر الاحتياطي `$2.99`، والسعر النهائي من Google Play.
+- الشراء الدائم: `premium_lifetime` — السعر الاحتياطي `$19.99`، والسعر النهائي من Google Play.
 
-**المرحلة 14 مكتملة:** Unit tests، Instrumentation test source، Release QA script، ProGuard، Release build، وGitHub Actions pipeline.
+## الصلاحيات المهمة
 
-## QA والبناء
+يستخدم التطبيق `QUERY_ALL_PACKAGES` لأن Privacy Scanner يفحص التطبيقات المثبتة والأذونات المطلوبة منها. ويستخدم `MANAGE_EXTERNAL_STORAGE` لأن وظائف إدارة وتنظيف الملفات تحتاج وصولًا واسعًا. يجب تقديم Permissions Declaration Form للصلاحيات المقيدة وإضافة إفصاح واضح داخل التطبيق ووصف المتجر.
+
+## البناء والفحص
 
 ```bash
-QA_ALLOW_TEST_ADS=1 ./scripts/qa_release.sh
-./gradlew assembleRelease --no-daemon
+./gradlew :app:assembleDebug --no-daemon
+./gradlew :app:testDebugUnitTest --no-daemon
+./gradlew :app:assembleRelease --no-daemon
+./scripts/qa_release.sh
+./scripts/verify_release.sh app/build/outputs/apk/release/app-release-unsigned.apk
 ```
 
-تم التحقق محلياً من Unit tests وassembleDebug وlintDebug وassembleRelease. لا يوجد جهاز أو Emulator متصل في بيئة البناء الحالية، ولذلك لم تُنفذ Instrumentation tests فعلياً؛ مصدر الاختبار موجود في `app/src/androidTest`.
+ينتج Release APK غير موقع ما لم تُمرر إعدادات التوقيع في بيئة محمية. احفظ `mapping.txt` لكل إصدار Release.
 
-ينتج Release حالياً APK غير موقع حتى تُمرر متغيرات keystore المحمية:
+## توقيع GitHub Actions
+
+يُستخدم `.github/workflows/release.yml` لبناء AAB وAPK موقّعين عبر GitHub Secrets. لا ترفع Keystore أو كلمات المرور إلى المستودع. الأسرار المطلوبة هي:
 
 ```text
-ANDROID_KEYSTORE_PATH
+ANDROID_KEYSTORE_BASE64
 ANDROID_KEYSTORE_PASSWORD
 ANDROID_KEY_ALIAS
 ANDROID_KEY_PASSWORD
 ```
 
-لا تحفظ هذه القيم في GitHub أو الملفات المصدرية. راجع [تقرير QA](docs/PHASE_14_QA_REPORT.md) قبل النشر.
-
 ## قبل النشر
 
-استبدل Test Ad IDs، أنشئ UMP messages، اربط Privacy Policy URL، أنشئ منتجات Play Billing، اختبر License Testers، نفذ Instrumentation على API 26+، وراجع Data Safety وPlay Console Internal Testing.
+إعداد منتجات Billing في Google Play، إنشاء رسالة UMP، ربط سياسة الخصوصية، تعبئة Data Safety، تقديم نماذج الصلاحيات المقيدة، إضافة License Testers، ثم اختبار AAB عبر Internal Testing.
