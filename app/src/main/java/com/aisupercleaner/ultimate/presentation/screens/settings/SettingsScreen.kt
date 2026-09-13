@@ -79,6 +79,16 @@ fun SettingsScreen(
 
         Section(stringResource(R.string.settings_about))
         InfoRowItem(stringResource(R.string.settings_version), "1.0.0", Icons.Rounded.Info)
+        InfoRowItem(
+            stringResource(R.string.settings_developer),
+            stringResource(R.string.settings_developer_name),
+            Icons.Rounded.Person,
+        )
+        InfoRowItem(
+            stringResource(R.string.settings_developer_email_label),
+            stringResource(R.string.settings_developer_email),
+            Icons.Rounded.Email,
+        )
 
         Spacer(Modifier.height(24.dp))
     }

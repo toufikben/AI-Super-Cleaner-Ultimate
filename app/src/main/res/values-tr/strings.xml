@@ -238,6 +238,10 @@
     <string name="settings_history">Temizlik Geçmişi</string>
     <string name="settings_history_sub">Tüm işlemleri görüntüle</string>
     <string name="settings_about">Hakkında</string>
+    <string name="settings_developer">Geliştirici</string>
+    <string name="settings_developer_name">Toufik Bendjeddah</string>
+    <string name="settings_developer_email_label">E-posta</string>
+    <string name="settings_developer_email">www.toufik.bendjeddah@gmail.com</string>
     <string name="settings_version">Sürüm</string>
     <string name="settings_privacy_policy">Gizlilik Politikası</string>
     <string name="settings_language">Dil</string>

@@ -238,6 +238,10 @@
     <string name="settings_history">Verlauf</string>
     <string name="settings_history_sub">Alle Vorgänge anzeigen</string>
     <string name="settings_about">Über</string>
+    <string name="settings_developer">Entwickler</string>
+    <string name="settings_developer_name">Toufik Bendjeddah</string>
+    <string name="settings_developer_email_label">E-Mail</string>
+    <string name="settings_developer_email">www.toufik.bendjeddah@gmail.com</string>
     <string name="settings_version">Version</string>
     <string name="settings_privacy_policy">Datenschutz</string>
     <string name="settings_language">Sprache</string>
