@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Super Cleaner</string>
+
+    <!-- Channels -->
+    <string name="channel_auto_clean">خودکار صفائی</string>
+    <string name="channel_auto_clean_desc">مقررہ خودکار صفائی کی یاد دہانیاں</string>
+    <string name="channel_alerts">اسمارٹ انتباہات</string>
+    <string name="channel_alerts_desc">اسٹوریج اور بیٹری کے انتباہات</string>
+    <string name="channel_vault">والٹ</string>
+    <string name="channel_vault_desc">نجی والٹ کی اطلاعات</string>
+
+    <!-- Common -->
+    <string name="ok">ٹھیک ہے</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="delete">حذف کریں</string>
+    <string name="retry">دوبارہ کوشش کریں</string>
+    <string name="continue_label">جاری رکھیں</string>
+    <string name="skip">چھوڑیں</string>
+    <string name="next">اگلا</string>
+    <string name="get_started">شروع کریں</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">صاف کریں، رفتار بڑھائیں، محفوظ رکھیں</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_1_title">ایک ٹیپ میں اسمارٹ صفائی</string>
+    <string name="onboarding_1_desc">نقل فائلیں، بڑی فائلیں اور فضول مواد تلاش کریں — بہت سی جگہ خالی کریں۔</string>
+    <string name="onboarding_2_title">اپنے ڈیوائس کی رفتار بڑھائیں</string>
+    <string name="onboarding_2_desc">RAM خالی کریں، بیٹری کا خرچ کم کریں اور پس منظر میں چلنے والی ایپس روکیں۔</string>
+    <string name="onboarding_3_title">مکمل رازداری</string>
+    <string name="onboarding_3_desc">خفیہ والٹ، محفوظ حذف اور بایومیٹرک لاک۔</string>
+
+    <!-- Tabs -->
+    <string name="tab_dashboard">ہوم</string>
+    <string name="tab_junk">کلینر</string>
+    <string name="tab_tools">ٹولز</string>
+    <string name="tab_settings">ترتیبات</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_storage_title">استعمال شدہ اسٹوریج</string>
+    <string name="dashboard_quick_actions">فوری اقدامات</string>
+    <string name="refresh">تازہ کریں</string>
+    <string name="stat_total_cleaned">کل خالی کی گئی جگہ</string>
+    <string name="stat_cleanups">صفائیاں</string>
+    <string name="stat_last_clean">آخری صفائی</string>
+
+    <string name="action_quick_clean">فوری صفائی</string>
+    <string name="action_quick_clean_sub">فوراً جگہ خالی کریں</string>
+    <string name="action_duplicates">نقل فائلیں</string>
+    <string name="action_duplicates_sub">نقول تلاش کریں</string>
+    <string name="action_large_files">بڑی فائلیں</string>
+    <string name="action_large_files_sub">100MB سے بڑی</string>
+    <string name="action_vault">نجی والٹ</string>
+    <string name="action_vault_sub">خفیہ کریں اور چھپائیں</string>
+
+    <!-- Junk Categories -->
+    <string name="junk_cache">کیش فائلیں</string>
+    <string name="junk_temp">عارضی فائلیں</string>
+    <string name="junk_logs">سسٹم لاگز</string>
+    <string name="junk_thumbnails">تھمب نیلز</string>
+    <string name="junk_empty_folders">خالی فولڈرز</string>
+    <string name="junk_apk">پرانی APKs</string>
+    <string name="junk_downloads">ڈاؤن لوڈ کا بچا ہوا مواد</string>
+    <string name="junk_obsolete">غیر ضروری فائلیں</string>
+
+    <!-- Junk Screen -->
+    <string name="junk_idle_title">اسکین کے لیے تیار</string>
+    <string name="junk_idle_desc">ہم ایک ٹیپ میں عارضی فائلیں، کیش اور لاگز تلاش کریں گے۔</string>
+    <string name="start_scan">اسکین شروع کریں</string>
+    <string name="rescan">دوبارہ اسکین کریں</string>
+    <string name="select_all">سب منتخب کریں</string>
+    <string name="deselect_all">سب کا انتخاب ختم کریں</string>
+    <string name="clean_now">ابھی صاف کریں</string>
+    <string name="cleaning_in_progress">صفائی جاری ہے…</string>
+    <string name="junk_selected_title">حذف کرنے کے لیے منتخب</string>
+    <string name="junk_selected_count">%1$d آئٹمز</string>
+
+    <string name="scan_idle">غیر فعال</string>
+    <string name="scan_enumerating">فہرستیں تیار کی جا رہی ہیں…</string>
+    <string name="scan_scanning">اسکین کیا جا رہا ہے…</string>
+    <string name="scan_finalizing">تکمیل جاری ہے…</string>
+    <string name="scan_completed">مکمل ہو گیا</string>
+    <string name="scan_cancelled">منسوخ کر دیا گیا</string>
+    <string name="scan_error">ایک خرابی پیش آ گئی</string>
+
+    <string name="cleanup_done">صفائی مکمل!</string>
+    <string name="freed_space">خالی کی گئی جگہ</string>
+    <string name="cleanup_summary">%1$d حذف، %2$d ناکام</string>
+    <string name="confirm_cleanup_title">حذف کرنے کی تصدیق کریں</string>
+    <string name="confirm_cleanup_message">%1$d فائلیں (%2$s) حذف کریں؟ یہ عمل واپس نہیں ہو سکتا۔</string>
+
+    <!-- Permissions -->
+    <string name="perm_screen_title">اجازتیں</string>
+    <string name="perm_intro_title">شروع کرنے سے پہلے</string>
+    <string name="perm_intro_desc">ہمیں چند اجازتوں کی ضرورت ہے۔ ہم آپ کا ڈیٹا کبھی جمع نہیں کرتے۔</string>
+    <string name="perm_progress">%2$d میں سے %1$d منظور</string>
+    <string name="perm_granted">منظور شدہ</string>
+    <string name="perm_denied">مسترد</string>
+    <string name="perm_blocked">بلاک ہے — ترتیبات کھولیں</string>
+    <string name="perm_needed">ضروری</string>
+    <string name="perm_not_applicable">معاونت نہیں</string>
+    <string name="perm_grant">منظور کریں</string>
+    <string name="perm_open_settings">ترتیبات</string>
+    <string name="perm_required">لازمی</string>
+    <string name="perm_required_hint">⚠️ جاری رکھنے کے لیے اہم اجازت منظور کریں</string>
+
+    <string name="perm_storage_title">فائلیں پڑھیں</string>
+    <string name="perm_storage_desc">تصاویر، ویڈیوز اور نقل فائلیں اسکین کرنے کے لیے۔</string>
+    <string name="perm_all_files_title">مکمل فائل رسائی</string>
+    <string name="perm_all_files_desc">ڈیوائس کی تمام فائلیں اسکین کرنے کے لیے (Android 11+)۔</string>
+    <string name="perm_notif_title">اطلاعات</string>
+    <string name="perm_notif_desc">اسٹوریج کم ہونے پر آپ کو خبردار کرنے کے لیے۔</string>
+    <string name="perm_query_title">انسٹال شدہ ایپس پڑھیں</string>
+    <string name="perm_query_desc">ہر ایپ کا کیش اور ڈیٹا اسکین کرنے کے لیے۔</string>
+    <string name="perm_biometric_title">فنگر پرنٹ / چہرہ</string>
+    <string name="perm_biometric_desc">اپنے نجی والٹ کو محفوظ اور غیر مقفل کرنے کے لیے۔</string>
+
+    <!-- Duplicates -->
+    <string name="duplicates_title">نقل فائلیں</string>
+    <string name="duplicates_intro_title">نقل فائلیں تلاش کریں</string>
+    <string name="duplicates_intro_desc">ہم ایک جیسی یا ملتی جلتی فائلیں تلاش کریں گے۔</string>
+    <string name="duplicates_scan_button">اسکین شروع کریں</string>
+    <string name="duplicates_empty">کوئی نقل فائل نہیں ملی 🎉</string>
+    <string name="duplicates_empty_sub">آپ کا ڈیوائس بالکل صاف ہے۔</string>
+    <string name="duplicates_found_groups">%1$d گروپس</string>
+    <string name="duplicates_found_wasted">%1$s خالی کی جا سکتی ہے</string>
+    <string name="duplicates_kind_exact">بالکل یکساں</string>
+    <string name="duplicates_kind_similar">ملتی جلتی تصاویر</string>
+    <string name="duplicates_items_count">%1$d فائلیں</string>
+    <string name="duplicates_wasted_label">حذف کریں: %1$s</string>
+    <string name="duplicates_smart_select">اسمارٹ انتخاب</string>
+    <string name="duplicates_keep_oldest">قدیم ترین رکھیں</string>
+    <string name="duplicates_keep_newest">جدید ترین رکھیں</string>
+    <string name="duplicates_keep_shortest">مختصر ترین رکھیں</string>
+    <string name="duplicates_delete_selected">منتخب حذف کریں</string>
+    <string name="duplicates_scanning_title">نقل فائلیں تلاش کی جا رہی ہیں…</string>
+    <string name="duplicates_phase_enumerating">فائلیں جمع کی جا رہی ہیں…</string>
+    <string name="duplicates_phase_size">حجم کے لحاظ سے چھانٹی جاری ہے…</string>
+    <string name="duplicates_phase_hash">SHA-256 کا حساب لگایا جا رہا ہے…</string>
+    <string name="duplicates_phase_image">ملتی جلتی تصاویر کا تجزیہ جاری ہے…</string>
+    <string name="duplicates_kept_label">رکھی گئی</string>
+    <string name="duplicates_selected_label">منتخب</string>
+    <string name="duplicates_need_permission">جاری رکھنے کے لیے ہمیں فائل پڑھنے کی اجازت درکار ہے</string>
+
+    <!-- Vault -->
+    <string name="vault_title">نجی والٹ</string>
+    <string name="vault_locked_title">والٹ مقفل ہے</string>
+    <string name="vault_setup_hint">اپنے والٹ کی حفاظت کے لیے پہلے PIN بنائیں</string>
+    <string name="vault_unlock_hint">PIN درج کریں یا اپنا فنگر پرنٹ استعمال کریں</string>
+    <string name="vault_pin_label">PIN</string>
+    <string name="vault_pin_confirm">PIN کی تصدیق کریں</string>
+    <string name="vault_pin_create">PIN بنائیں</string>
+    <string name="vault_pin_wrong">غلط PIN</string>
+    <string name="vault_pin_mismatch">PIN مماثل نہیں ہیں</string>
+    <string name="vault_setup_pin">PIN بنائیں</string>
+    <string name="vault_unlock">غیر مقفل کریں</string>
+    <string name="vault_use_biometric">بایومیٹرک استعمال کریں</string>
+    <string name="vault_lock">مقفل کریں</string>
+    <string name="vault_stats">%1$d فائلیں · %2$s</string>
+    <string name="vault_add_files">فائلیں شامل کریں</string>
+    <string name="vault_empty_title">والٹ خالی ہے</string>
+    <string name="vault_empty_desc">اپنی نجی فائلیں شامل کریں — انہیں خفیہ اور پوشیدہ کر دیا جائے گا۔</string>
+    <string name="vault_importing">درآمد جاری ہے %1$d/%2$d</string>
+    <string name="vault_delete_title">والٹ سے ہٹائیں</string>
+    <string name="vault_delete_message">"%1$s" کو محفوظ طریقے سے مٹا دیا جائے گا۔ اسے بازیافت نہیں کیا جا سکتا۔</string>
+
+    <!-- Shredder -->
+    <string name="shredder_title">فائل شریڈر</string>
+    <string name="shred_empty_title">کوئی فائل منتخب نہیں</string>
+    <string name="shred_empty_desc">فائلیں مستقل طور پر محفوظ طریقے سے مٹانے کے لیے شامل کریں۔</string>
+    <string name="shred_add">فائلیں شامل کریں</string>
+    <string name="shred_now">ابھی شریڈ کریں</string>
+    <string name="shredding_in_progress">شریڈنگ جاری ہے…</string>
+    <string name="shred_level_label">سکیورٹی کی سطح</string>
+    <string name="shred_level_fast">تیز</string>
+    <string name="shred_level_fast_desc">کارکردگی کے لیے ایک بے ترتیب پاس۔</string>
+    <string name="shred_level_secure">محفوظ</string>
+    <string name="shred_level_secure_desc">3 پاس — DoD 5220.22-M معیار۔</string>
+    <string name="shred_level_military">فوجی</string>
+    <string name="shred_level_military_desc">7 پاس — زیادہ سے زیادہ سکیورٹی۔</string>
+    <string name="shred_confirm_title">شریڈنگ کی تصدیق کریں</string>
+    <string name="shred_confirm_msg">%1$d فائلیں (%2$s) مستقل طور پر مٹا دی جائیں گی۔ انہیں بازیافت نہیں کیا جا سکتا۔</string>
+    <string name="shred_confirm_yes">مستقل طور پر شریڈ کریں</string>
+    <string name="shred_done_title">شریڈنگ مکمل</string>
+    <string name="shred_done_msg">%1$s کو محفوظ طریقے سے مٹا دیا گیا۔</string>
+
+    <!-- Privacy -->
+    <string name="privacy_title">رازداری اسکینر</string>
+    <string name="privacy_alert">%1$d ایپس کے پاس خطرناک اجازتیں ہیں</string>
+    <string name="privacy_all_clean">کوئی خطرناک ایپ نہیں ملی</string>
+    <string name="privacy_apps_count">%1$d انسٹال شدہ ایپس</string>
+    <string name="privacy_filter_all">سب</string>
+    <string name="privacy_filter_high">زیادہ خطرہ</string>
+    <string name="privacy_filter_medium">درمیانہ یا زیادہ</string>
+    <string name="privacy_perms_count">%1$d خطرناک اجازتیں</string>
+    <string name="risk_high">زیادہ</string>
+    <string name="risk_medium">درمیانہ</string>
+    <string name="risk_low">کم</string>
+    <string name="risk_safe">محفوظ</string>
+
+    <!-- Wi-Fi -->
+    <string name="wifi_title">Wi-Fi سکیورٹی</string>
+    <string name="wifi_risk_high">غیر محفوظ نیٹ ورک!</string>
+    <string name="wifi_risk_medium">سکیورٹی انتباہ</string>
+    <string name="wifi_risk_low">معمولی نوٹ</string>
+    <string name="wifi_risk_safe">محفوظ نیٹ ورک</string>
+    <string name="wifi_ssid">نیٹ ورک کا نام</string>
+    <string name="wifi_security">خفیہ کاری</string>
+    <string name="wifi_ip">IP ایڈریس</string>
+    <string name="wifi_connected">منسلک</string>
+    <string name="wifi_issues">معلوم شدہ مسائل</string>
+
+    <!-- Notifications -->
+    <string name="notif_auto_clean_title">خودکار صفائی مکمل</string>
+    <string name="notif_auto_clean_text">%2$d فائلیں حذف کر کے %1$s جگہ خالی کی گئی</string>
+    <string name="notif_storage_title">⚠️ اسٹوریج کم رہ گئی ہے</string>
+    <string name="notif_storage_text">%1$d%% استعمال — صرف %2$s باقی</string>
+    <string name="notif_large_files_title">بڑی فائلیں</string>
+    <string name="notif_large_files_text">%1$d فائلیں (%2$s) جائزے کے قابل ہیں</string>
+
+    <!-- History -->
+    <string name="history_title">صفائی کی سرگزشت</string>
+    <string name="history_empty">ابھی کوئی سرگزشت نہیں</string>
+    <string name="history_total_freed">کل خالی کی گئی جگہ</string>
+    <string name="history_total_sessions">صفائی کے %1$d سیشنز</string>
+
+    <!-- Forecast -->
+    <string name="forecast_critical">⚠️ %1$d دن میں اسٹوریج بھر جائے گی</string>
+    <string name="forecast_warning">%1$d دن میں بھر جائے گی</string>
+    <string name="forecast_attention">تخمیناً %1$d دن میں بھر جائے گی</string>
+    <string name="forecast_fine">آپ ٹھیک ہیں (%1$d دن باقی)</string>
+    <string name="forecast_date">تخمینی تاریخ: %1$s</string>
+
+    <!-- Scheduler -->
+    <string name="scheduler_title">خودکار شیڈول</string>
+    <string name="scheduler_enable">خودکار صفائی</string>
+    <string name="scheduler_enable_desc">عارضی فائلیں وقفے وقفے سے حذف کریں</string>
+    <string name="scheduler_interval">وقفہ</string>
+    <string name="scheduler_run_now">ابھی چلائیں</string>
+
+    <!-- Theme -->
+    <string name="theme_title">ظاہری شکل</string>
+    <string name="theme_mode">موڈ</string>
+    <string name="theme_light">روشن</string>
+    <string name="theme_dark">تاریک</string>
+    <string name="theme_system">سسٹم</string>
+    <string name="theme_dynamic">Material You رنگ</string>
+    <string name="theme_dynamic_desc">وال پیپر پر مبنی رنگ استعمال کریں</string>
+    <string name="theme_accent">نمایاں رنگ</string>
+    <string name="theme_preview">پیش نظارہ</string>
+
+    <!-- Accent Names -->
+    <string name="accent_ocean_blue">سمندری نیلا</string>
+    <string name="accent_royal_purple">شاہی جامنی</string>
+    <string name="accent_emerald_green">زمردی سبز</string>
+    <string name="accent_sunset_orange">غروب آفتاب نارنجی</string>
+    <string name="accent_crimson_red">قرمزی سرخ</string>
+    <string name="accent_turquoise_teal">فیروزی سبز مائل نیلا</string>
+    <string name="accent_rose_pink">گلابی</string>
+    <string name="accent_midnight_indigo">نصف شب کا نیلا</string>
+
+    <!-- Settings -->
+    <string name="settings_upgrade_title">PRO میں اپ گریڈ کریں</string>
+    <string name="settings_upgrade_sub">اشتہارات ہٹائیں + خصوصی خصوصیات</string>
+    <string name="settings_appearance">ظاہری شکل</string>
+    <string name="settings_theme">تھیمز اور رنگ</string>
+    <string name="settings_theme_sub">8 نمایاں انداز + ڈارک موڈ</string>
+    <string name="settings_automation">خودکاری</string>
+    <string name="settings_auto_clean">خودکار صفائی</string>
+    <string name="settings_auto_clean_sub">عارضی فائلیں وقفے وقفے سے حذف کریں</string>
+    <string name="settings_scheduler">اعلی درجے کا شیڈولر</string>
+    <string name="settings_scheduler_sub">وقفہ منتخب کریں</string>
+    <string name="settings_notifications">اطلاعات</string>
+    <string name="settings_notif_enable">اطلاعات فعال کریں</string>
+    <string name="settings_notif_enable_sub">اسمارٹ اسٹوریج انتباہات</string>
+    <string name="settings_alert_threshold">انتباہ کی حد</string>
+    <string name="settings_alert_threshold_sub">%1$d%% استعمال پر انتباہ</string>
+    <string name="settings_security">سکیورٹی</string>
+    <string name="settings_vault">نجی والٹ</string>
+    <string name="settings_developer">ڈیولپر</string>
+    <string name="settings_developer_name">Toufik Bendjeddah</string>
+    <string name="settings_developer_email_label">ای میل</string>
+    <string name="settings_developer_email">toufik.bendjeddah@gmail.com</string>
+    <string name="settings_vault_active">فعال</string>
+    <string name="settings_vault_inactive">فعال نہیں</string>
+    <string name="settings_data">ڈیٹا</string>
+    <string name="settings_history">صفائی کی سرگزشت</string>
+    <string name="settings_history_sub">تمام سابقہ کارروائیاں دیکھیں</string>
+    <string name="settings_about">متعلق</string>
+    <string name="settings_version">ورژن</string>
+    <string name="settings_privacy_policy">رازداری کی پالیسی</string>
+    <string name="settings_language">زبان</string>
+    <string name="settings_language_sub">اپنی پسندیدہ زبان منتخب کریں</string>
+
+    <!-- Rules -->
+    <string name="rules_title">حسب ضرورت قواعد</string>
+    <string name="rules_new">نیا قاعدہ</string>
+    <string name="rules_empty">ابھی کوئی قاعدہ نہیں</string>
+    <string name="rules_empty_desc">صفائی خودکار بنانے کے لیے اپنا پہلا قاعدہ بنائیں۔</string>
+    <string name="rules_settings">حسب ضرورت قواعد کا انجن</string>
+    <string name="rules_settings_sub">اعلی درجے کی خودکاری (PRO)</string>
+
+    <!-- Large Files -->
+    <string name="large_files_title">بڑی فائلیں</string>
+    <string name="large_files_idle_title">بڑی فائلیں تلاش کریں</string>
+    <string name="large_files_idle_desc">%1$d MB سے بڑی فائلیں تلاش کریں</string>
+    <string name="large_files_scanning">بڑی فائلیں تلاش کی جا رہی ہیں…</string>
+    <string name="large_files_found">%1$d بڑی فائلیں</string>
+    <string name="large_files_empty">کوئی بڑی فائل نہیں ملی</string>
+
+    <!-- RAM -->
+    <string name="ram_title">RAM بوسٹر</string>
+    <string name="ram_boost">ابھی بوسٹ کریں</string>
+
+    <!-- Battery -->
+    <string name="battery_title">بیٹری کی معلومات</string>
+
+    <!-- Tools -->
+    <string name="tools_cleaning">صفائی</string>
+    <string name="tools_security">سکیورٹی</string>
+    <string name="tools_performance">کارکردگی</string>
+    <string name="tools_automation">خودکاری</string>
+
+    <!-- Premium -->
+    <string name="premium_title">PRO</string>
+    <string name="premium_headline">سب کچھ کھولیں</string>
+    <string name="premium_subtitle">PRO ٹولز کے ساتھ مکمل اشتہار سے پاک تجربہ</string>
+    <string name="premium_feat_1">کبھی اشتہارات نہیں</string>
+    <string name="premium_feat_2">3 گنا تیز صفائی</string>
+    <string name="premium_feat_3">لامحدود خفیہ والٹ</string>
+    <string name="premium_feat_4">خصوصی نئی خصوصیات</string>
+    <string name="premium_feat_5">نہ ٹریکنگ، نہ ڈیٹا جمع کرنا</string>
+    <string name="premium_plan_monthly">ماہانہ</string>
+    <string name="premium_plan_monthly_price">$2.99</string>
+    <string name="premium_plan_monthly_sub">خودکار تجدید</string>
+    <string name="premium_plan_lifetime">تاحیات</string>
+    <string name="premium_plan_lifetime_price">$19.99</string>
+    <string name="premium_plan_lifetime_sub">ایک بار ادائیگی</string>
+    <string name="premium_restore">خریداری بحال کریں</string>
+    <string name="premium_active_title">آپ PRO ہیں 🎉</string>
+    <string name="premium_active_sub">تمام خصوصیات سے لطف اندوز ہوں</string>
+    <string name="premium_legal">Google Play کی ترتیبات سے کسی بھی وقت منسوخ کریں۔</string>
+    <string name="go_premium">PRO میں اپ گریڈ کریں</string>
+
+    <!-- Widget -->
+    <string name="widget_title">اسٹوریج</string>
+    <string name="widget_free">%1$s خالی</string>
+    <string name="widget_description">اسٹوریج کا براہِ راست ڈسپلے</string>
+</resources>

@@ -281,7 +281,7 @@
     <string name="settings_developer">Developer</string>
     <string name="settings_developer_name">Toufik Bendjeddah</string>
     <string name="settings_developer_email_label">Email</string>
-    <string name="settings_developer_email">www.toufik.bendjeddah@gmail.com</string>
+    <string name="settings_developer_email">toufik.bendjeddah@gmail.com</string>
     <string name="settings_vault_active">Enabled</string>
     <string name="settings_vault_inactive">Not enabled</string>
     <string name="settings_data">Data</string>

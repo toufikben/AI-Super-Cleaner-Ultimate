@@ -7,7 +7,7 @@
 | App name | AI Super Cleaner Ultimate |
 | Package name | `com.aisupercleaner.ultimate` |
 | Developer | Toufik Bendjeddah |
-| Contact | `www.toufik.bendjeddah@gmail.com` |
+| Contact | `toufik.bendjeddah@gmail.com` |
 | Countries | All countries, subject to Google Play availability and applicable law |
 | Ads | Yes — Google AdMob in the free experience |
 | In-app products | `premium_monthly` and `premium_lifetime` |
@@ -50,4 +50,4 @@ The app requests Android permissions needed for its functions, including file an
 AI Super Cleaner Ultimate does not upload your personal files, vault contents, scan results, or installed-app list to the developer. Advertising, consent, and billing providers may process information under their own policies and your consent choices. Read the Privacy Policy before using the app.
 
 Developer: Toufik Bendjeddah
-Contact: www.toufik.bendjeddah@gmail.com
+Contact: toufik.bendjeddah@gmail.com

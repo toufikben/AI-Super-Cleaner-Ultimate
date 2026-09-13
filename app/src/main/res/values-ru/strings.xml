@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Super Cleaner</string>
+
+    <!-- Channels -->
+    <string name="channel_auto_clean">Автоматическая очистка</string>
+    <string name="channel_auto_clean_desc">Напоминания о запланированной автоматической очистке</string>
+    <string name="channel_alerts">Умные уведомления</string>
+    <string name="channel_alerts_desc">Уведомления о хранилище и батарее</string>
+    <string name="channel_vault">Хранилище</string>
+    <string name="channel_vault_desc">Уведомления о личном хранилище</string>
+
+    <!-- Common -->
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="retry">Повторить</string>
+    <string name="continue_label">Продолжить</string>
+    <string name="skip">Пропустить</string>
+    <string name="next">Далее</string>
+    <string name="get_started">Начать</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">Очистка, ускорение, защита</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_1_title">Умная очистка одним нажатием</string>
+    <string name="onboarding_1_desc">Находите дубликаты, большие файлы и мусор — освобождайте много места.</string>
+    <string name="onboarding_2_title">Ускорьте устройство</string>
+    <string name="onboarding_2_desc">Освободите RAM, уменьшите расход батареи и остановите фоновые приложения.</string>
+    <string name="onboarding_3_title">Полная конфиденциальность</string>
+    <string name="onboarding_3_desc">Зашифрованное хранилище, безопасное удаление и биометрическая блокировка.</string>
+
+    <!-- Tabs -->
+    <string name="tab_dashboard">Главная</string>
+    <string name="tab_junk">Очистка</string>
+    <string name="tab_tools">Инструменты</string>
+    <string name="tab_settings">Настройки</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_storage_title">Используется хранилища</string>
+    <string name="dashboard_quick_actions">Быстрые действия</string>
+    <string name="refresh">Обновить</string>
+    <string name="stat_total_cleaned">Всего освобождено</string>
+    <string name="stat_cleanups">Очисток</string>
+    <string name="stat_last_clean">Последняя очистка</string>
+
+    <string name="action_quick_clean">Быстрая очистка</string>
+    <string name="action_quick_clean_sub">Мгновенно освободить место</string>
+    <string name="action_duplicates">Дубликаты</string>
+    <string name="action_duplicates_sub">Найти копии</string>
+    <string name="action_large_files">Большие файлы</string>
+    <string name="action_large_files_sub">Более 100 МБ</string>
+    <string name="action_vault">Личное хранилище</string>
+    <string name="action_vault_sub">Зашифровать и скрыть</string>
+
+    <!-- Junk Categories -->
+    <string name="junk_cache">Файлы кэша</string>
+    <string name="junk_temp">Временные файлы</string>
+    <string name="junk_logs">Системные журналы</string>
+    <string name="junk_thumbnails">Миниатюры</string>
+    <string name="junk_empty_folders">Пустые папки</string>
+    <string name="junk_apk">Старые APK</string>
+    <string name="junk_downloads">Остатки загрузок</string>
+    <string name="junk_obsolete">Устаревшие файлы</string>
+
+    <!-- Junk Screen -->
+    <string name="junk_idle_title">Готово к сканированию</string>
+    <string name="junk_idle_desc">Мы найдём временные файлы, кэш и журналы — одним нажатием.</string>
+    <string name="start_scan">Начать сканирование</string>
+    <string name="rescan">Сканировать снова</string>
+    <string name="select_all">Выбрать все</string>
+    <string name="deselect_all">Снять выделение</string>
+    <string name="clean_now">Очистить сейчас</string>
+    <string name="cleaning_in_progress">Очистка…</string>
+    <string name="junk_selected_title">Выбрано для удаления</string>
+    <string name="junk_selected_count">%1$d объектов</string>
+
+    <string name="scan_idle">Ожидание</string>
+    <string name="scan_enumerating">Подготовка списков…</string>
+    <string name="scan_scanning">Сканирование…</string>
+    <string name="scan_finalizing">Завершение…</string>
+    <string name="scan_completed">Завершено</string>
+    <string name="scan_cancelled">Отменено</string>
+    <string name="scan_error">Произошла ошибка</string>
+
+    <string name="cleanup_done">Очищено!</string>
+    <string name="freed_space">Освобождено места</string>
+    <string name="cleanup_summary">Удалено: %1$d, не удалось удалить: %2$d</string>
+    <string name="confirm_cleanup_title">Подтвердите удаление</string>
+    <string name="confirm_cleanup_message">Удалить %1$d файлов (%2$s)? Это действие нельзя отменить.</string>
+
+    <!-- Permissions -->
+    <string name="perm_screen_title">Разрешения</string>
+    <string name="perm_intro_title">Перед началом</string>
+    <string name="perm_intro_desc">Нам нужны некоторые разрешения. Мы никогда не собираем ваши данные.</string>
+    <string name="perm_progress">Предоставлено: %1$d из %2$d</string>
+    <string name="perm_granted">Предоставлено</string>
+    <string name="perm_denied">Отклонено</string>
+    <string name="perm_blocked">Заблокировано — откройте настройки</string>
+    <string name="perm_needed">Требуется</string>
+    <string name="perm_not_applicable">Не поддерживается</string>
+    <string name="perm_grant">Предоставить</string>
+    <string name="perm_open_settings">Настройки</string>
+    <string name="perm_required">Обязательно</string>
+    <string name="perm_required_hint">⚠️ Предоставьте критически важное разрешение, чтобы продолжить</string>
+
+    <string name="perm_storage_title">Чтение файлов</string>
+    <string name="perm_storage_desc">Для сканирования изображений, видео и дубликатов.</string>
+    <string name="perm_all_files_title">Полный доступ к файлам</string>
+    <string name="perm_all_files_desc">Для сканирования всех файлов устройства (Android 11+).</string>
+    <string name="perm_notif_title">Уведомления</string>
+    <string name="perm_notif_desc">Чтобы уведомлять вас о нехватке места.</string>
+    <string name="perm_query_title">Чтение установленных приложений</string>
+    <string name="perm_query_desc">Для сканирования кэша и данных каждого приложения.</string>
+    <string name="perm_biometric_title">Отпечаток пальца / лицо</string>
+    <string name="perm_biometric_desc">Для защиты и разблокировки личного хранилища.</string>
+
+    <!-- Duplicates -->
+    <string name="duplicates_title">Файлы-дубликаты</string>
+    <string name="duplicates_intro_title">Найти дубликаты</string>
+    <string name="duplicates_intro_desc">Мы найдём идентичные или похожие файлы.</string>
+    <string name="duplicates_scan_button">Начать сканирование</string>
+    <string name="duplicates_empty">Дубликаты не найдены 🎉</string>
+    <string name="duplicates_empty_sub">На вашем устройстве всё чисто.</string>
+    <string name="duplicates_found_groups">Групп: %1$d</string>
+    <string name="duplicates_found_wasted">Можно освободить: %1$s</string>
+    <string name="duplicates_kind_exact">Точное совпадение</string>
+    <string name="duplicates_kind_similar">Похожие изображения</string>
+    <string name="duplicates_items_count">Файлов: %1$d</string>
+    <string name="duplicates_wasted_label">Удалить: %1$s</string>
+    <string name="duplicates_smart_select">Умный выбор</string>
+    <string name="duplicates_keep_oldest">Оставить самые старые</string>
+    <string name="duplicates_keep_newest">Оставить самые новые</string>
+    <string name="duplicates_keep_shortest">Оставить самые короткие</string>
+    <string name="duplicates_delete_selected">Удалить выбранные</string>
+    <string name="duplicates_scanning_title">Поиск дубликатов…</string>
+    <string name="duplicates_phase_enumerating">Сбор файлов…</string>
+    <string name="duplicates_phase_size">Фильтрация по размеру…</string>
+    <string name="duplicates_phase_hash">Вычисление SHA-256…</string>
+    <string name="duplicates_phase_image">Анализ похожих изображений…</string>
+    <string name="duplicates_kept_label">Оставлено</string>
+    <string name="duplicates_selected_label">Выбрано</string>
+    <string name="duplicates_need_permission">Для продолжения нужен доступ к чтению файлов</string>
+
+    <!-- Vault -->
+    <string name="vault_title">Личное хранилище</string>
+    <string name="vault_locked_title">Хранилище заблокировано</string>
+    <string name="vault_setup_hint">Сначала создайте PIN-код, чтобы защитить хранилище</string>
+    <string name="vault_unlock_hint">Введите PIN-код или используйте отпечаток пальца</string>
+    <string name="vault_pin_label">PIN-код</string>
+    <string name="vault_pin_confirm">Подтвердите PIN-код</string>
+    <string name="vault_pin_create">Создать PIN-код</string>
+    <string name="vault_pin_wrong">Неверный PIN-код</string>
+    <string name="vault_pin_mismatch">PIN-коды не совпадают</string>
+    <string name="vault_setup_pin">Создать PIN-код</string>
+    <string name="vault_unlock">Разблокировать</string>
+    <string name="vault_use_biometric">Использовать биометрию</string>
+    <string name="vault_lock">Заблокировать</string>
+    <string name="vault_stats">Файлов: %1$d · %2$s</string>
+    <string name="vault_add_files">Добавить файлы</string>
+    <string name="vault_empty_title">Хранилище пусто</string>
+    <string name="vault_empty_desc">Добавьте личные файлы — они будут зашифрованы и скрыты.</string>
+    <string name="vault_importing">Импорт: %1$d/%2$d</string>
+    <string name="vault_delete_title">Удалить из хранилища</string>
+    <string name="vault_delete_message">&quot;%1$s&quot; будет безопасно стёрт. Восстановить его нельзя.</string>
+
+    <!-- Shredder -->
+    <string name="shredder_title">Измельчитель файлов</string>
+    <string name="shred_empty_title">Файлы не выбраны</string>
+    <string name="shred_empty_desc">Добавьте файлы, чтобы безвозвратно и безопасно стереть их.</string>
+    <string name="shred_add">Добавить файлы</string>
+    <string name="shred_now">Измельчить сейчас</string>
+    <string name="shredding_in_progress">Измельчение…</string>
+    <string name="shred_level_label">Уровень безопасности</string>
+    <string name="shred_level_fast">Быстрый</string>
+    <string name="shred_level_fast_desc">Один проход со случайными данными — для высокой производительности.</string>
+    <string name="shred_level_secure">Безопасный</string>
+    <string name="shred_level_secure_desc">3 прохода — стандарт DoD 5220.22-M.</string>
+    <string name="shred_level_military">Военный</string>
+    <string name="shred_level_military_desc">7 проходов — максимальная безопасность.</string>
+    <string name="shred_confirm_title">Подтвердите измельчение</string>
+    <string name="shred_confirm_msg">%1$d файлов (%2$s) будут безвозвратно стёрты. Восстановить их нельзя.</string>
+    <string name="shred_confirm_yes">Стереть навсегда</string>
+    <string name="shred_done_title">Удалено безвозвратно</string>
+    <string name="shred_done_msg">%1$s безопасно стёрт.</string>
+
+    <!-- Privacy -->
+    <string name="privacy_title">Сканер конфиденциальности</string>
+    <string name="privacy_alert">Приложений с опасными разрешениями: %1$d</string>
+    <string name="privacy_all_clean">Опасные приложения не найдены</string>
+    <string name="privacy_apps_count">Установленных приложений: %1$d</string>
+    <string name="privacy_filter_all">Все</string>
+    <string name="privacy_filter_high">Высокий риск</string>
+    <string name="privacy_filter_medium">Средний и выше</string>
+    <string name="privacy_perms_count">Опасных разрешений: %1$d</string>
+    <string name="risk_high">Высокий</string>
+    <string name="risk_medium">Средний</string>
+    <string name="risk_low">Низкий</string>
+    <string name="risk_safe">Безопасно</string>
+
+    <!-- Wi-Fi -->
+    <string name="wifi_title">Безопасность Wi-Fi</string>
+    <string name="wifi_risk_high">Незащищённая сеть!</string>
+    <string name="wifi_risk_medium">Предупреждение безопасности</string>
+    <string name="wifi_risk_low">Небольшое замечание</string>
+    <string name="wifi_risk_safe">Защищённая сеть</string>
+    <string name="wifi_ssid">Имя сети</string>
+    <string name="wifi_security">Шифрование</string>
+    <string name="wifi_ip">IP-адрес</string>
+    <string name="wifi_connected">Подключено</string>
+    <string name="wifi_issues">Обнаруженные проблемы</string>
+
+    <!-- Notifications -->
+    <string name="notif_auto_clean_title">Автоматическая очистка завершена</string>
+    <string name="notif_auto_clean_text">Освобождено %1$s: удалено файлов — %2$d</string>
+    <string name="notif_storage_title">⚠️ Заканчивается место</string>
+    <string name="notif_storage_text">Использовано %1$d%% — осталось всего %2$s</string>
+    <string name="notif_large_files_title">Большие файлы</string>
+    <string name="notif_large_files_text">Файлов для проверки: %1$d (%2$s)</string>
+
+    <!-- History -->
+    <string name="history_title">История очистки</string>
+    <string name="history_empty">Истории пока нет</string>
+    <string name="history_total_freed">Всего освобождено</string>
+    <string name="history_total_sessions">Сеансов очистки: %1$d</string>
+
+    <!-- Forecast -->
+    <string name="forecast_critical">⚠️ Хранилище будет заполнено через %1$d дн.</string>
+    <string name="forecast_warning">Будет заполнено через %1$d дн.</string>
+    <string name="forecast_attention">Предположительно заполнится через %1$d дн.</string>
+    <string name="forecast_fine">Всё в порядке (осталось дней: %1$d)</string>
+    <string name="forecast_date">Предположительная дата: %1$s</string>
+
+    <!-- Scheduler -->
+    <string name="scheduler_title">Автоматическое расписание</string>
+    <string name="scheduler_enable">Автоматическая очистка</string>
+    <string name="scheduler_enable_desc">Периодически удалять временные файлы</string>
+    <string name="scheduler_interval">Интервал</string>
+    <string name="scheduler_run_now">Запустить сейчас</string>
+
+    <!-- Theme -->
+    <string name="theme_title">Внешний вид</string>
+    <string name="theme_mode">Режим</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_dynamic">Цвета Material You</string>
+    <string name="theme_dynamic_desc">Использовать цвета на основе обоев</string>
+    <string name="theme_accent">Цвет акцента</string>
+    <string name="theme_preview">Предпросмотр</string>
+
+    <!-- Accent Names -->
+    <string name="accent_ocean_blue">Океановый синий</string>
+    <string name="accent_royal_purple">Королевский пурпурный</string>
+    <string name="accent_emerald_green">Изумрудный зелёный</string>
+    <string name="accent_sunset_orange">Оранжевый закат</string>
+    <string name="accent_crimson_red">Малиново-красный</string>
+    <string name="accent_turquoise_teal">Бирюзовый</string>
+    <string name="accent_rose_pink">Розовый</string>
+    <string name="accent_midnight_indigo">Полуночный индиго</string>
+
+    <!-- Settings -->
+    <string name="settings_upgrade_title">Перейти на PRO</string>
+    <string name="settings_upgrade_sub">Убрать рекламу и получить эксклюзивные функции</string>
+    <string name="settings_appearance">Внешний вид</string>
+    <string name="settings_theme">Темы и цвета</string>
+    <string name="settings_theme_sub">8 стилей акцента и тёмный режим</string>
+    <string name="settings_automation">Автоматизация</string>
+    <string name="settings_auto_clean">Автоматическая очистка</string>
+    <string name="settings_auto_clean_sub">Периодически удалять временные файлы</string>
+    <string name="settings_scheduler">Расширенное расписание</string>
+    <string name="settings_scheduler_sub">Выбрать интервал</string>
+    <string name="settings_notifications">Уведомления</string>
+    <string name="settings_notif_enable">Включить уведомления</string>
+    <string name="settings_notif_enable_sub">Умные уведомления о хранилище</string>
+    <string name="settings_alert_threshold">Порог уведомления</string>
+    <string name="settings_alert_threshold_sub">Уведомлять при использовании %1$d%%</string>
+    <string name="settings_security">Безопасность</string>
+    <string name="settings_vault">Личное хранилище</string>
+    <string name="settings_developer">Разработчик</string>
+    <string name="settings_developer_name">Toufik Bendjeddah</string>
+    <string name="settings_developer_email_label">Электронная почта</string>
+    <string name="settings_developer_email">toufik.bendjeddah@gmail.com</string>
+    <string name="settings_vault_active">Включено</string>
+    <string name="settings_vault_inactive">Не включено</string>
+    <string name="settings_data">Данные</string>
+    <string name="settings_history">История очистки</string>
+    <string name="settings_history_sub">Просмотреть все прошлые операции</string>
+    <string name="settings_about">О приложении</string>
+    <string name="settings_version">Версия</string>
+    <string name="settings_privacy_policy">Политика конфиденциальности</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_language_sub">Выберите предпочитаемый язык</string>
+
+    <!-- Rules -->
+    <string name="rules_title">Пользовательские правила</string>
+    <string name="rules_new">Новое правило</string>
+    <string name="rules_empty">Правил пока нет</string>
+    <string name="rules_empty_desc">Создайте первое правило для автоматизации очистки.</string>
+    <string name="rules_settings">Механизм пользовательских правил</string>
+    <string name="rules_settings_sub">Расширенная автоматизация (PRO)</string>
+
+    <!-- Large Files -->
+    <string name="large_files_title">Большие файлы</string>
+    <string name="large_files_idle_title">Найти большие файлы</string>
+    <string name="large_files_idle_desc">Найти файлы размером более %1$d МБ</string>
+    <string name="large_files_scanning">Поиск больших файлов…</string>
+    <string name="large_files_found">Больших файлов: %1$d</string>
+    <string name="large_files_empty">Большие файлы не найдены</string>
+
+    <!-- RAM -->
+    <string name="ram_title">Ускоритель RAM</string>
+    <string name="ram_boost">Ускорить сейчас</string>
+
+    <!-- Battery -->
+    <string name="battery_title">Информация о батарее</string>
+
+    <!-- Tools -->
+    <string name="tools_cleaning">Очистка</string>
+    <string name="tools_security">Безопасность</string>
+    <string name="tools_performance">Производительность</string>
+    <string name="tools_automation">Автоматизация</string>
+
+    <!-- Premium -->
+    <string name="premium_title">PRO</string>
+    <string name="premium_headline">Откройте всё</string>
+    <string name="premium_subtitle">Полный опыт без рекламы с PRO-инструментами</string>
+    <string name="premium_feat_1">Никакой рекламы</string>
+    <string name="premium_feat_2">Очистка в 3 раза быстрее</string>
+    <string name="premium_feat_3">Неограниченное зашифрованное хранилище</string>
+    <string name="premium_feat_4">Эксклюзивные новые функции</string>
+    <string name="premium_feat_5">Без отслеживания и сбора данных</string>
+    <string name="premium_plan_monthly">Ежемесячно</string>
+    <string name="premium_plan_monthly_price">$2.99</string>
+    <string name="premium_plan_monthly_sub">С автоматическим продлением</string>
+    <string name="premium_plan_lifetime">Навсегда</string>
+    <string name="premium_plan_lifetime_price">$19.99</string>
+    <string name="premium_plan_lifetime_sub">Разовый платёж</string>
+    <string name="premium_restore">Восстановить покупки</string>
+    <string name="premium_active_title">У вас PRO 🎉</string>
+    <string name="premium_active_sub">Пользуйтесь всеми функциями</string>
+    <string name="premium_legal">Отменить подписку можно в настройках Google Play.</string>
+    <string name="go_premium">Перейти на PRO</string>
+
+    <!-- Widget -->
+    <string name="widget_title">Хранилище</string>
+    <string name="widget_free">Свободно: %1$s</string>
+    <string name="widget_description">Отображение хранилища в реальном времени</string>
+</resources>

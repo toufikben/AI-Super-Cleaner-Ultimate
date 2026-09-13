@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Super Cleaner</string>
+
+    <!-- Channels -->
+    <string name="channel_auto_clean">Pulizia automatica</string>
+    <string name="channel_auto_clean_desc">Promemoria programmati per la pulizia automatica</string>
+    <string name="channel_alerts">Avvisi intelligenti</string>
+    <string name="channel_alerts_desc">Avvisi su spazio di archiviazione e batteria</string>
+    <string name="channel_vault">Cassaforte</string>
+    <string name="channel_vault_desc">Notifiche della cassaforte privata</string>
+
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Annulla</string>
+    <string name="delete">Elimina</string>
+    <string name="retry">Riprova</string>
+    <string name="continue_label">Continua</string>
+    <string name="skip">Salta</string>
+    <string name="next">Avanti</string>
+    <string name="get_started">Inizia</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">Pulisci, velocizza, proteggi</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_1_title">Pulizia intelligente con un tocco</string>
+    <string name="onboarding_1_desc">Trova duplicati, file grandi e spazzatura — libera tantissimo spazio.</string>
+    <string name="onboarding_2_title">Velocizza il tuo dispositivo</string>
+    <string name="onboarding_2_desc">Libera la RAM, riduci il consumo della batteria e arresta le app in background.</string>
+    <string name="onboarding_3_title">Privacy totale</string>
+    <string name="onboarding_3_desc">Cassaforte crittografata, eliminazione sicura e blocco biometrico.</string>
+
+    <!-- Tabs -->
+    <string name="tab_dashboard">Home</string>
+    <string name="tab_junk">Pulizia</string>
+    <string name="tab_tools">Strumenti</string>
+    <string name="tab_settings">Impostazioni</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_storage_title">Spazio utilizzato</string>
+    <string name="dashboard_quick_actions">Azioni rapide</string>
+    <string name="refresh">Aggiorna</string>
+    <string name="stat_total_cleaned">Totale liberato</string>
+    <string name="stat_cleanups">Pulizie</string>
+    <string name="stat_last_clean">Ultima pulizia</string>
+
+    <string name="action_quick_clean">Pulizia rapida</string>
+    <string name="action_quick_clean_sub">Libera spazio all\'istante</string>
+    <string name="action_duplicates">Duplicati</string>
+    <string name="action_duplicates_sub">Trova le copie</string>
+    <string name="action_large_files">File grandi</string>
+    <string name="action_large_files_sub">Oltre 100 MB</string>
+    <string name="action_vault">Cassaforte privata</string>
+    <string name="action_vault_sub">Crittografa e nascondi</string>
+
+    <!-- Junk Categories -->
+    <string name="junk_cache">File della cache</string>
+    <string name="junk_temp">File temporanei</string>
+    <string name="junk_logs">Log di sistema</string>
+    <string name="junk_thumbnails">Anteprime</string>
+    <string name="junk_empty_folders">Cartelle vuote</string>
+    <string name="junk_apk">Vecchi APK</string>
+    <string name="junk_downloads">Residui dei download</string>
+    <string name="junk_obsolete">File obsoleti</string>
+
+    <!-- Junk Screen -->
+    <string name="junk_idle_title">Pronto per la scansione</string>
+    <string name="junk_idle_desc">Troveremo file temporanei, cache e log — con un tocco.</string>
+    <string name="start_scan">Avvia scansione</string>
+    <string name="rescan">Ripeti scansione</string>
+    <string name="select_all">Seleziona tutto</string>
+    <string name="deselect_all">Deseleziona tutto</string>
+    <string name="clean_now">Pulisci ora</string>
+    <string name="cleaning_in_progress">Pulizia in corso…</string>
+    <string name="junk_selected_title">Selezionati per l\'eliminazione</string>
+    <string name="junk_selected_count">%1$d elementi</string>
+
+    <string name="scan_idle">Inattivo</string>
+    <string name="scan_enumerating">Preparazione degli elenchi…</string>
+    <string name="scan_scanning">Scansione…</string>
+    <string name="scan_finalizing">Operazione in chiusura…</string>
+    <string name="scan_completed">Completata</string>
+    <string name="scan_cancelled">Annullata</string>
+    <string name="scan_error">Si è verificato un errore</string>
+
+    <string name="cleanup_done">Pulizia completata!</string>
+    <string name="freed_space">Spazio liberato</string>
+    <string name="cleanup_summary">%1$d eliminati, %2$d non riusciti</string>
+    <string name="confirm_cleanup_title">Conferma eliminazione</string>
+    <string name="confirm_cleanup_message">Eliminare %1$d file (%2$s)? Questa operazione non può essere annullata.</string>
+
+    <!-- Permissions -->
+    <string name="perm_screen_title">Autorizzazioni</string>
+    <string name="perm_intro_title">Prima di iniziare</string>
+    <string name="perm_intro_desc">Sono necessarie alcune autorizzazioni. Non raccogliamo mai i tuoi dati.</string>
+    <string name="perm_progress">%1$d di %2$d concesse</string>
+    <string name="perm_granted">Concessa</string>
+    <string name="perm_denied">Negata</string>
+    <string name="perm_blocked">Bloccata — apri le impostazioni</string>
+    <string name="perm_needed">Necessaria</string>
+    <string name="perm_not_applicable">Non supportata</string>
+    <string name="perm_grant">Concedi</string>
+    <string name="perm_open_settings">Impostazioni</string>
+    <string name="perm_required">Obbligatoria</string>
+    <string name="perm_required_hint">⚠️ Concedi l\'autorizzazione essenziale per continuare</string>
+
+    <string name="perm_storage_title">Leggi i file</string>
+    <string name="perm_storage_desc">Per scansionare immagini, video e duplicati.</string>
+    <string name="perm_all_files_title">Accesso completo ai file</string>
+    <string name="perm_all_files_desc">Per scansionare tutti i file del dispositivo (Android 11+).</string>
+    <string name="perm_notif_title">Notifiche</string>
+    <string name="perm_notif_desc">Per avvisarti quando lo spazio è insufficiente.</string>
+    <string name="perm_query_title">Leggi le app installate</string>
+    <string name="perm_query_desc">Per scansionare la cache e i dati di ogni app.</string>
+    <string name="perm_biometric_title">Impronta digitale / volto</string>
+    <string name="perm_biometric_desc">Per proteggere e sbloccare la tua cassaforte privata.</string>
+
+    <!-- Duplicates -->
+    <string name="duplicates_title">File duplicati</string>
+    <string name="duplicates_intro_title">Trova i duplicati</string>
+    <string name="duplicates_intro_desc">Troveremo file identici o simili.</string>
+    <string name="duplicates_scan_button">Avvia scansione</string>
+    <string name="duplicates_empty">Nessun duplicato trovato 🎉</string>
+    <string name="duplicates_empty_sub">Il tuo dispositivo è immacolato.</string>
+    <string name="duplicates_found_groups">%1$d gruppi</string>
+    <string name="duplicates_found_wasted">Puoi liberare %1$s</string>
+    <string name="duplicates_kind_exact">Corrispondenza esatta</string>
+    <string name="duplicates_kind_similar">Immagini simili</string>
+    <string name="duplicates_items_count">%1$d file</string>
+    <string name="duplicates_wasted_label">Elimina: %1$s</string>
+    <string name="duplicates_smart_select">Selezione intelligente</string>
+    <string name="duplicates_keep_oldest">Mantieni i più vecchi</string>
+    <string name="duplicates_keep_newest">Mantieni i più recenti</string>
+    <string name="duplicates_keep_shortest">Mantieni i più brevi</string>
+    <string name="duplicates_delete_selected">Elimina selezionati</string>
+    <string name="duplicates_scanning_title">Ricerca dei duplicati…</string>
+    <string name="duplicates_phase_enumerating">Raccolta dei file…</string>
+    <string name="duplicates_phase_size">Filtraggio per dimensione…</string>
+    <string name="duplicates_phase_hash">Calcolo di SHA-256…</string>
+    <string name="duplicates_phase_image">Analisi delle immagini simili…</string>
+    <string name="duplicates_kept_label">Conservato</string>
+    <string name="duplicates_selected_label">Selezionato</string>
+    <string name="duplicates_need_permission">Per continuare è necessaria l\'autorizzazione alla lettura dei file</string>
+
+    <!-- Vault -->
+    <string name="vault_title">Cassaforte privata</string>
+    <string name="vault_locked_title">Cassaforte bloccata</string>
+    <string name="vault_setup_hint">Crea prima un PIN per proteggere la cassaforte</string>
+    <string name="vault_unlock_hint">Inserisci il PIN o usa l\'impronta digitale</string>
+    <string name="vault_pin_label">PIN</string>
+    <string name="vault_pin_confirm">Conferma PIN</string>
+    <string name="vault_pin_create">Crea PIN</string>
+    <string name="vault_pin_wrong">PIN errato</string>
+    <string name="vault_pin_mismatch">I PIN non corrispondono</string>
+    <string name="vault_setup_pin">Crea PIN</string>
+    <string name="vault_unlock">Sblocca</string>
+    <string name="vault_use_biometric">Usa dati biometrici</string>
+    <string name="vault_lock">Blocca</string>
+    <string name="vault_stats">%1$d file · %2$s</string>
+    <string name="vault_add_files">Aggiungi file</string>
+    <string name="vault_empty_title">La cassaforte è vuota</string>
+    <string name="vault_empty_desc">Aggiungi i tuoi file privati — verranno crittografati e nascosti.</string>
+    <string name="vault_importing">Importazione %1$d/%2$d</string>
+    <string name="vault_delete_title">Rimuovi dalla cassaforte</string>
+    <string name="vault_delete_message">"%1$s" verrà cancellato in modo sicuro. Non potrà essere recuperato.</string>
+
+    <!-- Shredder -->
+    <string name="shredder_title">Distruggi file</string>
+    <string name="shred_empty_title">Nessun file selezionato</string>
+    <string name="shred_empty_desc">Aggiungi file per cancellarli definitivamente in modo sicuro.</string>
+    <string name="shred_add">Aggiungi file</string>
+    <string name="shred_now">Distruggi ora</string>
+    <string name="shredding_in_progress">Distruzione in corso…</string>
+    <string name="shred_level_label">Livello di sicurezza</string>
+    <string name="shred_level_fast">Rapido</string>
+    <string name="shred_level_fast_desc">Un passaggio casuale — per prestazioni migliori.</string>
+    <string name="shred_level_secure">Sicuro</string>
+    <string name="shred_level_secure_desc">3 passaggi — standard DoD 5220.22-M.</string>
+    <string name="shred_level_military">Militare</string>
+    <string name="shred_level_military_desc">7 passaggi — massima sicurezza.</string>
+    <string name="shred_confirm_title">Conferma distruzione</string>
+    <string name="shred_confirm_msg">%1$d file (%2$s) verranno cancellati definitivamente. Non potranno essere recuperati.</string>
+    <string name="shred_confirm_yes">Distruggi definitivamente</string>
+    <string name="shred_done_title">Distruzione completata</string>
+    <string name="shred_done_msg">%1$s cancellato in modo sicuro.</string>
+
+    <!-- Privacy -->
+    <string name="privacy_title">Scanner della privacy</string>
+    <string name="privacy_alert">%1$d app con autorizzazioni pericolose</string>
+    <string name="privacy_all_clean">Nessuna app pericolosa trovata</string>
+    <string name="privacy_apps_count">%1$d app installate</string>
+    <string name="privacy_filter_all">Tutte</string>
+    <string name="privacy_filter_high">Rischio elevato</string>
+    <string name="privacy_filter_medium">Medio+</string>
+    <string name="privacy_perms_count">%1$d autorizzazioni pericolose</string>
+    <string name="risk_high">Elevato</string>
+    <string name="risk_medium">Medio</string>
+    <string name="risk_low">Basso</string>
+    <string name="risk_safe">Sicuro</string>
+
+    <!-- Wi-Fi -->
+    <string name="wifi_title">Sicurezza Wi-Fi</string>
+    <string name="wifi_risk_high">Rete non protetta!</string>
+    <string name="wifi_risk_medium">Avviso di sicurezza</string>
+    <string name="wifi_risk_low">Nota minore</string>
+    <string name="wifi_risk_safe">Rete protetta</string>
+    <string name="wifi_ssid">Nome della rete</string>
+    <string name="wifi_security">Crittografia</string>
+    <string name="wifi_ip">Indirizzo IP</string>
+    <string name="wifi_connected">Connesso</string>
+    <string name="wifi_issues">Problemi rilevati</string>
+
+    <!-- Notifications -->
+    <string name="notif_auto_clean_title">Pulizia automatica completata</string>
+    <string name="notif_auto_clean_text">Liberati %1$s eliminando %2$d file</string>
+    <string name="notif_storage_title">⚠️ Spazio di archiviazione in esaurimento</string>
+    <string name="notif_storage_text">%1$d%% utilizzato — restano solo %2$s</string>
+    <string name="notif_large_files_title">File grandi</string>
+    <string name="notif_large_files_text">%1$d file (%2$s) da esaminare</string>
+
+    <!-- History -->
+    <string name="history_title">Cronologia delle pulizie</string>
+    <string name="history_empty">Nessuna cronologia</string>
+    <string name="history_total_freed">Totale liberato</string>
+    <string name="history_total_sessions">%1$d sessioni di pulizia</string>
+
+    <!-- Forecast -->
+    <string name="forecast_critical">⚠️ Spazio esaurito tra %1$d giorni</string>
+    <string name="forecast_warning">Spazio esaurito tra %1$d giorni</string>
+    <string name="forecast_attention">Spazio esaurito stimato tra %1$d giorni</string>
+    <string name="forecast_fine">Va tutto bene (%1$d giorni rimasti)</string>
+    <string name="forecast_date">Esaurimento stimato il %1$s</string>
+
+    <!-- Scheduler -->
+    <string name="scheduler_title">Programmazione automatica</string>
+    <string name="scheduler_enable">Pulizia automatica</string>
+    <string name="scheduler_enable_desc">Elimina periodicamente i file temporanei</string>
+    <string name="scheduler_interval">Intervallo</string>
+    <string name="scheduler_run_now">Esegui ora</string>
+
+    <!-- Theme -->
+    <string name="theme_title">Aspetto</string>
+    <string name="theme_mode">Modalità</string>
+    <string name="theme_light">Chiara</string>
+    <string name="theme_dark">Scura</string>
+    <string name="theme_system">Sistema</string>
+    <string name="theme_dynamic">Colori Material You</string>
+    <string name="theme_dynamic_desc">Usa colori basati sullo sfondo</string>
+    <string name="theme_accent">Colore principale</string>
+    <string name="theme_preview">Anteprima</string>
+
+    <!-- Accent Names -->
+    <string name="accent_ocean_blue">Blu oceano</string>
+    <string name="accent_royal_purple">Viola regale</string>
+    <string name="accent_emerald_green">Verde smeraldo</string>
+    <string name="accent_sunset_orange">Arancione tramonto</string>
+    <string name="accent_crimson_red">Rosso cremisi</string>
+    <string name="accent_turquoise_teal">Verde acqua turchese</string>
+    <string name="accent_rose_pink">Rosa cipria</string>
+    <string name="accent_midnight_indigo">Indaco notte</string>
+
+    <!-- Settings -->
+    <string name="settings_upgrade_title">Passa a PRO</string>
+    <string name="settings_upgrade_sub">Rimuovi gli annunci e ottieni funzioni esclusive</string>
+    <string name="settings_appearance">Aspetto</string>
+    <string name="settings_theme">Temi e colori</string>
+    <string name="settings_theme_sub">8 stili di colore e modalità scura</string>
+    <string name="settings_automation">Automazione</string>
+    <string name="settings_auto_clean">Pulizia automatica</string>
+    <string name="settings_auto_clean_sub">Elimina periodicamente i file temporanei</string>
+    <string name="settings_scheduler">Programmazione avanzata</string>
+    <string name="settings_scheduler_sub">Scegli l\'intervallo</string>
+    <string name="settings_notifications">Notifiche</string>
+    <string name="settings_notif_enable">Abilita notifiche</string>
+    <string name="settings_notif_enable_sub">Avvisi intelligenti sullo spazio</string>
+    <string name="settings_alert_threshold">Soglia avviso</string>
+    <string name="settings_alert_threshold_sub">Avvisa al %1$d%% di utilizzo</string>
+    <string name="settings_security">Sicurezza</string>
+    <string name="settings_vault">Cassaforte privata</string>
+    <string name="settings_developer">Sviluppatore</string>
+    <string name="settings_developer_name">Toufik Bendjeddah</string>
+    <string name="settings_developer_email_label">Email</string>
+    <string name="settings_developer_email">toufik.bendjeddah@gmail.com</string>
+    <string name="settings_vault_active">Abilitata</string>
+    <string name="settings_vault_inactive">Non abilitata</string>
+    <string name="settings_data">Dati</string>
+    <string name="settings_history">Cronologia delle pulizie</string>
+    <string name="settings_history_sub">Visualizza tutte le operazioni passate</string>
+    <string name="settings_about">Informazioni</string>
+    <string name="settings_version">Versione</string>
+    <string name="settings_privacy_policy">Informativa sulla privacy</string>
+    <string name="settings_language">Lingua</string>
+    <string name="settings_language_sub">Scegli la lingua preferita</string>
+
+    <!-- Rules -->
+    <string name="rules_title">Regole personalizzate</string>
+    <string name="rules_new">Nuova regola</string>
+    <string name="rules_empty">Nessuna regola</string>
+    <string name="rules_empty_desc">Crea la tua prima regola per automatizzare la pulizia.</string>
+    <string name="rules_settings">Motore delle regole personalizzate</string>
+    <string name="rules_settings_sub">Automazione avanzata (PRO)</string>
+
+    <!-- Large Files -->
+    <string name="large_files_title">File grandi</string>
+    <string name="large_files_idle_title">Trova file grandi</string>
+    <string name="large_files_idle_desc">Trova file più grandi di %1$d MB</string>
+    <string name="large_files_scanning">Ricerca di file grandi…</string>
+    <string name="large_files_found">%1$d file grandi</string>
+    <string name="large_files_empty">Nessun file grande trovato</string>
+
+    <!-- RAM -->
+    <string name="ram_title">Ottimizzatore RAM</string>
+    <string name="ram_boost">Ottimizza ora</string>
+
+    <!-- Battery -->
+    <string name="battery_title">Informazioni sulla batteria</string>
+
+    <!-- Tools -->
+    <string name="tools_cleaning">Pulizia</string>
+    <string name="tools_security">Sicurezza</string>
+    <string name="tools_performance">Prestazioni</string>
+    <string name="tools_automation">Automazione</string>
+
+    <!-- Premium -->
+    <string name="premium_title">PRO</string>
+    <string name="premium_headline">Sblocca tutto</string>
+    <string name="premium_subtitle">Esperienza completa senza annunci con strumenti pro</string>
+    <string name="premium_feat_1">Niente più annunci</string>
+    <string name="premium_feat_2">Pulizia 3 volte più veloce</string>
+    <string name="premium_feat_3">Cassaforte crittografata illimitata</string>
+    <string name="premium_feat_4">Nuove funzioni esclusive</string>
+    <string name="premium_feat_5">Nessun tracciamento, nessuna raccolta dati</string>
+    <string name="premium_plan_monthly">Mensile</string>
+    <string name="premium_plan_monthly_price">$2.99</string>
+    <string name="premium_plan_monthly_sub">Rinnovo automatico</string>
+    <string name="premium_plan_lifetime">A vita</string>
+    <string name="premium_plan_lifetime_price">$19.99</string>
+    <string name="premium_plan_lifetime_sub">Pagamento una tantum</string>
+    <string name="premium_restore">Ripristina acquisti</string>
+    <string name="premium_active_title">Sei PRO 🎉</string>
+    <string name="premium_active_sub">Goditi tutte le funzioni</string>
+    <string name="premium_legal">Puoi annullare in qualsiasi momento dalle impostazioni di Google Play.</string>
+    <string name="go_premium">Passa a PRO</string>
+
+    <!-- Widget -->
+    <string name="widget_title">Spazio di archiviazione</string>
+    <string name="widget_free">%1$s liberi</string>
+    <string name="widget_description">Visualizzazione dello spazio in tempo reale</string>
+</resources>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Super Cleaner</string>
+
+    <!-- Channels -->
+    <string name="channel_auto_clean">Pembersihan Otomatis</string>
+    <string name="channel_auto_clean_desc">Pengingat pembersihan otomatis terjadwal</string>
+    <string name="channel_alerts">Peringatan Cerdas</string>
+    <string name="channel_alerts_desc">Peringatan penyimpanan dan baterai</string>
+    <string name="channel_vault">Brankas</string>
+    <string name="channel_vault_desc">Notifikasi brankas pribadi</string>
+
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Batal</string>
+    <string name="delete">Hapus</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="continue_label">Lanjutkan</string>
+    <string name="skip">Lewati</string>
+    <string name="next">Berikutnya</string>
+    <string name="get_started">Mulai</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">Bersihkan, Percepat, Lindungi</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_1_title">Pembersihan cerdas dengan satu ketukan</string>
+    <string name="onboarding_1_desc">Temukan duplikat, file besar, dan sampah — kosongkan banyak ruang.</string>
+    <string name="onboarding_2_title">Percepat perangkat Anda</string>
+    <string name="onboarding_2_desc">Bebaskan RAM, kurangi penggunaan baterai, dan hentikan aplikasi latar belakang.</string>
+    <string name="onboarding_3_title">Privasi total</string>
+    <string name="onboarding_3_desc">Brankas terenkripsi, penghapusan aman, dan kunci biometrik.</string>
+
+    <!-- Tabs -->
+    <string name="tab_dashboard">Beranda</string>
+    <string name="tab_junk">Pembersih</string>
+    <string name="tab_tools">Alat</string>
+    <string name="tab_settings">Pengaturan</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_storage_title">Penyimpanan Terpakai</string>
+    <string name="dashboard_quick_actions">Tindakan Cepat</string>
+    <string name="refresh">Muat Ulang</string>
+    <string name="stat_total_cleaned">Total yang dibebaskan</string>
+    <string name="stat_cleanups">Pembersihan</string>
+    <string name="stat_last_clean">Pembersihan terakhir</string>
+
+    <string name="action_quick_clean">Pembersihan Cepat</string>
+    <string name="action_quick_clean_sub">Bebaskan ruang seketika</string>
+    <string name="action_duplicates">Duplikat</string>
+    <string name="action_duplicates_sub">Temukan salinan</string>
+    <string name="action_large_files">File Besar</string>
+    <string name="action_large_files_sub">Lebih dari 100 MB</string>
+    <string name="action_vault">Brankas Pribadi</string>
+    <string name="action_vault_sub">Enkripsi &amp; sembunyikan</string>
+
+    <!-- Junk Categories -->
+    <string name="junk_cache">File Cache</string>
+    <string name="junk_temp">File Sementara</string>
+    <string name="junk_logs">Log Sistem</string>
+    <string name="junk_thumbnails">Thumbnail</string>
+    <string name="junk_empty_folders">Folder Kosong</string>
+    <string name="junk_apk">APK Lama</string>
+    <string name="junk_downloads">Sisa Unduhan</string>
+    <string name="junk_obsolete">File Usang</string>
+
+    <!-- Junk Screen -->
+    <string name="junk_idle_title">Siap memindai</string>
+    <string name="junk_idle_desc">Kami akan menemukan file sementara, cache, dan log — dalam satu ketukan.</string>
+    <string name="start_scan">Mulai Pemindaian</string>
+    <string name="rescan">Pindai Lagi</string>
+    <string name="select_all">Pilih semua</string>
+    <string name="deselect_all">Batalkan semua pilihan</string>
+    <string name="clean_now">Bersihkan Sekarang</string>
+    <string name="cleaning_in_progress">Sedang membersihkan…</string>
+    <string name="junk_selected_title">Dipilih untuk dihapus</string>
+    <string name="junk_selected_count">%1$d item</string>
+
+    <string name="scan_idle">Siaga</string>
+    <string name="scan_enumerating">Menyiapkan daftar…</string>
+    <string name="scan_scanning">Memindai…</string>
+    <string name="scan_finalizing">Menyelesaikan…</string>
+    <string name="scan_completed">Selesai</string>
+    <string name="scan_cancelled">Dibatalkan</string>
+    <string name="scan_error">Terjadi kesalahan</string>
+
+    <string name="cleanup_done">Berhasil dibersihkan!</string>
+    <string name="freed_space">Ruang dibebaskan</string>
+    <string name="cleanup_summary">%1$d dihapus, %2$d gagal</string>
+    <string name="confirm_cleanup_title">Konfirmasi penghapusan</string>
+    <string name="confirm_cleanup_message">Hapus %1$d file (%2$s)? Tindakan ini tidak dapat dibatalkan.</string>
+
+    <!-- Permissions -->
+    <string name="perm_screen_title">Izin</string>
+    <string name="perm_intro_title">Sebelum memulai</string>
+    <string name="perm_intro_desc">Kami memerlukan beberapa izin. Kami tidak pernah mengumpulkan data Anda.</string>
+    <string name="perm_progress">%1$d dari %2$d diberikan</string>
+    <string name="perm_granted">Diberikan</string>
+    <string name="perm_denied">Ditolak</string>
+    <string name="perm_blocked">Diblokir — buka pengaturan</string>
+    <string name="perm_needed">Diperlukan</string>
+    <string name="perm_not_applicable">Tidak didukung</string>
+    <string name="perm_grant">Berikan</string>
+    <string name="perm_open_settings">Pengaturan</string>
+    <string name="perm_required">Wajib</string>
+    <string name="perm_required_hint">⚠️ Berikan izin penting untuk melanjutkan</string>
+
+    <string name="perm_storage_title">Baca File</string>
+    <string name="perm_storage_desc">Untuk memindai gambar, video, dan duplikat.</string>
+    <string name="perm_all_files_title">Akses Penuh File</string>
+    <string name="perm_all_files_desc">Untuk memindai semua file perangkat (Android 11+).</string>
+    <string name="perm_notif_title">Notifikasi</string>
+    <string name="perm_notif_desc">Beri tahu Anda saat penyimpanan hampir penuh.</string>
+    <string name="perm_query_title">Baca Aplikasi Terinstal</string>
+    <string name="perm_query_desc">Untuk memindai cache dan data setiap aplikasi.</string>
+    <string name="perm_biometric_title">Sidik Jari / Wajah</string>
+    <string name="perm_biometric_desc">Untuk mengamankan dan membuka brankas pribadi Anda.</string>
+
+    <!-- Duplicates -->
+    <string name="duplicates_title">File Duplikat</string>
+    <string name="duplicates_intro_title">Temukan duplikat</string>
+    <string name="duplicates_intro_desc">Kami akan menemukan file yang identik atau serupa.</string>
+    <string name="duplicates_scan_button">Mulai Pemindaian</string>
+    <string name="duplicates_empty">Tidak ada duplikat ditemukan 🎉</string>
+    <string name="duplicates_empty_sub">Perangkat Anda sudah bersih.</string>
+    <string name="duplicates_found_groups">%1$d grup</string>
+    <string name="duplicates_found_wasted">%1$s dapat dibebaskan</string>
+    <string name="duplicates_kind_exact">Cocok Persis</string>
+    <string name="duplicates_kind_similar">Gambar Serupa</string>
+    <string name="duplicates_items_count">%1$d file</string>
+    <string name="duplicates_wasted_label">Hapus: %1$s</string>
+    <string name="duplicates_smart_select">Pilih Cerdas</string>
+    <string name="duplicates_keep_oldest">Simpan yang Terlama</string>
+    <string name="duplicates_keep_newest">Simpan yang Terbaru</string>
+    <string name="duplicates_keep_shortest">Simpan yang Terpendek</string>
+    <string name="duplicates_delete_selected">Hapus yang Dipilih</string>
+    <string name="duplicates_scanning_title">Memindai duplikat…</string>
+    <string name="duplicates_phase_enumerating">Mengumpulkan file…</string>
+    <string name="duplicates_phase_size">Memfilter berdasarkan ukuran…</string>
+    <string name="duplicates_phase_hash">Menghitung SHA-256…</string>
+    <string name="duplicates_phase_image">Menganalisis gambar serupa…</string>
+    <string name="duplicates_kept_label">Dipertahankan</string>
+    <string name="duplicates_selected_label">Dipilih</string>
+    <string name="duplicates_need_permission">Kami memerlukan izin membaca file untuk melanjutkan</string>
+
+    <!-- Vault -->
+    <string name="vault_title">Brankas Pribadi</string>
+    <string name="vault_locked_title">Brankas Terkunci</string>
+    <string name="vault_setup_hint">Buat PIN terlebih dahulu untuk melindungi brankas Anda</string>
+    <string name="vault_unlock_hint">Masukkan PIN atau gunakan sidik jari Anda</string>
+    <string name="vault_pin_label">PIN</string>
+    <string name="vault_pin_confirm">Konfirmasi PIN</string>
+    <string name="vault_pin_create">Buat PIN</string>
+    <string name="vault_pin_wrong">PIN Salah</string>
+    <string name="vault_pin_mismatch">PIN tidak cocok</string>
+    <string name="vault_setup_pin">Buat PIN</string>
+    <string name="vault_unlock">Buka Kunci</string>
+    <string name="vault_use_biometric">Gunakan Biometrik</string>
+    <string name="vault_lock">Kunci</string>
+    <string name="vault_stats">%1$d file · %2$s</string>
+    <string name="vault_add_files">Tambah File</string>
+    <string name="vault_empty_title">Brankas kosong</string>
+    <string name="vault_empty_desc">Tambahkan file pribadi Anda — file akan dienkripsi dan disembunyikan.</string>
+    <string name="vault_importing">Mengimpor %1$d/%2$d</string>
+    <string name="vault_delete_title">Hapus dari brankas</string>
+    <string name="vault_delete_message">"%1$s" akan dihapus dengan aman. Tidak dapat dipulihkan.</string>
+
+    <!-- Shredder -->
+    <string name="shredder_title">Penghancur File</string>
+    <string name="shred_empty_title">Tidak ada file yang dipilih</string>
+    <string name="shred_empty_desc">Tambahkan file untuk menghapusnya secara permanen dan aman.</string>
+    <string name="shred_add">Tambah File</string>
+    <string name="shred_now">Hancurkan Sekarang</string>
+    <string name="shredding_in_progress">Sedang menghancurkan…</string>
+    <string name="shred_level_label">Tingkat Keamanan</string>
+    <string name="shred_level_fast">Cepat</string>
+    <string name="shred_level_fast_desc">Satu kali penimpaan acak — untuk performa.</string>
+    <string name="shred_level_secure">Aman</string>
+    <string name="shred_level_secure_desc">3 kali penimpaan — standar DoD 5220.22-M.</string>
+    <string name="shred_level_military">Militer</string>
+    <string name="shred_level_military_desc">7 kali penimpaan — keamanan maksimum.</string>
+    <string name="shred_confirm_title">Konfirmasi Penghancuran</string>
+    <string name="shred_confirm_msg">%1$d file (%2$s) akan dihapus secara permanen. Tidak dapat dipulihkan.</string>
+    <string name="shred_confirm_yes">Hancurkan Permanen</string>
+    <string name="shred_done_title">Dihancurkan</string>
+    <string name="shred_done_msg">%1$s dihapus dengan aman.</string>
+
+    <!-- Privacy -->
+    <string name="privacy_title">Pemindai Privasi</string>
+    <string name="privacy_alert">%1$d aplikasi dengan izin berbahaya</string>
+    <string name="privacy_all_clean">Tidak ada aplikasi berbahaya ditemukan</string>
+    <string name="privacy_apps_count">%1$d aplikasi terinstal</string>
+    <string name="privacy_filter_all">Semua</string>
+    <string name="privacy_filter_high">Risiko Tinggi</string>
+    <string name="privacy_filter_medium">Sedang+</string>
+    <string name="privacy_perms_count">%1$d izin berbahaya</string>
+    <string name="risk_high">Tinggi</string>
+    <string name="risk_medium">Sedang</string>
+    <string name="risk_low">Rendah</string>
+    <string name="risk_safe">Aman</string>
+
+    <!-- Wi-Fi -->
+    <string name="wifi_title">Keamanan Wi-Fi</string>
+    <string name="wifi_risk_high">Jaringan Tidak Aman!</string>
+    <string name="wifi_risk_medium">Peringatan Keamanan</string>
+    <string name="wifi_risk_low">Catatan Kecil</string>
+    <string name="wifi_risk_safe">Jaringan Aman</string>
+    <string name="wifi_ssid">Nama Jaringan</string>
+    <string name="wifi_security">Enkripsi</string>
+    <string name="wifi_ip">Alamat IP</string>
+    <string name="wifi_connected">Terhubung</string>
+    <string name="wifi_issues">Masalah Terdeteksi</string>
+
+    <!-- Notifications -->
+    <string name="notif_auto_clean_title">Pembersihan otomatis selesai</string>
+    <string name="notif_auto_clean_text">Membebaskan %1$s dengan menghapus %2$d file</string>
+    <string name="notif_storage_title">⚠️ Penyimpanan hampir penuh</string>
+    <string name="notif_storage_text">%1$d%% terpakai — tersisa hanya %2$s</string>
+    <string name="notif_large_files_title">File besar</string>
+    <string name="notif_large_files_text">%1$d file (%2$s) perlu ditinjau</string>
+
+    <!-- History -->
+    <string name="history_title">Riwayat Pembersihan</string>
+    <string name="history_empty">Belum ada riwayat</string>
+    <string name="history_total_freed">Total Dibebaskan</string>
+    <string name="history_total_sessions">%1$d sesi pembersihan</string>
+
+    <!-- Forecast -->
+    <string name="forecast_critical">⚠️ Penyimpanan penuh dalam %1$d hari</string>
+    <string name="forecast_warning">Penuh dalam %1$d hari</string>
+    <string name="forecast_attention">Diperkirakan penuh dalam %1$d hari</string>
+    <string name="forecast_fine">Anda aman (%1$d hari tersisa)</string>
+    <string name="forecast_date">Diperkirakan pada %1$s</string>
+
+    <!-- Scheduler -->
+    <string name="scheduler_title">Jadwal Otomatis</string>
+    <string name="scheduler_enable">Pembersihan Otomatis</string>
+    <string name="scheduler_enable_desc">Hapus file sementara secara berkala</string>
+    <string name="scheduler_interval">Interval</string>
+    <string name="scheduler_run_now">Jalankan Sekarang</string>
+
+    <!-- Theme -->
+    <string name="theme_title">Tampilan</string>
+    <string name="theme_mode">Mode</string>
+    <string name="theme_light">Terang</string>
+    <string name="theme_dark">Gelap</string>
+    <string name="theme_system">Sistem</string>
+    <string name="theme_dynamic">Warna Material You</string>
+    <string name="theme_dynamic_desc">Gunakan warna berdasarkan wallpaper</string>
+    <string name="theme_accent">Warna Aksen</string>
+    <string name="theme_preview">Pratinjau</string>
+
+    <!-- Accent Names -->
+    <string name="accent_ocean_blue">Biru Laut</string>
+    <string name="accent_royal_purple">Ungu Kerajaan</string>
+    <string name="accent_emerald_green">Hijau Zamrud</string>
+    <string name="accent_sunset_orange">Oranye Senja</string>
+    <string name="accent_crimson_red">Merah Tua</string>
+    <string name="accent_turquoise_teal">Teal Pirus</string>
+    <string name="accent_rose_pink">Merah Muda Mawar</string>
+    <string name="accent_midnight_indigo">Nila Tengah Malam</string>
+
+    <!-- Settings -->
+    <string name="settings_upgrade_title">Upgrade ke PRO</string>
+    <string name="settings_upgrade_sub">Hapus iklan + fitur eksklusif</string>
+    <string name="settings_appearance">Tampilan</string>
+    <string name="settings_theme">Tema &amp; Warna</string>
+    <string name="settings_theme_sub">8 gaya aksen + mode gelap</string>
+    <string name="settings_automation">Otomatisasi</string>
+    <string name="settings_auto_clean">Pembersihan Otomatis</string>
+    <string name="settings_auto_clean_sub">Hapus file sementara secara berkala</string>
+    <string name="settings_scheduler">Penjadwal Lanjutan</string>
+    <string name="settings_scheduler_sub">Pilih interval</string>
+    <string name="settings_notifications">Notifikasi</string>
+    <string name="settings_notif_enable">Aktifkan Notifikasi</string>
+    <string name="settings_notif_enable_sub">Peringatan penyimpanan cerdas</string>
+    <string name="settings_alert_threshold">Ambang Peringatan</string>
+    <string name="settings_alert_threshold_sub">Beri peringatan saat penggunaan mencapai %1$d%%</string>
+    <string name="settings_security">Keamanan</string>
+    <string name="settings_vault">Brankas Pribadi</string>
+    <string name="settings_developer">Pengembang</string>
+    <string name="settings_developer_name">Toufik Bendjeddah</string>
+    <string name="settings_developer_email_label">Email</string>
+    <string name="settings_developer_email">toufik.bendjeddah@gmail.com</string>
+    <string name="settings_vault_active">Diaktifkan</string>
+    <string name="settings_vault_inactive">Tidak diaktifkan</string>
+    <string name="settings_data">Data</string>
+    <string name="settings_history">Riwayat Pembersihan</string>
+    <string name="settings_history_sub">Lihat semua operasi sebelumnya</string>
+    <string name="settings_about">Tentang</string>
+    <string name="settings_version">Versi</string>
+    <string name="settings_privacy_policy">Kebijakan Privasi</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_language_sub">Pilih bahasa pilihan Anda</string>
+
+    <!-- Rules -->
+    <string name="rules_title">Aturan Kustom</string>
+    <string name="rules_new">Aturan Baru</string>
+    <string name="rules_empty">Belum ada aturan</string>
+    <string name="rules_empty_desc">Buat aturan pertama Anda untuk mengotomatiskan pembersihan.</string>
+    <string name="rules_settings">Mesin Aturan Kustom</string>
+    <string name="rules_settings_sub">Otomatisasi lanjutan (PRO)</string>
+
+    <!-- Large Files -->
+    <string name="large_files_title">File Besar</string>
+    <string name="large_files_idle_title">Temukan file besar</string>
+    <string name="large_files_idle_desc">Temukan file yang lebih besar dari %1$d MB</string>
+    <string name="large_files_scanning">Mencari file besar…</string>
+    <string name="large_files_found">%1$d file besar</string>
+    <string name="large_files_empty">Tidak ada file besar ditemukan</string>
+
+    <!-- RAM -->
+    <string name="ram_title">Peningkat RAM</string>
+    <string name="ram_boost">Tingkatkan Sekarang</string>
+
+    <!-- Battery -->
+    <string name="battery_title">Info Baterai</string>
+
+    <!-- Tools -->
+    <string name="tools_cleaning">Pembersihan</string>
+    <string name="tools_security">Keamanan</string>
+    <string name="tools_performance">Performa</string>
+    <string name="tools_automation">Otomatisasi</string>
+
+    <!-- Premium -->
+    <string name="premium_title">PRO</string>
+    <string name="premium_headline">Buka Semua Fitur</string>
+    <string name="premium_subtitle">Pengalaman bebas iklan dengan alat pro</string>
+    <string name="premium_feat_1">Tanpa iklan, selamanya</string>
+    <string name="premium_feat_2">Pembersihan 3× lebih cepat</string>
+    <string name="premium_feat_3">Brankas terenkripsi tanpa batas</string>
+    <string name="premium_feat_4">Fitur baru eksklusif</string>
+    <string name="premium_feat_5">Tanpa pelacakan, tanpa pengumpulan data</string>
+    <string name="premium_plan_monthly">Bulanan</string>
+    <string name="premium_plan_monthly_price">$2.99</string>
+    <string name="premium_plan_monthly_sub">Diperpanjang otomatis</string>
+    <string name="premium_plan_lifetime">Seumur Hidup</string>
+    <string name="premium_plan_lifetime_price">$19.99</string>
+    <string name="premium_plan_lifetime_sub">Pembayaran satu kali</string>
+    <string name="premium_restore">Pulihkan Pembelian</string>
+    <string name="premium_active_title">Anda sudah PRO 🎉</string>
+    <string name="premium_active_sub">Nikmati semua fitur</string>
+    <string name="premium_legal">Batalkan kapan saja melalui pengaturan Google Play.</string>
+    <string name="go_premium">Upgrade ke PRO</string>
+
+    <!-- Widget -->
+    <string name="widget_title">Penyimpanan</string>
+    <string name="widget_free">%1$s tersedia</string>
+    <string name="widget_description">Tampilan penyimpanan langsung</string>
+</resources>
