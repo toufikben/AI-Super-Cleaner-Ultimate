@@ -12,6 +12,7 @@ import io.mockk.runs
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -53,6 +54,7 @@ class BillingViewModelTest {
         purchaseInProgress.value = true
         val busyState = viewModel.uiState.first { it.isBusy }
         assertThat(busyState.isBusy).isTrue()
+        advanceTimeBy(5_001)
     }
 
     private fun fakeBillingManager(
