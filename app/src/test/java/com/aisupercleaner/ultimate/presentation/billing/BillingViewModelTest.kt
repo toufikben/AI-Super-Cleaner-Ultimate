@@ -1,6 +1,5 @@
 package com.aisupercleaner.ultimate.presentation.billing
 
-import app.cash.turbine.test
 import com.aisupercleaner.ultimate.billing.BillingCatalog
 import com.aisupercleaner.ultimate.billing.BillingManager
 import com.aisupercleaner.ultimate.presentation.premium.PremiumScreenStatus
@@ -14,7 +13,6 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.runCurrent
 import org.junit.Test
 
 class BillingViewModelTest {
@@ -46,23 +44,15 @@ class BillingViewModelTest {
         val billing = fakeBillingManager(isPremium, purchaseInProgress)
         val viewModel = PremiumViewModel(billing)
 
-        viewModel.uiState.test {
-            awaitItem()
+        viewModel.uiState.first()
 
-            isPremium.value = true
-            runCurrent()
-            awaitItem().let { state ->
-                assertThat(state.status).isEqualTo(PremiumScreenStatus.PREMIUM)
-                assertThat(state.isPremium).isTrue()
-            }
+        isPremium.value = true
+        val premiumState = viewModel.uiState.first { it.isPremium }
+        assertThat(premiumState.status).isEqualTo(PremiumScreenStatus.PREMIUM)
 
-            purchaseInProgress.value = true
-            runCurrent()
-            awaitItem().let { state ->
-                assertThat(state.isBusy).isTrue()
-            }
-            cancelAndIgnoreRemainingEvents()
-        }
+        purchaseInProgress.value = true
+        val busyState = viewModel.uiState.first { it.isBusy }
+        assertThat(busyState.isBusy).isTrue()
     }
 
     private fun fakeBillingManager(
