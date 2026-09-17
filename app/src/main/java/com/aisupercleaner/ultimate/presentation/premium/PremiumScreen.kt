@@ -85,13 +85,13 @@ class PremiumViewModel @Inject constructor(
     }
 
     fun purchaseMonthly(activity: Activity) {
-        if (!uiState.value.isPremium && uiState.value.monthlyAvailable) {
+        if (!uiState.value.isPremium && !uiState.value.isBusy && uiState.value.monthlyAvailable) {
             billing.launchMonthly(activity)
         }
     }
 
     fun purchaseLifetime(activity: Activity) {
-        if (!uiState.value.isPremium && uiState.value.lifetimeAvailable) {
+        if (!uiState.value.isPremium && !uiState.value.isBusy && uiState.value.lifetimeAvailable) {
             billing.launchLifetime(activity)
         }
     }

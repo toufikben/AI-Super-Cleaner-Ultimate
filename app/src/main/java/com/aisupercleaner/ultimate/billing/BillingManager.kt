@@ -107,7 +107,9 @@ class BillingManager @Inject constructor(@ApplicationContext context: Context, p
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
         _purchaseInProgress.value = false
         when {
-            result.responseCode == BillingClient.BillingResponseCode.OK && purchases != null -> process(purchases)
+            result.responseCode == BillingClient.BillingResponseCode.OK && purchases != null -> {
+                process(synchronized(purchasesByType) { purchasesByType.values.flatten() } + purchases)
+            }
             result.responseCode == BillingClient.BillingResponseCode.USER_CANCELED -> _message.value = "Purchase canceled."
             result.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> refresh()
             result.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> connect()
