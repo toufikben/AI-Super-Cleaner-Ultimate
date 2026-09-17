@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import androidx.annotation.VisibleForTesting
 import com.aisupercleaner.ultimate.R
 import com.aisupercleaner.ultimate.billing.BillingManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -171,8 +172,9 @@ fun PremiumScreen(
     }
 }
 
+@VisibleForTesting
 @Composable
-private fun PremiumActiveCard() {
+internal fun PremiumActiveCard() {
     Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
         Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(Icons.Rounded.CheckCircle, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
