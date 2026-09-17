@@ -2,6 +2,7 @@ package com.aisupercleaner.ultimate.presentation.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aisupercleaner.ultimate.billing.BillingManager
 import com.aisupercleaner.ultimate.data.local.database.AppDatabase
 import com.aisupercleaner.ultimate.data.preferences.AppPreferences
 import com.aisupercleaner.ultimate.data.vault.VaultAuthManager
@@ -29,6 +30,7 @@ data class SettingsUiState(
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val preferences: AppPreferences,
+    private val billing: BillingManager,
     private val autoCleanScheduler: AutoCleanScheduler,
     private val workerScheduler: WorkerScheduler,
     private val vaultAuthManager: VaultAuthManager,
@@ -39,7 +41,7 @@ class SettingsViewModel @Inject constructor(
         preferences.notificationsEnabled,
         preferences.autoCleanEnabled,
         preferences.storageAlertThresholdPercent,
-        preferences.isPremium,
+        billing.isPremium,
     ) { notif, auto, threshold, premium ->
         SettingsUiState(
             notificationsEnabled = notif,
