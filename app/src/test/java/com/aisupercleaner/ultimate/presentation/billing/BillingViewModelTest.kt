@@ -14,6 +14,7 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.runCurrent
 import org.junit.Test
 
 class BillingViewModelTest {
@@ -49,12 +50,14 @@ class BillingViewModelTest {
             awaitItem()
 
             isPremium.value = true
+            runCurrent()
             awaitItem().let { state ->
                 assertThat(state.status).isEqualTo(PremiumScreenStatus.PREMIUM)
                 assertThat(state.isPremium).isTrue()
             }
 
             purchaseInProgress.value = true
+            runCurrent()
             awaitItem().let { state ->
                 assertThat(state.isBusy).isTrue()
             }
