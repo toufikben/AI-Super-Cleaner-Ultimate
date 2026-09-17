@@ -39,6 +39,9 @@ class BillingManager @Inject constructor(@ApplicationContext context: Context, p
     val catalog = _catalog.asStateFlow()
     private val _message = MutableStateFlow<String?>(null)
     val message = _message.asStateFlow()
+    private val _purchaseInProgress = MutableStateFlow(false)
+    val purchaseInProgress = _purchaseInProgress.asStateFlow()
+    private val purchasesByType = mutableMapOf<String, List<Purchase>>()
     private val handler = Handler(Looper.getMainLooper())
     private var reconnectScheduled = false
     private val client = BillingClient.newBuilder(context.applicationContext)
@@ -66,6 +69,8 @@ class BillingManager @Inject constructor(@ApplicationContext context: Context, p
 
     fun refresh() {
         if (!client.isReady) { connect(); return }
+        synchronized(purchasesByType) { purchasesByType.clear() }
+        _isPremium.value = false
         queryProducts()
         queryPurchases(BillingClient.ProductType.INAPP)
         queryPurchases(BillingClient.ProductType.SUBS)
@@ -90,13 +95,17 @@ class BillingManager @Inject constructor(@ApplicationContext context: Context, p
 
     private fun queryPurchases(type: String) {
         client.queryPurchasesAsync(QueryPurchasesParams.newBuilder().setProductType(type).build()) { result, purchases ->
-            if (result.responseCode == BillingClient.BillingResponseCode.OK) process(purchases)
+            if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                synchronized(purchasesByType) { purchasesByType[type] = purchases }
+                process(synchronized(purchasesByType) { purchasesByType.values.flatten() })
+            }
             else if (result.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) connect()
             else _message.value = "Could not restore purchases: ${result.debugMessage}"
         }
     }
 
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
+        _purchaseInProgress.value = false
         when {
             result.responseCode == BillingClient.BillingResponseCode.OK && purchases != null -> process(purchases)
             result.responseCode == BillingClient.BillingResponseCode.USER_CANCELED -> _message.value = "Purchase canceled."
@@ -138,8 +147,12 @@ class BillingManager @Inject constructor(@ApplicationContext context: Context, p
 
     private fun launch(activity: Activity, product: BillingFlowParams.ProductDetailsParams) {
         if (!client.isReady) { _message.value = "Google Play Billing is connecting. Please try again."; connect(); return }
+        _purchaseInProgress.value = true
         val result = client.launchBillingFlow(activity, BillingFlowParams.newBuilder().setProductDetailsParamsList(listOf(product)).build())
-        if (result.responseCode != BillingClient.BillingResponseCode.OK) _message.value = "Could not open Google Play checkout: ${result.debugMessage}"
+        if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+            _purchaseInProgress.value = false
+            _message.value = "Could not open Google Play checkout: ${result.debugMessage}"
+        }
     }
 
     fun clearMessage() { _message.value = null }

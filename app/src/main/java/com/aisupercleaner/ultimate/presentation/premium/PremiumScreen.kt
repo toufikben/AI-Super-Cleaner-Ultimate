@@ -31,14 +31,10 @@ import com.aisupercleaner.ultimate.R
 import com.aisupercleaner.ultimate.billing.BillingManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 enum class PremiumScreenStatus { CHECKING, FREE, PREMIUM, ERROR }
 
@@ -57,14 +53,12 @@ data class PremiumUiState(
 class PremiumViewModel @Inject constructor(
     private val billing: BillingManager,
 ) : ViewModel() {
-    private val busy = MutableStateFlow(false)
-
     val uiState: StateFlow<PremiumUiState> = combine(
         billing.isPremium,
         billing.catalog,
         billing.message,
-        busy,
-    ) { isPremium, catalog, message, isBusy ->
+        billing.purchaseInProgress,
+    ) { isPremium, catalog, message, purchaseInProgress ->
         val monthlyPrice = catalog.monthly?.subscriptionOfferDetails
             ?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
         val lifetimePrice = catalog.lifetime?.oneTimePurchaseOfferDetails?.formattedPrice
@@ -79,7 +73,7 @@ class PremiumViewModel @Inject constructor(
             lifetimePrice = lifetimePrice,
             monthlyAvailable = catalog.monthly != null,
             lifetimeAvailable = catalog.lifetime != null,
-            isBusy = isBusy,
+            isBusy = purchaseInProgress,
             message = message,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PremiumUiState())
@@ -87,35 +81,23 @@ class PremiumViewModel @Inject constructor(
     init { refreshPurchases() }
 
     fun refreshPurchases() {
-        busy.value = true
         billing.refresh()
-        releaseBusy()
     }
 
     fun purchaseMonthly(activity: Activity) {
         if (!uiState.value.isPremium && uiState.value.monthlyAvailable) {
-            busy.value = true
             billing.launchMonthly(activity)
-            releaseBusy()
         }
     }
 
     fun purchaseLifetime(activity: Activity) {
         if (!uiState.value.isPremium && uiState.value.lifetimeAvailable) {
-            busy.value = true
             billing.launchLifetime(activity)
-            releaseBusy()
         }
     }
 
     fun clearMessage() = billing.clearMessage()
 
-    private fun releaseBusy() {
-        viewModelScope.launch {
-            delay(1_500)
-            busy.value = false
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

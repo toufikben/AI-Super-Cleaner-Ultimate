@@ -63,7 +63,11 @@ fun MainScaffold(adManager: AdManager, billingManager: BillingManager, onNavigat
                 title = { Text(stringResource(currentTab.labelRes), fontWeight = FontWeight.SemiBold) },
                 actions = {
                     IconButton(onClick = onNavigateToPremium) {
-                        BadgedBox(badge = { Badge(containerColor = MaterialTheme.colorScheme.tertiary) { Text("PRO") } }) {
+                        if (!isPremium) {
+                            BadgedBox(badge = { Badge(containerColor = MaterialTheme.colorScheme.tertiary) { Text("PRO") } }) {
+                                Icon(Icons.Rounded.WorkspacePremium, contentDescription = stringResource(R.string.go_premium), tint = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
                             Icon(Icons.Rounded.WorkspacePremium, contentDescription = stringResource(R.string.go_premium), tint = MaterialTheme.colorScheme.primary)
                         }
                     }
