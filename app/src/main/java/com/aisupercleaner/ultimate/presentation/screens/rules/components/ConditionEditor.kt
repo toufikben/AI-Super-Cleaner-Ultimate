@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.aisupercleaner.ultimate.R
 import com.aisupercleaner.ultimate.data.rules.Condition
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,13 +22,13 @@ fun ConditionEditor(condition: Condition, onChange: (Condition) -> Unit, onRemov
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     when (condition.field) {
-                        Condition.Field.SIZE -> "الحجم"
-                        Condition.Field.AGE -> "العمر"
-                        Condition.Field.EXTENSION -> "النوع"
-                        Condition.Field.PATH_CONTAINS, Condition.Field.PATH_STARTS -> "المسار"
-                        Condition.Field.NAME_CONTAINS, Condition.Field.NAME_MATCHES -> "الاسم"
+                        Condition.Field.SIZE -> stringResource(R.string.condition_field_size)
+                        Condition.Field.AGE -> stringResource(R.string.condition_field_age)
+                        Condition.Field.EXTENSION -> stringResource(R.string.condition_field_extension)
+                        Condition.Field.PATH_CONTAINS, Condition.Field.PATH_STARTS -> stringResource(R.string.condition_field_path)
+                        Condition.Field.NAME_CONTAINS, Condition.Field.NAME_MATCHES -> stringResource(R.string.condition_field_name)
                         Condition.Field.MIME_TYPE -> "MIME"
-                        Condition.Field.IS_IN_GALLERY -> "المعرض"
+                        Condition.Field.IS_IN_GALLERY -> stringResource(R.string.condition_field_gallery)
                     },
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.weight(1f),
@@ -71,7 +73,7 @@ private fun AgeEditor(c: Condition.Age, onChange: (Condition) -> Unit) {
         OutlinedTextField(
             value = c.valueDays.toString(),
             onValueChange = { v -> v.filter(Char::isDigit).toIntOrNull()?.let { onChange(c.copy(valueDays = it)) } },
-            label = { Text("يوم") },
+            label = { Text(stringResource(R.string.condition_days)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             modifier = Modifier.weight(1f),
@@ -95,12 +97,12 @@ private fun ExtensionEditor(c: Condition.Extension, onChange: (Condition) -> Uni
 
 @Composable
 private fun PathEditor(c: Condition.PathCondition, onChange: (Condition) -> Unit) {
-    OutlinedTextField(value = c.value, onValueChange = { onChange(c.copy(value = it)) }, label = { Text("مثال: Download") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+    OutlinedTextField(value = c.value, onValueChange = { onChange(c.copy(value = it)) }, label = { Text(stringResource(R.string.condition_path_hint)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
 }
 
 @Composable
 private fun NameEditor(c: Condition.NameCondition, onChange: (Condition) -> Unit) {
-    OutlinedTextField(value = c.value, onValueChange = { onChange(c.copy(value = it)) }, label = { Text("نمط الاسم") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+    OutlinedTextField(value = c.value, onValueChange = { onChange(c.copy(value = it)) }, label = { Text(stringResource(R.string.condition_name_hint)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -108,20 +110,20 @@ private fun NameEditor(c: Condition.NameCondition, onChange: (Condition) -> Unit
 private fun OperatorDropdown(current: Condition.Op, ageMode: Boolean = false, onChange: (Condition.Op) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     val label = when {
-        ageMode && current == Condition.Op.GREATER_THAN -> "أقدم من"
-        ageMode && current == Condition.Op.LESS_THAN -> "أحدث من"
-        current == Condition.Op.GREATER_THAN -> "أكبر من"
-        current == Condition.Op.LESS_THAN -> "أصغر من"
-        current == Condition.Op.EQUALS -> "="
+        ageMode && current == Condition.Op.GREATER_THAN -> stringResource(R.string.condition_op_older_than)
+        ageMode && current == Condition.Op.LESS_THAN -> stringResource(R.string.condition_op_newer_than)
+        current == Condition.Op.GREATER_THAN -> stringResource(R.string.condition_op_greater_than)
+        current == Condition.Op.LESS_THAN -> stringResource(R.string.condition_op_less_than)
+        current == Condition.Op.EQUALS -> stringResource(R.string.condition_op_equals_symbol)
         else -> "?"
     }
     Box {
         OutlinedButton(onClick = { expanded = true }) { Text(label) }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             listOf(
-                Condition.Op.GREATER_THAN to (if (ageMode) "أقدم من" else "أكبر من"),
-                Condition.Op.LESS_THAN to (if (ageMode) "أحدث من" else "أصغر من"),
-                Condition.Op.EQUALS to "يساوي",
+                Condition.Op.GREATER_THAN to (if (ageMode) stringResource(R.string.condition_op_older_than) else stringResource(R.string.condition_op_greater_than)),
+                Condition.Op.LESS_THAN to (if (ageMode) stringResource(R.string.condition_op_newer_than) else stringResource(R.string.condition_op_less_than)),
+                Condition.Op.EQUALS to stringResource(R.string.condition_op_equals),
             ).forEach { (op, text) ->
                 DropdownMenuItem(text = { Text(text) }, onClick = { onChange(op); expanded = false })
             }

@@ -91,7 +91,7 @@ private fun StorageCard(used: Long, total: Long, free: Long, percent: Float, isL
                     Text(stringResource(R.string.dashboard_storage_title), style = MaterialTheme.typography.labelLarge, color = colors.onPrimaryContainer.copy(alpha = 0.8f))
                     Spacer(Modifier.height(6.dp))
                     Text(if (isLoading) "…" else Formatter.formatBytes(used), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = colors.onPrimaryContainer)
-                    Text(if (isLoading) "" else "من ${Formatter.formatBytes(total)}", style = MaterialTheme.typography.bodyMedium, color = colors.onPrimaryContainer.copy(alpha = 0.7f))
+                    Text(if (isLoading) "" else stringResource(R.string.dashboard_storage_from, Formatter.formatBytes(total)), style = MaterialTheme.typography.bodyMedium, color = colors.onPrimaryContainer.copy(alpha = 0.7f))
                 }
                 IconButton(onClick = onRefresh, enabled = !isLoading) {
                     Icon(Icons.Rounded.Refresh, contentDescription = stringResource(R.string.refresh), tint = colors.onPrimaryContainer)
@@ -107,8 +107,8 @@ private fun StorageCard(used: Long, total: Long, free: Long, percent: Float, isL
             )
             Spacer(Modifier.height(10.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("${(animatedProgress * 100).toInt()}% مُستخدَم", style = MaterialTheme.typography.bodySmall, color = colors.onPrimaryContainer.copy(alpha = 0.85f))
-                Text(if (isLoading) "…" else "متاح ${Formatter.formatBytes(free)}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = colors.onPrimaryContainer.copy(alpha = 0.85f))
+                Text(stringResource(R.string.dashboard_storage_used, (animatedProgress * 100).toInt()), style = MaterialTheme.typography.bodySmall, color = colors.onPrimaryContainer.copy(alpha = 0.85f))
+                Text(if (isLoading) "…" else stringResource(R.string.dashboard_storage_free, Formatter.formatBytes(free)), style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = colors.onPrimaryContainer.copy(alpha = 0.85f))
             }
         }
     }

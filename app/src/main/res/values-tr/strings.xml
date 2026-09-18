@@ -285,4 +285,129 @@
     <string name="widget_title">Depolama</string>
     <string name="widget_free">%1$s boş</string>
     <string name="widget_description">Canlı depolama gösterimi</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">Pil sıcak — şarj cihazını bir süre çıkarın</string>
+    <string name="battery_charging">Şarj oluyor</string>
+    <string name="battery_status">Durum</string>
+    <string name="battery_status_charging">Şarj oluyor</string>
+    <string name="battery_status_discharging">Deşarj oluyor</string>
+    <string name="battery_temperature">Sıcaklık</string>
+    <string name="battery_voltage">Voltaj</string>
+    <string name="battery_technology">Teknoloji</string>
+    <string name="battery_health">Sağlık</string>
+    <string name="battery_health_good">İyi ✓</string>
+    <string name="battery_health_overheat">Aşırı ısınmış!</string>
+    <string name="battery_health_dead">Arızalı</string>
+    <string name="battery_health_over_voltage">Yüksek voltaj</string>
+    <string name="battery_health_cold">Soğuk</string>
+    <string name="battery_health_failure">Arıza</string>
+    <string name="battery_health_unknown">Bilinmiyor</string>
+    <string name="battery_power_source">Güç kaynağı</string>
+    <string name="battery_source_ac">Şarj cihazı</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">Kablosuz</string>
+    <string name="battery_source_none">Bağlı değil</string>
+    <string name="dashboard_storage_from">%1$s /</string>
+    <string name="dashboard_storage_used">%1$d%% kullanıldı</string>
+    <string name="dashboard_storage_free">%1$s kullanılabilir</string>
+    <string name="permission_missing_title">Eksik izinler</string>
+    <string name="permission_missing_message">Cihazınızı taramak için dosya erişim izni gerekiyor.</string>
+    <string name="shred_selected_count">%1$d dosya</string>
+    <string name="theme_live_preview">Canlı önizleme</string>
+    <string name="theme_preview_button_one">Düğme 1</string>
+    <string name="theme_preview_button_two">Düğme 2</string>
+    <string name="theme_preview_button_three">Düğme 3</string>
+    <string name="scheduler_interval_6">6 saatte bir</string>
+    <string name="scheduler_interval_12">12 saatte bir</string>
+    <string name="scheduler_interval_24">Günlük</string>
+    <string name="scheduler_interval_72">3 günde bir</string>
+    <string name="scheduler_interval_168">Haftalık</string>
+    <string name="rules_unnamed">Adsız kural</string>
+    <string name="rules_logic">Mantık: %1$s</string>
+    <string name="rules_logic_all">tüm koşullar</string>
+    <string name="rules_logic_any">herhangi bir koşul</string>
+    <string name="rules_edit">Düzenle</string>
+    <string name="rules_delete">Sil</string>
+    <string name="rules_delete_title">Kural silinsin mi?</string>
+    <string name="rules_delete_message">%1$s kalıcı olarak silinecek.</string>
+    <string name="rules_evaluating">Değerlendiriliyor…</string>
+    <string name="rules_scanned_count">%1$d dosya</string>
+    <string name="rules_no_results">Sonuç yok</string>
+    <string name="rules_back">Geri</string>
+    <string name="rules_results_title">Kural değerlendirme sonuçları</string>
+    <string name="rules_results_summary">%1$d dosya · %2$s</string>
+    <string name="rules_match_summary">%1$d dosya · %2$s</string>
+    <string name="rules_action_suggest">Öner</string>
+    <string name="rules_action_delete">Sil</string>
+    <string name="rules_action_shred">Güvenli sil</string>
+    <string name="rules_action_vault">Kasaya taşı</string>
+    <string name="rules_back_to_list">Kurallara dön</string>
+    <string name="rules_error_title">Bir hata oluştu</string>
+    <string name="condition_field_size">Boyut</string>
+    <string name="condition_field_age">Yaş</string>
+    <string name="condition_field_extension">Tür</string>
+    <string name="condition_field_path">Yol</string>
+    <string name="condition_field_name">Ad</string>
+    <string name="condition_field_gallery">Galeri</string>
+    <string name="condition_days">Gün</string>
+    <string name="condition_path_hint">Örnek: Download</string>
+    <string name="condition_name_hint">Ad deseni</string>
+    <string name="condition_op_older_than">Daha eski</string>
+    <string name="condition_op_newer_than">Daha yeni</string>
+    <string name="condition_op_greater_than">Büyüktür</string>
+    <string name="condition_op_less_than">Küçüktür</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">Eşittir</string>
+    <string name="condition_add_size">Boyut</string>
+    <string name="condition_add_age">Yaş</string>
+    <string name="condition_add_extension">Uzantı</string>
+    <string name="condition_add_path">Yol içeriyor</string>
+    <string name="condition_add_name">Ad içeriyor</string>
+    <string name="rule_editor_new_title">Yeni kural</string>
+    <string name="rule_editor_edit_title">Kuralı düzenle</string>
+    <string name="rule_editor_name">Kural adı</string>
+    <string name="rule_editor_description">Açıklama (isteğe bağlı)</string>
+    <string name="rules_logic_label">Mantık</string>
+    <string name="rules_logic_all_and">Tüm koşullar (AND)</string>
+    <string name="rules_logic_any_or">Herhangi bir koşul (OR)</string>
+    <string name="rules_conditions">Koşullar</string>
+    <string name="rules_action_label">Eylem</string>
+    <string name="rule_action_suggest_full">Yalnızca öner (otomatik silme)</string>
+    <string name="rule_action_move_vault">Kasaya taşı</string>
+    <string name="rule_action_shred_full">Güvenli sil (Shredder)</string>
+    <string name="rule_action_delete_full">Doğrudan sil</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">Bilinmeyen hata</string>
+    <string name="duplicates_summary">%1$d grup · %2$d yinelenen dosya</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d öğe daha</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">Filtreler</string>
+    <string name="large_files_min_size">Minimum boyut: %1$d MB</string>
+    <string name="large_files_categories">Kategoriler</string>
+    <string name="large_files_older_than">Daha eski</string>
+    <string name="large_files_all">Tümü</string>
+    <string name="apply">Uygula</string>
+    <string name="ram_available">Kullanılabilir</string>
+    <string name="ram_used">Kullanılan</string>
+    <string name="ram_boosting">Bellek boşaltılıyor…</string>
+    <string name="ram_success_title">Bellek boşaltıldı</string>
+    <string name="ram_success_message">%1$s bellek boşaltıldı.</string>
+    <string name="ram_total_of">%1$s toplamın</string>
+    <string name="large_files_category_video">Video</string>
+    <string name="large_files_category_audio">Ses</string>
+    <string name="large_files_category_image">Görsel</string>
+    <string name="large_files_category_archive">Arşiv</string>
+    <string name="large_files_category_document">Belge</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">Diğer</string>
+    <plurals name="duplicates_selected_count"><item quantity="one">%d seçili öğe</item><item quantity="other">%d seçili öğe</item></plurals>
+    <plurals name="junk_items_count"><item quantity="one">%d öğe</item><item quantity="other">%d öğe</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="one">%1$d dosya tarandı</item><item quantity="other">%1$d dosya tarandı</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="one">%d öğe</item><item quantity="other">%d öğe</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="one">%1$d büyük dosya</item><item quantity="other">%1$d büyük dosya</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="one">%1$d dosya</item><item quantity="other">%1$d dosya</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="one">%1$d gün</item><item quantity="other">%1$d gün</item></plurals>
 </resources>

@@ -58,7 +58,7 @@ fun JunkScreen(adManager: AdManager? = null, isPremium: Boolean = false, viewMod
                 onRescan = viewModel::startScanWithPermissionCheck,
             )
             JunkUiState.Phase.ERROR -> ErrorContent(
-                message = state.errorMessage ?: "Unknown",
+                message = state.errorMessage ?: stringResource(R.string.error_unknown),
                 onRetry = viewModel::startScanWithPermissionCheck,
                 onDismiss = viewModel::dismissError,
                 onOpenPermissions = { runCatching { context.startActivity(viewModel.openAllFilesSettings()) } },
@@ -164,9 +164,9 @@ private fun ReadyContent(
 private fun ErrorContent(message: String, onRetry: () -> Unit, onDismiss: () -> Unit, onOpenPermissions: () -> Unit) {
     val isPermission = message == "MISSING_PERMISSION"
     Column(Modifier.fillMaxSize().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-        Text(if (isPermission) "صلاحيات ناقصة" else stringResource(R.string.scan_error), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text(if (isPermission) stringResource(R.string.permission_missing_title) else stringResource(R.string.scan_error), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(8.dp))
-        Text(if (isPermission) "نحتاج إذن قراءة الملفات لفحص جهازك." else message, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(if (isPermission) stringResource(R.string.permission_missing_message) else message, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(24.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             OutlinedButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
@@ -192,7 +192,7 @@ private fun CleanupBar(bytes: Long, count: Int, onCleanClick: () -> Unit) {
         ) {
             Column {
                 Text(Formatter.formatBytes(bytes), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                Text("$count عنصر محدد", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.junk_selected_count, count), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Button(onClick = onCleanClick, shape = MaterialTheme.shapes.large, modifier = Modifier.height(48.dp)) {
                 Icon(Icons.Rounded.Delete, contentDescription = null)

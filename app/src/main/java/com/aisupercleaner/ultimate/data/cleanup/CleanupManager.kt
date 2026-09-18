@@ -23,49 +23,63 @@ class CleanupManager @Inject constructor(
     // ✅ FIX: يسجّل في History
     suspend fun deleteJunk(
         items: List<JunkItem>,
+        source: HistoryEntry.Source,
         onProgress: (done: Int, total: Int) -> Unit = { _, _ -> },
     ): CleanupResult = withContext(Dispatchers.IO) {
         val start = System.currentTimeMillis()
-        var deleted = 0
-        var failed = 0
         var freed = 0L
+        val successfulPaths = mutableListOf<String>()
+        val failedPaths = mutableListOf<String>()
         val failures = mutableListOf<CleanupResult.Failure>()
 
         items.forEachIndexed { index, item ->
             val file = File(item.path)
+            val sizeBeforeDelete = FileUtils.safeLength(file)
             if (FileUtils.safeDelete(file)) {
-                deleted++
-                freed += item.sizeBytes
+                successfulPaths += item.path
+                freed += sizeBeforeDelete
             } else {
-                failed++
+                failedPaths += item.path
                 failures += CleanupResult.Failure(item.path, "Permission denied or file in use")
             }
             if (index % 10 == 0 || index == items.lastIndex) onProgress(index + 1, items.size)
         }
 
-        val result = CleanupResult(deleted, failed, freed, System.currentTimeMillis() - start, failures)
-
-        // سجّل في History
-        historyRepository.record(
+        val result = CleanupResult(
+            deletedCount = successfulPaths.size,
+            failedCount = failedPaths.size,
             freedBytes = freed,
-            deletedCount = deleted,
-            failedCount = failed,
-            source = HistoryEntry.Source.JUNK,
-            durationMs = result.durationMs,
+            durationMs = System.currentTimeMillis() - start,
+            successfulPaths = successfulPaths,
+            failedPaths = failedPaths,
+            failures = failures,
         )
-        preferences.recordCleanup(freed)
-        storageRepository.refresh()
+
+        // Empty and failure-only runs are not cleanup sessions and must not
+        // create misleading history rows or update cleanup totals.
+        if (result.deletedCount > 0) {
+            historyRepository.record(
+                freedBytes = result.freedBytes,
+                deletedCount = result.deletedCount,
+                failedCount = result.failedCount,
+                source = source,
+                durationMs = result.durationMs,
+            )
+            preferences.recordCleanup(result.freedBytes)
+            storageRepository.refresh()
+        }
         result
     }
 
-    suspend fun deleteFiles(paths: List<String>): CleanupResult = deleteJunk(
-        paths.map { path ->
+    suspend fun deleteFiles(paths: List<String>, source: HistoryEntry.Source): CleanupResult = deleteJunk(
+        items = paths.map { path ->
             JunkItem(
                 path = path,
                 sizeBytes = File(path).length().coerceAtLeast(0),
                 lastModified = File(path).lastModified(),
                 category = JunkCategory.CACHE,
             )
-        }
+        },
+        source = source,
     )
 }

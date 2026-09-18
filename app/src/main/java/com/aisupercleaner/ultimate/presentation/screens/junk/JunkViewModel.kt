@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aisupercleaner.ultimate.core.permissions.PermissionManager
 import com.aisupercleaner.ultimate.data.cleanup.CleanupManager
+import com.aisupercleaner.ultimate.data.history.HistoryEntry
 import com.aisupercleaner.ultimate.data.scanner.JunkCategory
 import com.aisupercleaner.ultimate.data.scanner.JunkItem
 import com.aisupercleaner.ultimate.data.scanner.JunkScanner
@@ -125,16 +126,16 @@ class JunkViewModel @Inject constructor(
         _uiState.update { it.copy(phase = JunkUiState.Phase.CLEANING) }
 
         viewModelScope.launch {
-            val result = cleanupManager.deleteJunk(items)
+            val result = cleanupManager.deleteJunk(items, HistoryEntry.Source.JUNK)
             _uiState.update {
                 it.copy(
                     phase = JunkUiState.Phase.DONE,
                     lastResult = result,
                     groups = it.groups.mapNotNull { group ->
-                        val remaining = group.items.filter { item -> item.path !in state.selectedPaths }
+                        val remaining = group.items.filter { item -> item.path !in result.successfulPaths }
                         if (remaining.isEmpty()) null else group.copy(items = remaining)
                     },
-                    selectedPaths = emptySet(),
+                    selectedPaths = result.failedPaths.toSet(),
                 )
             }
         }

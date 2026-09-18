@@ -98,25 +98,25 @@ private fun RuleCard(rule: CleanupRule, onToggle: (String, Boolean) -> Unit, onE
         Column(Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text(rule.name.ifBlank { "قاعدة بدون اسم" }, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                    Text(rule.name.ifBlank { stringResource(R.string.rules_unnamed) }, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                     if (rule.description.isNotBlank()) Text(rule.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Switch(checked = rule.enabled, onCheckedChange = { onToggle(rule.id, it) })
             }
             Spacer(Modifier.height(8.dp))
-            Text("المنطق: " + if (rule.logic == CleanupRule.Logic.AND) "كل الشروط" else "أي شرط", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.rules_logic, if (rule.logic == CleanupRule.Logic.AND) stringResource(R.string.rules_logic_all) else stringResource(R.string.rules_logic_any)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             rule.conditions.forEach { condition -> Text("• " + RuleEvaluator.describe(condition), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = { onEdit(rule) }, modifier = Modifier.weight(1f)) {
                     Icon(Icons.Rounded.Edit, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text("تعديل")
+                    Text(stringResource(R.string.rules_edit))
                 }
                 OutlinedButton(onClick = { showDelete = true }, modifier = Modifier.weight(1f), colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
                     Icon(Icons.Rounded.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text("حذف")
+                    Text(stringResource(R.string.rules_delete))
                 }
             }
         }
@@ -124,8 +124,8 @@ private fun RuleCard(rule: CleanupRule, onToggle: (String, Boolean) -> Unit, onE
     if (showDelete) {
         AlertDialog(
             onDismissRequest = { showDelete = false },
-            title = { Text("حذف القاعدة؟") },
-            text = { Text("سيتم حذف \"${rule.name}\" نهائيًا.") },
+            title = { Text(stringResource(R.string.rules_delete_title)) },
+            text = { Text(stringResource(R.string.rules_delete_message, rule.name)) },
             confirmButton = { TextButton(onClick = { onDelete(rule.id); showDelete = false }) { Text(stringResource(R.string.delete)) } },
             dismissButton = { TextButton(onClick = { showDelete = false }) { Text(stringResource(R.string.cancel)) } },
         )
@@ -137,9 +137,9 @@ private fun EvaluatingView(scanned: Int, path: String) {
     Column(Modifier.fillMaxSize().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         CircularProgressIndicator(Modifier.size(72.dp))
         Spacer(Modifier.height(24.dp))
-        Text("جاري التقييم…", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.rules_evaluating), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(8.dp))
-        Text("$scanned ملف", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(R.string.rules_scanned_count, scanned), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (path.isNotBlank()) {
             Spacer(Modifier.height(12.dp))
             Text(path, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), maxLines = 1)
@@ -154,9 +154,9 @@ private fun ReportView(report: com.aisupercleaner.ultimate.data.rules.RuleEngine
         Column(Modifier.fillMaxSize().padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             Icon(Icons.Rounded.CheckCircle, contentDescription = null, modifier = Modifier.size(96.dp), tint = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(16.dp))
-            Text("لا توجد نتائج", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.rules_no_results), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(16.dp))
-            Button(onClick = onBack) { Text("رجوع") }
+            Button(onClick = onBack) { Text(stringResource(R.string.rules_back)) }
         }
         return
     }
@@ -164,9 +164,9 @@ private fun ReportView(report: com.aisupercleaner.ultimate.data.rules.RuleEngine
         item {
             Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
                 Column(Modifier.padding(16.dp)) {
-                    Text("نتائج تقييم القواعد", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.rules_results_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(6.dp))
-                    Text("${report.totalMatchedFiles} ملف · ${Formatter.formatBytes(report.totalMatchedBytes)}")
+                    Text(stringResource(R.string.rules_results_summary, report.totalMatchedFiles, Formatter.formatBytes(report.totalMatchedBytes)))
                 }
             }
         }
@@ -174,7 +174,7 @@ private fun ReportView(report: com.aisupercleaner.ultimate.data.rules.RuleEngine
             Card {
                 Column(Modifier.padding(14.dp)) {
                     Text(match.rule.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                    Text("${match.count} ملف · ${Formatter.formatBytes(match.totalBytes)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.rules_match_summary, match.count, Formatter.formatBytes(match.totalBytes)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Button(
@@ -183,17 +183,17 @@ private fun ReportView(report: com.aisupercleaner.ultimate.data.rules.RuleEngine
                             enabled = match.rule.action != CleanupRule.Action.SUGGEST,
                         ) {
                             Text(when (match.rule.action) {
-                                CleanupRule.Action.SUGGEST -> "اقتراح"
-                                CleanupRule.Action.DELETE -> "حذف"
-                                CleanupRule.Action.SHRED -> "محو آمن"
-                                CleanupRule.Action.MOVE_TO_VAULT -> "نقل للخزنة"
+                                CleanupRule.Action.SUGGEST -> stringResource(R.string.rules_action_suggest)
+                                CleanupRule.Action.DELETE -> stringResource(R.string.rules_action_delete)
+                                CleanupRule.Action.SHRED -> stringResource(R.string.rules_action_shred)
+                                CleanupRule.Action.MOVE_TO_VAULT -> stringResource(R.string.rules_action_vault)
                             })
                         }
                     }
                 }
             }
         }
-        item { OutlinedButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text("رجوع للقواعد") } }
+        item { OutlinedButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.rules_back_to_list)) } }
         item { Spacer(Modifier.height(32.dp)) }
     }
 }
@@ -203,9 +203,9 @@ private fun ErrorView(message: String, onDismiss: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Icon(Icons.Rounded.Warning, contentDescription = null, modifier = Modifier.size(72.dp), tint = MaterialTheme.colorScheme.error)
         Spacer(Modifier.height(12.dp))
-        Text("حدث خطأ", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.rules_error_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         Text(message, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(16.dp))
-        Button(onClick = onDismiss) { Text("حسنًا") }
+        Button(onClick = onDismiss) { Text(stringResource(R.string.ok)) }
     }
 }

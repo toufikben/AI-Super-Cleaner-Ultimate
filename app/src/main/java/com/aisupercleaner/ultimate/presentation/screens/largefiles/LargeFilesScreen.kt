@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -85,7 +86,7 @@ fun LargeFilesScreen(
                 LargeFilesUiState.Phase.SCANNING -> ScanningView(state.scanned, state.currentPath, viewModel::cancelScan)
                 LargeFilesUiState.Phase.READY, LargeFilesUiState.Phase.DELETING, LargeFilesUiState.Phase.DONE -> ReadyView(state, viewModel::toggleSelection, viewModel::selectAll, viewModel::deselectAll, viewModel::startScan)
                 LargeFilesUiState.Phase.ERROR -> ErrorView(
-                    state.errorMessage ?: "",
+                    state.errorMessage ?: stringResource(R.string.error_unknown),
                     viewModel::startScan,
                     viewModel::dismissError,
                     { runCatching { context.startActivity(viewModel.openAllFilesSettings()) } },
@@ -149,7 +150,7 @@ private fun ScanningView(scanned: Int, path: String, onCancel: () -> Unit) {
         Spacer(Modifier.height(20.dp))
         Text(stringResource(R.string.large_files_scanning), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(8.dp))
-        Text("$scanned ملف", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(pluralStringResource(R.plurals.large_files_scanned, scanned, scanned), color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (path.isNotBlank()) {
             Spacer(Modifier.height(10.dp))
             Text(path, style = MaterialTheme.typography.labelSmall, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
@@ -245,7 +246,7 @@ private fun DeleteBar(bytes: Long, count: Int, onDelete: () -> Unit) {
         ) {
             Column {
                 Text(Formatter.formatBytes(bytes), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                Text("$count ملف", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(pluralStringResource(R.plurals.large_files_selected_count, count, count), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Button(
                 onClick = onDelete,
@@ -291,25 +292,25 @@ private fun FilterSheet(
 
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(Modifier.padding(16.dp).navigationBarsPadding()) {
-            Text("مرشحات", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.large_files_filters), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(16.dp))
-            Text("الحد الأدنى للحجم: $minSizeMb MB", style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.large_files_min_size, minSizeMb), style = MaterialTheme.typography.bodyMedium)
             Slider(value = minSizeMb.toFloat(), onValueChange = { minSizeMb = it.toLong() }, valueRange = 10f..2048f)
             Spacer(Modifier.height(16.dp))
-            Text("الفئات", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+            Text(stringResource(R.string.large_files_categories), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
             LargeFileScanner.LargeFile.Category.entries.forEach { cat ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = cat in selectedCategories, onCheckedChange = { checked ->
                         selectedCategories = if (checked) selectedCategories + cat else selectedCategories - cat
                     })
-                    Text(cat.name.lowercase().replaceFirstChar { it.uppercase() })
+                    Text(stringResource(cat.labelRes()))
                 }
             }
             Spacer(Modifier.height(16.dp))
-            Text("أقدم من (بالأيام)", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+            Text(stringResource(R.string.large_files_older_than), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(null, 7, 30, 90, 365).forEach { days ->
-                    FilterChip(selected = olderThanDays == days, onClick = { olderThanDays = days }, label = { Text(days?.let { "$it يوم" } ?: "الكل") })
+                    FilterChip(selected = olderThanDays == days, onClick = { olderThanDays = days }, label = { Text(days?.let { pluralStringResource(R.plurals.large_files_filter_days, it, it) } ?: stringResource(R.string.large_files_all)) })
                 }
             }
             Spacer(Modifier.height(24.dp))
@@ -325,9 +326,19 @@ private fun FilterSheet(
                 },
                 modifier = Modifier.fillMaxWidth().height(52.dp),
                 shape = MaterialTheme.shapes.large,
-            ) { Text("تطبيق", fontWeight = FontWeight.SemiBold) }
+            ) { Text(stringResource(R.string.apply), fontWeight = FontWeight.SemiBold) }
         }
     }
+}
+
+private fun LargeFileScanner.LargeFile.Category.labelRes(): Int = when (this) {
+    LargeFileScanner.LargeFile.Category.VIDEO -> R.string.large_files_category_video
+    LargeFileScanner.LargeFile.Category.AUDIO -> R.string.large_files_category_audio
+    LargeFileScanner.LargeFile.Category.IMAGE -> R.string.large_files_category_image
+    LargeFileScanner.LargeFile.Category.ARCHIVE -> R.string.large_files_category_archive
+    LargeFileScanner.LargeFile.Category.DOCUMENT -> R.string.large_files_category_document
+    LargeFileScanner.LargeFile.Category.APK -> R.string.large_files_category_apk
+    LargeFileScanner.LargeFile.Category.OTHER -> R.string.large_files_category_other
 }
 
 private fun LargeFileScanner.LargeFile.Category.icon(): ImageVector = when (this) {

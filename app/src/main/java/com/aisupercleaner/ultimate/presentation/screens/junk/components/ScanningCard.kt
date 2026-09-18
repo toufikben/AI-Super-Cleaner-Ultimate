@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,7 +45,7 @@ fun ScanningCard(progress: ScanProgress, onCancel: () -> Unit) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 LinearProgressIndicator(progress = { progress.progress }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape), color = colors.primary)
                 Spacer(Modifier.height(8.dp))
-                Text("${progress.scannedFiles} ملف تم فحصه", style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
+                Text(pluralStringResource(R.plurals.junk_scanned_files, progress.scannedFiles, progress.scannedFiles), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
             }
         }
         TextButton(onClick = onCancel) { Text(stringResource(R.string.cancel)) }

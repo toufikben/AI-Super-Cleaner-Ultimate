@@ -285,4 +285,129 @@
     <string name="widget_title">Speicher</string>
     <string name="widget_free">%1$s frei</string>
     <string name="widget_description">Live-Speicheranzeige</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">Akku ist heiß — Ladegerät kurz trennen</string>
+    <string name="battery_charging">Wird geladen</string>
+    <string name="battery_status">Status</string>
+    <string name="battery_status_charging">Laden</string>
+    <string name="battery_status_discharging">Wird entladen</string>
+    <string name="battery_temperature">Temperatur</string>
+    <string name="battery_voltage">Spannung</string>
+    <string name="battery_technology">Technologie</string>
+    <string name="battery_health">Gesundheit</string>
+    <string name="battery_health_good">Gut ✓</string>
+    <string name="battery_health_overheat">Überhitzt!</string>
+    <string name="battery_health_dead">Defekt</string>
+    <string name="battery_health_over_voltage">Hohe Spannung</string>
+    <string name="battery_health_cold">Kalt</string>
+    <string name="battery_health_failure">Fehler</string>
+    <string name="battery_health_unknown">Unbekannt</string>
+    <string name="battery_power_source">Stromquelle</string>
+    <string name="battery_source_ac">Ladegerät</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">Kabellos</string>
+    <string name="battery_source_none">Nicht verbunden</string>
+    <string name="dashboard_storage_from">von %1$s</string>
+    <string name="dashboard_storage_used">%1$d%% verwendet</string>
+    <string name="dashboard_storage_free">%1$s verfügbar</string>
+    <string name="permission_missing_title">Fehlende Berechtigungen</string>
+    <string name="permission_missing_message">Wir benötigen Dateizugriff, um Ihr Gerät zu scannen.</string>
+    <string name="shred_selected_count">%1$d Dateien</string>
+    <string name="theme_live_preview">Live-Vorschau</string>
+    <string name="theme_preview_button_one">Schaltfläche 1</string>
+    <string name="theme_preview_button_two">Schaltfläche 2</string>
+    <string name="theme_preview_button_three">Schaltfläche 3</string>
+    <string name="scheduler_interval_6">Alle 6 Stunden</string>
+    <string name="scheduler_interval_12">Alle 12 Stunden</string>
+    <string name="scheduler_interval_24">Täglich</string>
+    <string name="scheduler_interval_72">Alle 3 Tage</string>
+    <string name="scheduler_interval_168">Wöchentlich</string>
+    <string name="rules_unnamed">Unbenannte Regel</string>
+    <string name="rules_logic">Logik: %1$s</string>
+    <string name="rules_logic_all">alle Bedingungen</string>
+    <string name="rules_logic_any">eine beliebige Bedingung</string>
+    <string name="rules_edit">Bearbeiten</string>
+    <string name="rules_delete">Löschen</string>
+    <string name="rules_delete_title">Regel löschen?</string>
+    <string name="rules_delete_message">%1$s wird dauerhaft gelöscht.</string>
+    <string name="rules_evaluating">Wird ausgewertet…</string>
+    <string name="rules_scanned_count">%1$d Dateien</string>
+    <string name="rules_no_results">Keine Ergebnisse</string>
+    <string name="rules_back">Zurück</string>
+    <string name="rules_results_title">Ergebnisse der Regelauswertung</string>
+    <string name="rules_results_summary">%1$d Dateien · %2$s</string>
+    <string name="rules_match_summary">%1$d Dateien · %2$s</string>
+    <string name="rules_action_suggest">Vorschlagen</string>
+    <string name="rules_action_delete">Löschen</string>
+    <string name="rules_action_shred">Sicher löschen</string>
+    <string name="rules_action_vault">In Tresor verschieben</string>
+    <string name="rules_back_to_list">Zurück zu den Regeln</string>
+    <string name="rules_error_title">Ein Fehler ist aufgetreten</string>
+    <string name="condition_field_size">Größe</string>
+    <string name="condition_field_age">Alter</string>
+    <string name="condition_field_extension">Typ</string>
+    <string name="condition_field_path">Pfad</string>
+    <string name="condition_field_name">Name</string>
+    <string name="condition_field_gallery">Galerie</string>
+    <string name="condition_days">Tage</string>
+    <string name="condition_path_hint">Beispiel: Download</string>
+    <string name="condition_name_hint">Namensmuster</string>
+    <string name="condition_op_older_than">Älter als</string>
+    <string name="condition_op_newer_than">Neuer als</string>
+    <string name="condition_op_greater_than">Größer als</string>
+    <string name="condition_op_less_than">Kleiner als</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">Gleich</string>
+    <string name="condition_add_size">Größe</string>
+    <string name="condition_add_age">Alter</string>
+    <string name="condition_add_extension">Erweiterung</string>
+    <string name="condition_add_path">Pfad enthält</string>
+    <string name="condition_add_name">Name enthält</string>
+    <string name="rule_editor_new_title">Neue Regel</string>
+    <string name="rule_editor_edit_title">Regel bearbeiten</string>
+    <string name="rule_editor_name">Regelname</string>
+    <string name="rule_editor_description">Beschreibung (optional)</string>
+    <string name="rules_logic_label">Logik</string>
+    <string name="rules_logic_all_and">Alle Bedingungen (AND)</string>
+    <string name="rules_logic_any_or">Beliebige Bedingung (OR)</string>
+    <string name="rules_conditions">Bedingungen</string>
+    <string name="rules_action_label">Aktion</string>
+    <string name="rule_action_suggest_full">Nur vorschlagen (nicht automatisch löschen)</string>
+    <string name="rule_action_move_vault">In Tresor verschieben</string>
+    <string name="rule_action_shred_full">Sicher löschen (Shredder)</string>
+    <string name="rule_action_delete_full">Direkt löschen</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">Unbekannter Fehler</string>
+    <string name="duplicates_summary">%1$d Gruppen · %2$d Duplikate</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d weitere Elemente</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">Filter</string>
+    <string name="large_files_min_size">Mindestgröße: %1$d MB</string>
+    <string name="large_files_categories">Kategorien</string>
+    <string name="large_files_older_than">Älter als</string>
+    <string name="large_files_all">Alle</string>
+    <string name="apply">Anwenden</string>
+    <string name="ram_available">Verfügbar</string>
+    <string name="ram_used">Verwendet</string>
+    <string name="ram_boosting">Speicher wird freigegeben…</string>
+    <string name="ram_success_title">Speicher freigegeben</string>
+    <string name="ram_success_message">%1$s Speicher wurden freigegeben.</string>
+    <string name="ram_total_of">von %1$s</string>
+    <string name="large_files_category_video">Video</string>
+    <string name="large_files_category_audio">Audio</string>
+    <string name="large_files_category_image">Bild</string>
+    <string name="large_files_category_archive">Archiv</string>
+    <string name="large_files_category_document">Dokument</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">Andere</string>
+    <plurals name="duplicates_selected_count"><item quantity="one">%d ausgewählte Datei</item><item quantity="other">%d ausgewählte Dateien</item></plurals>
+    <plurals name="junk_items_count"><item quantity="one">%d Element</item><item quantity="other">%d Elemente</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="one">%1$d Datei gescannt</item><item quantity="other">%1$d Dateien gescannt</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="one">%d Element</item><item quantity="other">%d Elemente</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="one">%1$d große Datei</item><item quantity="other">%1$d große Dateien</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="one">%1$d Datei</item><item quantity="other">%1$d Dateien</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="one">%1$d Tag</item><item quantity="other">%1$d Tage</item></plurals>
 </resources>

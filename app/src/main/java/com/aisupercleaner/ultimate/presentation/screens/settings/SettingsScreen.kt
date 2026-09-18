@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.aisupercleaner.ultimate.BuildConfig
 import com.aisupercleaner.ultimate.R
 
 @Composable
@@ -78,7 +79,7 @@ fun SettingsScreen(
         RowItem(stringResource(R.string.settings_history), stringResource(R.string.settings_history_sub), Icons.Rounded.History, onNavigateToHistory)
 
         Section(stringResource(R.string.settings_about))
-        InfoRowItem(stringResource(R.string.settings_version), "1.0.0", Icons.Rounded.Info)
+        InfoRowItem(stringResource(R.string.settings_version), BuildConfig.VERSION_NAME, Icons.Rounded.Info)
         InfoRowItem(
             stringResource(R.string.settings_developer),
             stringResource(R.string.settings_developer_name),

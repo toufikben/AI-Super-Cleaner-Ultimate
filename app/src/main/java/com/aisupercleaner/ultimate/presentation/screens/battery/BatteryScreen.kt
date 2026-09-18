@@ -45,7 +45,7 @@ fun BatteryScreen(onBack: () -> Unit = {}, viewModel: BatteryViewModel = hiltVie
                     Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Rounded.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.error)
                         Spacer(Modifier.width(10.dp))
-                        Text("البطارية ساخنة — افصل الشاحن قليلًا", style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(R.string.battery_overheat_warning), style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }
@@ -69,7 +69,7 @@ private fun BatteryGauge(info: BatteryInfo) {
             Icon(if (info.isCharging) Icons.Rounded.BatteryChargingFull else Icons.Rounded.BatteryFull, contentDescription = null, tint = color, modifier = Modifier.size(32.dp))
             Spacer(Modifier.height(4.dp))
             Text("${info.levelPercent}%", style = MaterialTheme.typography.displayMedium, fontWeight = FontWeight.Bold, color = color)
-            if (info.isCharging) Text("جاري الشحن", style = MaterialTheme.typography.bodySmall, color = color, fontWeight = FontWeight.SemiBold)
+            if (info.isCharging) Text(stringResource(R.string.battery_charging), style = MaterialTheme.typography.bodySmall, color = color, fontWeight = FontWeight.SemiBold)
         }
     }
 }
@@ -78,24 +78,24 @@ private fun BatteryGauge(info: BatteryInfo) {
 private fun BatteryInfoCard(info: BatteryInfo) {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp)) {
-            BatteryRow("الحالة", if (info.isCharging) "يشحن" else "قيد التفريغ")
-            BatteryRow("الحرارة", "${info.temperatureC}°C")
-            BatteryRow("الفولتية", "${info.voltageMv} mV")
-            BatteryRow("التقنية", info.technology)
-            BatteryRow("الصحة", when (info.health) {
-                BatteryInfo.Health.GOOD -> "جيدة ✓"
-                BatteryInfo.Health.OVERHEAT -> "سخونة!"
-                BatteryInfo.Health.DEAD -> "تالفة"
-                BatteryInfo.Health.OVER_VOLTAGE -> "فولتية عالية"
-                BatteryInfo.Health.COLD -> "باردة"
-                BatteryInfo.Health.UNKNOWN_FAILURE -> "فشل"
-                BatteryInfo.Health.UNKNOWN -> "غير معروفة"
+            BatteryRow(stringResource(R.string.battery_status), if (info.isCharging) stringResource(R.string.battery_status_charging) else stringResource(R.string.battery_status_discharging))
+            BatteryRow(stringResource(R.string.battery_temperature), "${info.temperatureC}°C")
+            BatteryRow(stringResource(R.string.battery_voltage), "${info.voltageMv} mV")
+            BatteryRow(stringResource(R.string.battery_technology), info.technology)
+            BatteryRow(stringResource(R.string.battery_health), when (info.health) {
+                BatteryInfo.Health.GOOD -> stringResource(R.string.battery_health_good)
+                BatteryInfo.Health.OVERHEAT -> stringResource(R.string.battery_health_overheat)
+                BatteryInfo.Health.DEAD -> stringResource(R.string.battery_health_dead)
+                BatteryInfo.Health.OVER_VOLTAGE -> stringResource(R.string.battery_health_over_voltage)
+                BatteryInfo.Health.COLD -> stringResource(R.string.battery_health_cold)
+                BatteryInfo.Health.UNKNOWN_FAILURE -> stringResource(R.string.battery_health_failure)
+                BatteryInfo.Health.UNKNOWN -> stringResource(R.string.battery_health_unknown)
             })
-            BatteryRow("مصدر الشحن", when (info.plugged) {
-                BatteryInfo.Plugged.AC -> "شاحن"
-                BatteryInfo.Plugged.USB -> "USB"
-                BatteryInfo.Plugged.WIRELESS -> "لاسلكي"
-                BatteryInfo.Plugged.NONE -> "غير متصل"
+            BatteryRow(stringResource(R.string.battery_power_source), when (info.plugged) {
+                BatteryInfo.Plugged.AC -> stringResource(R.string.battery_source_ac)
+                BatteryInfo.Plugged.USB -> stringResource(R.string.battery_source_usb)
+                BatteryInfo.Plugged.WIRELESS -> stringResource(R.string.battery_source_wireless)
+                BatteryInfo.Plugged.NONE -> stringResource(R.string.battery_source_none)
             })
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aisupercleaner.ultimate.core.permissions.PermissionManager
 import com.aisupercleaner.ultimate.data.cleanup.CleanupManager
+import com.aisupercleaner.ultimate.data.history.HistoryEntry
 import com.aisupercleaner.ultimate.data.repository.DuplicateRepository
 import com.aisupercleaner.ultimate.data.scanner.duplicates.DuplicateEngine
 import com.aisupercleaner.ultimate.data.scanner.duplicates.DuplicateGroup
@@ -149,22 +150,22 @@ class DuplicatesViewModel @Inject constructor(
         _uiState.update { it.copy(phase = DuplicatesUiState.Phase.DELETING) }
 
         viewModelScope.launch {
-            val result = cleanupManager.deleteFiles(paths)
-            repository.deletePaths(paths)
+            val result = cleanupManager.deleteFiles(paths, HistoryEntry.Source.DUPLICATES)
+            if (result.successfulPaths.isNotEmpty()) repository.deletePaths(result.successfulPaths)
 
             _uiState.update { s ->
                 val remaining = s.groups.mapNotNull { group ->
-                    val left = group.items.filter { it.path !in paths }
+                    val left = group.items.filter { it.path !in result.successfulPaths }
                     when {
                         left.isEmpty() -> null
-                        left.size == 1 -> null
+                        left.size == 1 && left.none { it.path in result.failedPaths } -> null
                         else -> group.copy(items = left)
                     }
                 }
                 s.copy(
                     phase = DuplicatesUiState.Phase.DONE,
                     groups = remaining,
-                    selectedPaths = emptySet(),
+                    selectedPaths = result.failedPaths.toSet(),
                     lastResult = result,
                 )
             }

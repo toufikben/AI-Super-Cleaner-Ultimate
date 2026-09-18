@@ -33,6 +33,7 @@ class AppPreferences @Inject constructor(
         val APP_LOCK_ENABLED = booleanPreferencesKey("app_lock_enabled")
         val AUTO_CLEAN_ENABLED = booleanPreferencesKey("auto_clean_enabled")
         val AUTO_CLEAN_INTERVAL_HOURS = intPreferencesKey("auto_clean_interval_hours")
+        val STORAGE_ALERT_INTERVAL_HOURS = intPreferencesKey("storage_alert_interval_hours")
         val LAST_CLEAN_TIMESTAMP = longPreferencesKey("last_clean_timestamp")
         val TOTAL_CLEANED_BYTES = longPreferencesKey("total_cleaned_bytes")
         val CLEANUP_COUNT = intPreferencesKey("cleanup_count")
@@ -54,6 +55,7 @@ class AppPreferences @Inject constructor(
     val appLockEnabled: Flow<Boolean> = context.dataStore.data.map { it[Keys.APP_LOCK_ENABLED] ?: false }
     val autoCleanEnabled: Flow<Boolean> = context.dataStore.data.map { it[Keys.AUTO_CLEAN_ENABLED] ?: false }
     val autoCleanIntervalHours: Flow<Int> = context.dataStore.data.map { it[Keys.AUTO_CLEAN_INTERVAL_HOURS] ?: 24 }
+    val storageAlertIntervalHours: Flow<Int> = context.dataStore.data.map { it[Keys.STORAGE_ALERT_INTERVAL_HOURS] ?: 6 }
     val lastCleanTimestamp: Flow<Long> = context.dataStore.data.map { it[Keys.LAST_CLEAN_TIMESTAMP] ?: 0L }
     val totalCleanedBytes: Flow<Long> = context.dataStore.data.map { it[Keys.TOTAL_CLEANED_BYTES] ?: 0L }
     val cleanupCount: Flow<Int> = context.dataStore.data.map { it[Keys.CLEANUP_COUNT] ?: 0 }
@@ -68,8 +70,11 @@ class AppPreferences @Inject constructor(
     suspend fun setAppLockEnabled(value: Boolean) = context.dataStore.edit { it[Keys.APP_LOCK_ENABLED] = value }
     suspend fun setAutoCleanEnabled(value: Boolean) = context.dataStore.edit { it[Keys.AUTO_CLEAN_ENABLED] = value }
     suspend fun setAutoCleanIntervalHours(hours: Int) = context.dataStore.edit { it[Keys.AUTO_CLEAN_INTERVAL_HOURS] = hours }
+    suspend fun setStorageAlertIntervalHours(hours: Int) = context.dataStore.edit { it[Keys.STORAGE_ALERT_INTERVAL_HOURS] = hours }
     suspend fun setStorageAlertThresholdPercent(value: Int) = context.dataStore.edit { it[Keys.STORAGE_ALERT_THRESHOLD_PERCENT] = value }
     suspend fun setNotificationsEnabled(value: Boolean) = context.dataStore.edit { it[Keys.NOTIFICATIONS_ENABLED] = value }
+
+    suspend fun clearAllData() = context.dataStore.edit { it.clear() }
 
     suspend fun recordCleanup(bytesFreed: Long) = context.dataStore.edit { prefs ->
         prefs[Keys.LAST_CLEAN_TIMESTAMP] = System.currentTimeMillis()

@@ -17,10 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.aisupercleaner.ultimate.R
 import com.aisupercleaner.ultimate.core.util.Formatter
 import com.aisupercleaner.ultimate.data.scanner.JunkGroup
 import com.aisupercleaner.ultimate.data.scanner.JunkItem
@@ -52,7 +54,7 @@ fun JunkCategoryCard(
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(group.category.titleRes), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                     Spacer(Modifier.height(2.dp))
-                    Text("${group.count} عنصر · ${Formatter.formatBytes(group.totalBytes)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.junk_category_summary, pluralStringResource(R.plurals.junk_items_count, group.count, group.count), Formatter.formatBytes(group.totalBytes)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 val rotation by animateFloatAsState(targetValue = if (expanded) 180f else 0f, animationSpec = tween(250), label = "rot")
                 Icon(Icons.Rounded.ExpandMore, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.rotate(rotation))
@@ -65,7 +67,7 @@ fun JunkCategoryCard(
                     }
                     if (group.items.size > 50) {
                         Text(
-                            "+ ${group.items.size - 50} عناصر أخرى",
+                            stringResource(R.string.junk_additional_items, group.items.size - 50),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),

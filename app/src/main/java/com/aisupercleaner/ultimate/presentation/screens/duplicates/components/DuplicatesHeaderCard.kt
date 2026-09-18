@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,7 @@ fun DuplicatesHeaderCard(
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                stringResource(R.string.duplicates_found_groups, groupsCount) + " · $duplicatesCount تكرار",
+                stringResource(R.string.duplicates_summary, groupsCount, duplicatesCount),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onPrimaryContainer.copy(alpha = 0.8f),
             )
@@ -50,7 +51,7 @@ fun DuplicatesHeaderCard(
                     Text(stringResource(R.string.duplicates_selected_label), style = MaterialTheme.typography.labelSmall, color = colors.onPrimaryContainer.copy(alpha = 0.7f))
                     Text(Formatter.formatBytes(selectedBytes), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = colors.onPrimaryContainer)
                 }
-                Text("$selectedCount عنصر", style = MaterialTheme.typography.bodySmall, color = colors.onPrimaryContainer.copy(alpha = 0.7f))
+                Text(pluralStringResource(R.plurals.duplicates_selected_count, selectedCount, selectedCount), style = MaterialTheme.typography.bodySmall, color = colors.onPrimaryContainer.copy(alpha = 0.7f))
             }
         }
     }

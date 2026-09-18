@@ -59,7 +59,7 @@ fun ShredderScreen(
                     ) {
                         Column {
                             Text(Formatter.formatBytes(state.totalBytes), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                            Text("${state.selectedFiles.size} ملف", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(R.string.shred_selected_count, state.selectedFiles.size), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         Button(
                             onClick = { confirm = true },
@@ -87,7 +87,7 @@ fun ShredderScreen(
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
             if (state.phase == ShredderUiState.Phase.SHREDDING) {
-                ShreddingIndicator(state.currentIndex, state.selectedFiles.size)
+                ShreddingIndicator(state.currentIndex, state.selectedFiles.size, onCancel = viewModel::cancelShred)
                 return@Column
             }
             LevelSelector(selected = state.level, onSelect = viewModel::setLevel)
@@ -167,13 +167,15 @@ private fun ShredFileRow(name: String, size: Long, onRemove: () -> Unit) {
 }
 
 @Composable
-private fun ShreddingIndicator(current: Int, total: Int) {
+private fun ShreddingIndicator(current: Int, total: Int, onCancel: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         CircularProgressIndicator(Modifier.size(80.dp))
         Spacer(Modifier.height(24.dp))
         Text(stringResource(R.string.shredding_in_progress), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(8.dp))
         Text("$current / $total", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Spacer(Modifier.height(20.dp))
+        OutlinedButton(onClick = onCancel) { Text(stringResource(R.string.cancel)) }
     }
 }
 

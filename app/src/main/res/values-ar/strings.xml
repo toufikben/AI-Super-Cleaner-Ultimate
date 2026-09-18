@@ -317,4 +317,129 @@
     <string name="widget_title">مساحة التخزين</string>
     <string name="widget_free">متاح %1$s</string>
     <string name="widget_description">عرض مباشر لمساحة التخزين</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">البطارية ساخنة — افصل الشاحن قليلًا</string>
+    <string name="battery_charging">جاري الشحن</string>
+    <string name="battery_status">الحالة</string>
+    <string name="battery_status_charging">يشحن</string>
+    <string name="battery_status_discharging">قيد التفريغ</string>
+    <string name="battery_temperature">الحرارة</string>
+    <string name="battery_voltage">الفولتية</string>
+    <string name="battery_technology">التقنية</string>
+    <string name="battery_health">الصحة</string>
+    <string name="battery_health_good">جيدة ✓</string>
+    <string name="battery_health_overheat">سخونة!</string>
+    <string name="battery_health_dead">تالفة</string>
+    <string name="battery_health_over_voltage">فولتية عالية</string>
+    <string name="battery_health_cold">باردة</string>
+    <string name="battery_health_failure">فشل</string>
+    <string name="battery_health_unknown">غير معروفة</string>
+    <string name="battery_power_source">مصدر الشحن</string>
+    <string name="battery_source_ac">شاحن</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">لاسلكي</string>
+    <string name="battery_source_none">غير متصل</string>
+    <string name="dashboard_storage_from">من %1$s</string>
+    <string name="dashboard_storage_used">%1$d%% مُستخدَم</string>
+    <string name="dashboard_storage_free">متاح %1$s</string>
+    <string name="permission_missing_title">صلاحيات ناقصة</string>
+    <string name="permission_missing_message">نحتاج إذن قراءة الملفات لفحص جهازك.</string>
+    <string name="shred_selected_count">%1$d ملف</string>
+    <string name="theme_live_preview">معاينة مباشرة</string>
+    <string name="theme_preview_button_one">زر 1</string>
+    <string name="theme_preview_button_two">زر 2</string>
+    <string name="theme_preview_button_three">زر 3</string>
+    <string name="scheduler_interval_6">كل 6 ساعات</string>
+    <string name="scheduler_interval_12">كل 12 ساعة</string>
+    <string name="scheduler_interval_24">يوميًا</string>
+    <string name="scheduler_interval_72">كل 3 أيام</string>
+    <string name="scheduler_interval_168">أسبوعيًا</string>
+    <string name="rules_unnamed">قاعدة بدون اسم</string>
+    <string name="rules_logic">المنطق: %1$s</string>
+    <string name="rules_logic_all">كل الشروط</string>
+    <string name="rules_logic_any">أي شرط</string>
+    <string name="rules_edit">تعديل</string>
+    <string name="rules_delete">حذف</string>
+    <string name="rules_delete_title">حذف القاعدة؟</string>
+    <string name="rules_delete_message">سيتم حذف "%1$s" نهائيًا.</string>
+    <string name="rules_evaluating">جاري التقييم…</string>
+    <string name="rules_scanned_count">%1$d ملف</string>
+    <string name="rules_no_results">لا توجد نتائج</string>
+    <string name="rules_back">رجوع</string>
+    <string name="rules_results_title">نتائج تقييم القواعد</string>
+    <string name="rules_results_summary">%1$d ملف · %2$s</string>
+    <string name="rules_match_summary">%1$d ملف · %2$s</string>
+    <string name="rules_action_suggest">اقتراح</string>
+    <string name="rules_action_delete">حذف</string>
+    <string name="rules_action_shred">محو آمن</string>
+    <string name="rules_action_vault">نقل للخزنة</string>
+    <string name="rules_back_to_list">رجوع للقواعد</string>
+    <string name="rules_error_title">حدث خطأ</string>
+    <string name="condition_field_size">الحجم</string>
+    <string name="condition_field_age">العمر</string>
+    <string name="condition_field_extension">النوع</string>
+    <string name="condition_field_path">المسار</string>
+    <string name="condition_field_name">الاسم</string>
+    <string name="condition_field_gallery">المعرض</string>
+    <string name="condition_days">يوم</string>
+    <string name="condition_path_hint">مثال: Download</string>
+    <string name="condition_name_hint">نمط الاسم</string>
+    <string name="condition_op_older_than">أقدم من</string>
+    <string name="condition_op_newer_than">أحدث من</string>
+    <string name="condition_op_greater_than">أكبر من</string>
+    <string name="condition_op_less_than">أصغر من</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">يساوي</string>
+    <string name="condition_add_size">الحجم</string>
+    <string name="condition_add_age">العمر</string>
+    <string name="condition_add_extension">الامتداد</string>
+    <string name="condition_add_path">المسار يحتوي</string>
+    <string name="condition_add_name">الاسم يحتوي</string>
+    <string name="rule_editor_new_title">قاعدة جديدة</string>
+    <string name="rule_editor_edit_title">تعديل قاعدة</string>
+    <string name="rule_editor_name">اسم القاعدة</string>
+    <string name="rule_editor_description">وصف (اختياري)</string>
+    <string name="rules_logic_label">المنطق</string>
+    <string name="rules_logic_all_and">كل الشروط (AND)</string>
+    <string name="rules_logic_any_or">أي شرط (OR)</string>
+    <string name="rules_conditions">الشروط</string>
+    <string name="rules_action_label">الإجراء</string>
+    <string name="rule_action_suggest_full">اقترح فقط (لا تحذف تلقائيًا)</string>
+    <string name="rule_action_move_vault">انقل إلى الخزنة</string>
+    <string name="rule_action_shred_full">احذف بشكل آمن (Shredder)</string>
+    <string name="rule_action_delete_full">احذف مباشرة</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">خطأ غير معروف</string>
+    <string name="duplicates_summary">%1$d مجموعات · %2$d ملفات مكررة</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d عناصر أخرى</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">المرشحات</string>
+    <string name="large_files_min_size">الحد الأدنى للحجم: %1$d ميجابايت</string>
+    <string name="large_files_categories">الفئات</string>
+    <string name="large_files_older_than">أقدم من</string>
+    <string name="large_files_all">الكل</string>
+    <string name="apply">تطبيق</string>
+    <string name="ram_available">متاح</string>
+    <string name="ram_used">مُستخدَم</string>
+    <string name="ram_boosting">جارٍ تحرير الذاكرة…</string>
+    <string name="ram_success_title">تم تحرير الذاكرة</string>
+    <string name="ram_success_message">تم تحرير %1$s من الذاكرة.</string>
+    <string name="ram_total_of">من %1$s</string>
+    <string name="large_files_category_video">فيديو</string>
+    <string name="large_files_category_audio">صوت</string>
+    <string name="large_files_category_image">صورة</string>
+    <string name="large_files_category_archive">أرشيف</string>
+    <string name="large_files_category_document">مستند</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">أخرى</string>
+    <plurals name="duplicates_selected_count"><item quantity="zero">%d لا يوجد عنصر محدد</item><item quantity="one">%d عنصر محدد</item><item quantity="two">%d عنصران محددان</item><item quantity="few">%d عناصر محددة</item><item quantity="many">%d عنصرًا محددًا</item><item quantity="other">%d عناصر محددة</item></plurals>
+    <plurals name="junk_items_count"><item quantity="zero">%d لا يوجد عنصر</item><item quantity="one">%d عنصر</item><item quantity="two">%d عنصران</item><item quantity="few">%d عناصر</item><item quantity="many">%d عنصرًا</item><item quantity="other">%d عناصر</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="zero">%1$d لا توجد ملفات تم فحصها</item><item quantity="one">%1$d ملف تم فحصه</item><item quantity="two">%1$d ملفان تم فحصهما</item><item quantity="few">%1$d ملفات تم فحصها</item><item quantity="many">%1$d ملفًا تم فحصه</item><item quantity="other">%1$d ملفات تم فحصها</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="zero">%d لا يوجد عنصر</item><item quantity="one">%d عنصر</item><item quantity="two">%d عنصران</item><item quantity="few">%d عناصر</item><item quantity="many">%d عنصرًا</item><item quantity="other">%d عناصر</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="zero">%1$d لا توجد ملفات</item><item quantity="one">%1$d ملف</item><item quantity="two">%1$d ملفان</item><item quantity="few">%1$d ملفات</item><item quantity="many">%1$d ملفًا</item><item quantity="other">%1$d ملفات</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="zero">%1$d لا يوجد ملف</item><item quantity="one">%1$d ملف</item><item quantity="two">%1$d ملفان</item><item quantity="few">%1$d ملفات</item><item quantity="many">%1$d ملفًا</item><item quantity="other">%1$d ملفات</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="zero">%1$d يوم</item><item quantity="one">%1$d يوم</item><item quantity="two">%1$d يومان</item><item quantity="few">%1$d أيام</item><item quantity="many">%1$d يومًا</item><item quantity="other">%1$d أيام</item></plurals>
 </resources>

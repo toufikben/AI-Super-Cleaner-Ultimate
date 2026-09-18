@@ -285,4 +285,129 @@
     <string name="widget_title">Almacenamiento</string>
     <string name="widget_free">%1$s libres</string>
     <string name="widget_description">Mostrar almacenamiento</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">La batería está caliente — desconecta el cargador un momento</string>
+    <string name="battery_charging">Cargando</string>
+    <string name="battery_status">Estado</string>
+    <string name="battery_status_charging">Cargando</string>
+    <string name="battery_status_discharging">Descargando</string>
+    <string name="battery_temperature">Temperatura</string>
+    <string name="battery_voltage">Voltaje</string>
+    <string name="battery_technology">Tecnología</string>
+    <string name="battery_health">Salud</string>
+    <string name="battery_health_good">Buena ✓</string>
+    <string name="battery_health_overheat">¡Sobrecalentada!</string>
+    <string name="battery_health_dead">Agotada</string>
+    <string name="battery_health_over_voltage">Voltaje alto</string>
+    <string name="battery_health_cold">Fría</string>
+    <string name="battery_health_failure">Fallo</string>
+    <string name="battery_health_unknown">Desconocida</string>
+    <string name="battery_power_source">Fuente de alimentación</string>
+    <string name="battery_source_ac">Cargador</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">Inalámbrica</string>
+    <string name="battery_source_none">No conectada</string>
+    <string name="dashboard_storage_from">de %1$s</string>
+    <string name="dashboard_storage_used">%1$d%% usado</string>
+    <string name="dashboard_storage_free">%1$s disponible</string>
+    <string name="permission_missing_title">Permisos faltantes</string>
+    <string name="permission_missing_message">Necesitamos permiso para leer archivos y escanear tu dispositivo.</string>
+    <string name="shred_selected_count">%1$d archivos</string>
+    <string name="theme_live_preview">Vista previa en vivo</string>
+    <string name="theme_preview_button_one">Botón 1</string>
+    <string name="theme_preview_button_two">Botón 2</string>
+    <string name="theme_preview_button_three">Botón 3</string>
+    <string name="scheduler_interval_6">Cada 6 horas</string>
+    <string name="scheduler_interval_12">Cada 12 horas</string>
+    <string name="scheduler_interval_24">Diariamente</string>
+    <string name="scheduler_interval_72">Cada 3 días</string>
+    <string name="scheduler_interval_168">Semanalmente</string>
+    <string name="rules_unnamed">Regla sin nombre</string>
+    <string name="rules_logic">Lógica: %1$s</string>
+    <string name="rules_logic_all">todas las condiciones</string>
+    <string name="rules_logic_any">cualquier condición</string>
+    <string name="rules_edit">Editar</string>
+    <string name="rules_delete">Eliminar</string>
+    <string name="rules_delete_title">¿Eliminar regla?</string>
+    <string name="rules_delete_message">%1$s se eliminará permanentemente.</string>
+    <string name="rules_evaluating">Evaluando…</string>
+    <string name="rules_scanned_count">%1$d archivos</string>
+    <string name="rules_no_results">Sin resultados</string>
+    <string name="rules_back">Volver</string>
+    <string name="rules_results_title">Resultados de evaluación de reglas</string>
+    <string name="rules_results_summary">%1$d archivos · %2$s</string>
+    <string name="rules_match_summary">%1$d archivos · %2$s</string>
+    <string name="rules_action_suggest">Sugerir</string>
+    <string name="rules_action_delete">Eliminar</string>
+    <string name="rules_action_shred">Borrado seguro</string>
+    <string name="rules_action_vault">Mover a la bóveda</string>
+    <string name="rules_back_to_list">Volver a las reglas</string>
+    <string name="rules_error_title">Ocurrió un error</string>
+    <string name="condition_field_size">Tamaño</string>
+    <string name="condition_field_age">Antigüedad</string>
+    <string name="condition_field_extension">Tipo</string>
+    <string name="condition_field_path">Ruta</string>
+    <string name="condition_field_name">Nombre</string>
+    <string name="condition_field_gallery">Galería</string>
+    <string name="condition_days">Días</string>
+    <string name="condition_path_hint">Ejemplo: Download</string>
+    <string name="condition_name_hint">Patrón del nombre</string>
+    <string name="condition_op_older_than">Más antiguo que</string>
+    <string name="condition_op_newer_than">Más reciente que</string>
+    <string name="condition_op_greater_than">Mayor que</string>
+    <string name="condition_op_less_than">Menor que</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">Igual a</string>
+    <string name="condition_add_size">Tamaño</string>
+    <string name="condition_add_age">Antigüedad</string>
+    <string name="condition_add_extension">Extensión</string>
+    <string name="condition_add_path">La ruta contiene</string>
+    <string name="condition_add_name">El nombre contiene</string>
+    <string name="rule_editor_new_title">Nueva regla</string>
+    <string name="rule_editor_edit_title">Editar regla</string>
+    <string name="rule_editor_name">Nombre de la regla</string>
+    <string name="rule_editor_description">Descripción (opcional)</string>
+    <string name="rules_logic_label">Lógica</string>
+    <string name="rules_logic_all_and">Todas las condiciones (AND)</string>
+    <string name="rules_logic_any_or">Cualquier condición (OR)</string>
+    <string name="rules_conditions">Condiciones</string>
+    <string name="rules_action_label">Acción</string>
+    <string name="rule_action_suggest_full">Solo sugerir (no eliminar automáticamente)</string>
+    <string name="rule_action_move_vault">Mover a la bóveda</string>
+    <string name="rule_action_shred_full">Borrado seguro (Shredder)</string>
+    <string name="rule_action_delete_full">Eliminar directamente</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">Error desconocido</string>
+    <string name="duplicates_summary">%1$d grupos · %2$d duplicados</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d elementos más</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">Filtros</string>
+    <string name="large_files_min_size">Tamaño mínimo: %1$d MB</string>
+    <string name="large_files_categories">Categorías</string>
+    <string name="large_files_older_than">Más antiguos que</string>
+    <string name="large_files_all">Todos</string>
+    <string name="apply">Aplicar</string>
+    <string name="ram_available">Disponible</string>
+    <string name="ram_used">Usada</string>
+    <string name="ram_boosting">Liberando memoria…</string>
+    <string name="ram_success_title">Memoria liberada</string>
+    <string name="ram_success_message">Se liberaron %1$s de memoria.</string>
+    <string name="ram_total_of">de %1$s</string>
+    <string name="large_files_category_video">Vídeo</string>
+    <string name="large_files_category_audio">Audio</string>
+    <string name="large_files_category_image">Imagen</string>
+    <string name="large_files_category_archive">Archivo</string>
+    <string name="large_files_category_document">Documento</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">Otro</string>
+    <plurals name="duplicates_selected_count"><item quantity="one">%d elemento seleccionado</item><item quantity="other">%d elementos seleccionados</item></plurals>
+    <plurals name="junk_items_count"><item quantity="one">%d elemento</item><item quantity="other">%d elementos</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="one">%1$d archivo analizado</item><item quantity="other">%1$d archivos analizados</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="one">%d elemento</item><item quantity="other">%d elementos</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="one">%1$d archivo grande</item><item quantity="other">%1$d archivos grandes</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="one">%1$d archivo</item><item quantity="other">%1$d archivos</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="one">%1$d día</item><item quantity="other">%1$d días</item></plurals>
 </resources>

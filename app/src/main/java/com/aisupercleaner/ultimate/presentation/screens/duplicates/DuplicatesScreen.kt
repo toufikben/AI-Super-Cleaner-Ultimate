@@ -20,6 +20,7 @@ import com.aisupercleaner.ultimate.ads.AdManager
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -77,7 +78,7 @@ fun DuplicatesScreen(
                         onRescan = { viewModel.startScan(includeSimilarImages = true) },
                     )
                 DuplicatesUiState.Phase.ERROR -> ErrorView(
-                    message = state.errorMessage ?: "Unknown",
+                    message = state.errorMessage ?: stringResource(R.string.error_unknown),
                     onRetry = { viewModel.startScan(includeSimilarImages = true) },
                     onDismiss = viewModel::dismissError,
                     onOpenSettings = { runCatching { context.startActivity(viewModel.openAllFilesSettings()) } },
@@ -211,7 +212,7 @@ private fun DeleteBar(bytes: Long, count: Int, onDelete: () -> Unit) {
         ) {
             Column {
                 Text(Formatter.formatBytes(bytes), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                Text("$count عنصر", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(pluralStringResource(R.plurals.duplicates_selected_count, count, count), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Button(
                 onClick = onDelete,

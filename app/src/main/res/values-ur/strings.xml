@@ -345,4 +345,129 @@
     <string name="widget_title">اسٹوریج</string>
     <string name="widget_free">%1$s خالی</string>
     <string name="widget_description">اسٹوریج کا براہِ راست ڈسپلے</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">بیٹری گرم ہے — کچھ دیر کے لیے چارجر نکال دیں</string>
+    <string name="battery_charging">چارج ہو رہی ہے</string>
+    <string name="battery_status">حالت</string>
+    <string name="battery_status_charging">چارج ہو رہی ہے</string>
+    <string name="battery_status_discharging">ڈسچارج ہو رہی ہے</string>
+    <string name="battery_temperature">درجہ حرارت</string>
+    <string name="battery_voltage">وولٹیج</string>
+    <string name="battery_technology">ٹیکنالوجی</string>
+    <string name="battery_health">صحت</string>
+    <string name="battery_health_good">اچھی ✓</string>
+    <string name="battery_health_overheat">بہت گرم!</string>
+    <string name="battery_health_dead">خراب</string>
+    <string name="battery_health_over_voltage">زیادہ وولٹیج</string>
+    <string name="battery_health_cold">سرد</string>
+    <string name="battery_health_failure">ناکامی</string>
+    <string name="battery_health_unknown">نامعلوم</string>
+    <string name="battery_power_source">پاور سورس</string>
+    <string name="battery_source_ac">چارجر</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">وائرلیس</string>
+    <string name="battery_source_none">منسلک نہیں</string>
+    <string name="dashboard_storage_from">%1$s میں سے</string>
+    <string name="dashboard_storage_used">%1$d%% استعمال شدہ</string>
+    <string name="dashboard_storage_free">%1$s دستیاب</string>
+    <string name="permission_missing_title">اجازتیں موجود نہیں</string>
+    <string name="permission_missing_message">آپ کے آلے کو اسکین کرنے کے لیے فائلوں تک رسائی درکار ہے۔</string>
+    <string name="shred_selected_count">%1$d فائلیں</string>
+    <string name="theme_live_preview">براہ راست پیش منظر</string>
+    <string name="theme_preview_button_one">بٹن 1</string>
+    <string name="theme_preview_button_two">بٹن 2</string>
+    <string name="theme_preview_button_three">بٹن 3</string>
+    <string name="scheduler_interval_6">ہر 6 گھنٹے</string>
+    <string name="scheduler_interval_12">ہر 12 گھنٹے</string>
+    <string name="scheduler_interval_24">روزانہ</string>
+    <string name="scheduler_interval_72">ہر 3 دن</string>
+    <string name="scheduler_interval_168">ہفتہ وار</string>
+    <string name="rules_unnamed">بے نام اصول</string>
+    <string name="rules_logic">منطق: %1$s</string>
+    <string name="rules_logic_all">تمام شرائط</string>
+    <string name="rules_logic_any">کوئی بھی شرط</string>
+    <string name="rules_edit">ترمیم</string>
+    <string name="rules_delete">حذف</string>
+    <string name="rules_delete_title">اصول حذف کریں؟</string>
+    <string name="rules_delete_message">%1$s مستقل طور پر حذف ہو جائے گا۔</string>
+    <string name="rules_evaluating">جائزہ لیا جا رہا ہے…</string>
+    <string name="rules_scanned_count">%1$d فائلیں</string>
+    <string name="rules_no_results">کوئی نتائج نہیں</string>
+    <string name="rules_back">واپس</string>
+    <string name="rules_results_title">اصولوں کے جائزے کے نتائج</string>
+    <string name="rules_results_summary">%1$d فائلیں · %2$s</string>
+    <string name="rules_match_summary">%1$d فائلیں · %2$s</string>
+    <string name="rules_action_suggest">تجویز</string>
+    <string name="rules_action_delete">حذف</string>
+    <string name="rules_action_shred">محفوظ مٹانا</string>
+    <string name="rules_action_vault">والٹ میں منتقل کریں</string>
+    <string name="rules_back_to_list">اصولوں پر واپس</string>
+    <string name="rules_error_title">ایک خرابی پیش آئی</string>
+    <string name="condition_field_size">سائز</string>
+    <string name="condition_field_age">عمر</string>
+    <string name="condition_field_extension">قسم</string>
+    <string name="condition_field_path">پاتھ</string>
+    <string name="condition_field_name">نام</string>
+    <string name="condition_field_gallery">گیلری</string>
+    <string name="condition_days">دن</string>
+    <string name="condition_path_hint">مثال: Download</string>
+    <string name="condition_name_hint">نام کا نمونہ</string>
+    <string name="condition_op_older_than">سے پرانا</string>
+    <string name="condition_op_newer_than">سے نیا</string>
+    <string name="condition_op_greater_than">سے بڑا</string>
+    <string name="condition_op_less_than">سے چھوٹا</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">برابر</string>
+    <string name="condition_add_size">سائز</string>
+    <string name="condition_add_age">عمر</string>
+    <string name="condition_add_extension">ایکسٹینشن</string>
+    <string name="condition_add_path">پاتھ میں شامل ہے</string>
+    <string name="condition_add_name">نام میں شامل ہے</string>
+    <string name="rule_editor_new_title">نیا اصول</string>
+    <string name="rule_editor_edit_title">اصول میں ترمیم</string>
+    <string name="rule_editor_name">اصول کا نام</string>
+    <string name="rule_editor_description">تفصیل (اختیاری)</string>
+    <string name="rules_logic_label">منطق</string>
+    <string name="rules_logic_all_and">تمام شرائط (AND)</string>
+    <string name="rules_logic_any_or">کوئی بھی شرط (OR)</string>
+    <string name="rules_conditions">شرائط</string>
+    <string name="rules_action_label">عمل</string>
+    <string name="rule_action_suggest_full">صرف تجویز کریں (خودکار طور پر حذف نہ کریں)</string>
+    <string name="rule_action_move_vault">والٹ میں منتقل کریں</string>
+    <string name="rule_action_shred_full">محفوظ مٹانا (Shredder)</string>
+    <string name="rule_action_delete_full">براہ راست حذف کریں</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">نامعلوم خرابی</string>
+    <string name="duplicates_summary">%1$d گروپس · %2$d نقل فائلیں</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d مزید آئٹمز</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">فلٹرز</string>
+    <string name="large_files_min_size">کم از کم سائز: %1$d MB</string>
+    <string name="large_files_categories">زمرے</string>
+    <string name="large_files_older_than">اس سے پرانی</string>
+    <string name="large_files_all">سب</string>
+    <string name="apply">لاگو کریں</string>
+    <string name="ram_available">دستیاب</string>
+    <string name="ram_used">استعمال شدہ</string>
+    <string name="ram_boosting">میموری خالی کی جا رہی ہے…</string>
+    <string name="ram_success_title">میموری خالی ہو گئی</string>
+    <string name="ram_success_message">میموری سے %1$s خالی کیا گیا۔</string>
+    <string name="ram_total_of">%1$s میں سے</string>
+    <string name="large_files_category_video">ویڈیو</string>
+    <string name="large_files_category_audio">آڈیو</string>
+    <string name="large_files_category_image">تصویر</string>
+    <string name="large_files_category_archive">آرکائیو</string>
+    <string name="large_files_category_document">دستاویز</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">دیگر</string>
+    <plurals name="duplicates_selected_count"><item quantity="one">%d منتخب آئٹم</item><item quantity="other">%d منتخب آئٹمز</item></plurals>
+    <plurals name="junk_items_count"><item quantity="one">%d آئٹم</item><item quantity="other">%d آئٹمز</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="one">%1$d فائل اسکین ہوئی</item><item quantity="other">%1$d فائلیں اسکین ہوئیں</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="one">%d آئٹم</item><item quantity="other">%d آئٹمز</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="one">%1$d بڑی فائل</item><item quantity="other">%1$d بڑی فائلیں</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="one">%1$d فائل</item><item quantity="other">%1$d فائلیں</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="one">%1$d دن</item><item quantity="other">%1$d دن</item></plurals>
 </resources>

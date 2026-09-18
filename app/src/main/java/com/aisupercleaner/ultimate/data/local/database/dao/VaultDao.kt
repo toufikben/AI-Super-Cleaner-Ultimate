@@ -14,6 +14,9 @@ interface VaultDao {
     @Query("SELECT * FROM vault_files ORDER BY importedAt DESC")
     fun observeAll(): Flow<List<VaultFileEntity>>
 
+    @Query("SELECT * FROM vault_files")
+    suspend fun getAll(): List<VaultFileEntity>
+
     @Query("SELECT * FROM vault_files WHERE id = :id")
     suspend fun getById(id: Long): VaultFileEntity?
 
@@ -29,9 +32,14 @@ interface VaultDao {
     @Query("DELETE FROM vault_files WHERE id = :id")
     suspend fun deleteById(id: Long)
 
+    @Query("DELETE FROM vault_files WHERE encryptedName = :name")
+    suspend fun deleteByEncryptedName(name: String)
+
     @Query("SELECT COUNT(*) FROM vault_files")
     suspend fun count(): Int
 
     @Query("SELECT COALESCE(SUM(sizeBytes), 0) FROM vault_files")
     suspend fun totalSizeBytes(): Long
+    @Query("DELETE FROM vault_files")
+    suspend fun clearAll()
 }

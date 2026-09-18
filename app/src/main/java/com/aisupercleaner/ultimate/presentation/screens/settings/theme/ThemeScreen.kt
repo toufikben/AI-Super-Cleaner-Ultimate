@@ -135,15 +135,15 @@ private fun ThemePreviewCard() {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Rounded.CleaningServices, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(28.dp))
                 Spacer(Modifier.width(8.dp))
-                Text("معاينة مباشرة", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.theme_live_preview), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             }
             Spacer(Modifier.height(12.dp))
             LinearProgressIndicator(progress = { 0.65f }, modifier = Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilledTonalButton(onClick = {}) { Text("زر 1") }
-                OutlinedButton(onClick = {}) { Text("زر 2") }
-                Button(onClick = {}) { Text("زر 3") }
+                FilledTonalButton(onClick = {}) { Text(stringResource(R.string.theme_preview_button_one)) }
+                OutlinedButton(onClick = {}) { Text(stringResource(R.string.theme_preview_button_two)) }
+                Button(onClick = {}) { Text(stringResource(R.string.theme_preview_button_three)) }
             }
         }
     }

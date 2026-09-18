@@ -21,7 +21,7 @@ import com.aisupercleaner.ultimate.R
 @Composable
 fun SchedulerScreen(onBack: () -> Unit = {}, viewModel: SchedulerViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val intervals = listOf(6 to "كل 6 ساعات", 12 to "كل 12 ساعة", 24 to "يوميًا", 72 to "كل 3 أيام", 168 to "أسبوعيًا")
+    val intervals = listOf(6 to R.string.scheduler_interval_6, 12 to R.string.scheduler_interval_12, 24 to R.string.scheduler_interval_24, 72 to R.string.scheduler_interval_72, 168 to R.string.scheduler_interval_168)
 
     Scaffold(
         topBar = {
@@ -51,7 +51,7 @@ fun SchedulerScreen(onBack: () -> Unit = {}, viewModel: SchedulerViewModel = hil
             intervals.forEach { (hours, label) ->
                 Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(selected = state.intervalHours == hours, onClick = { viewModel.setInterval(hours) }, enabled = state.autoCleanEnabled)
-                    Text(label, style = MaterialTheme.typography.bodyLarge)
+                    Text(stringResource(label), style = MaterialTheme.typography.bodyLarge)
                 }
             }
 

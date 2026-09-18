@@ -8,6 +8,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.InsertDriveFile
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,9 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.compose.runtime.DisposableEffect
 import com.aisupercleaner.ultimate.R
 import com.aisupercleaner.ultimate.core.util.Formatter
 import com.aisupercleaner.ultimate.data.vault.VaultFile
+import java.io.File
 import com.aisupercleaner.ultimate.presentation.screens.vault.components.PinSetupDialog
 import com.aisupercleaner.ultimate.presentation.screens.vault.components.VaultFileGrid
 import com.aisupercleaner.ultimate.presentation.screens.vault.components.VaultLockScreen
@@ -35,6 +44,16 @@ fun VaultScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val activity = context as? FragmentActivity
+
+    // Lock and clear decrypted cache whenever this screen leaves the foreground.
+    DisposableEffect(viewModel, context) {
+        val lifecycle = (context as? androidx.lifecycle.LifecycleOwner)?.lifecycle
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) viewModel.lock()
+        }
+        lifecycle?.addObserver(observer)
+        onDispose { lifecycle?.removeObserver(observer) }
+    }
 
     var showPinSetup by remember { mutableStateOf(false) }
     var pendingDelete by remember { mutableStateOf<VaultFile?>(null) }
@@ -109,6 +128,10 @@ fun VaultScreen(
         }
     }
 
+    state.previewFile?.let { file ->
+        VaultPreviewDialog(file = file, loadPreview = { viewModel.getPreviewFile(file.id) }, onDismiss = viewModel::closePreview)
+    }
+
     pendingDelete?.let { file ->
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
@@ -120,6 +143,26 @@ fun VaultScreen(
             dismissButton = { TextButton(onClick = { pendingDelete = null }) { Text(stringResource(R.string.cancel)) } },
         )
     }
+}
+
+@Composable
+private fun VaultPreviewDialog(file: VaultFile, loadPreview: suspend () -> File?, onDismiss: () -> Unit) {
+    var preview by remember(file.id) { mutableStateOf<File?>(null) }
+    LaunchedEffect(file.id) { preview = loadPreview() }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(file.originalName) },
+        text = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                if (preview == null) CircularProgressIndicator()
+                else if (file.isImage) AsyncImage(model = preview, contentDescription = file.originalName, contentScale = ContentScale.Fit, modifier = Modifier.fillMaxWidth().heightIn(max = 360.dp))
+                else Icon(Icons.Rounded.InsertDriveFile, contentDescription = null, modifier = Modifier.size(72.dp), tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.height(8.dp))
+                Text(file.displaySize, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.ok)) } },
+    )
 }
 
 @Composable

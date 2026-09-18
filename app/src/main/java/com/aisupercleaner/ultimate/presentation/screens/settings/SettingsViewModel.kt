@@ -3,13 +3,15 @@ package com.aisupercleaner.ultimate.presentation.screens.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aisupercleaner.ultimate.billing.BillingManager
+import com.aisupercleaner.ultimate.data.clear.ClearAllDataResult
 import com.aisupercleaner.ultimate.data.local.database.AppDatabase
 import com.aisupercleaner.ultimate.data.preferences.AppPreferences
 import com.aisupercleaner.ultimate.data.vault.VaultAuthManager
-import com.aisupercleaner.ultimate.data.worker.AutoCleanScheduler
+import com.aisupercleaner.ultimate.data.vault.VaultManager
 import com.aisupercleaner.ultimate.data.worker.WorkerScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -31,42 +33,72 @@ data class SettingsUiState(
 class SettingsViewModel @Inject constructor(
     private val preferences: AppPreferences,
     private val billing: BillingManager,
-    private val autoCleanScheduler: AutoCleanScheduler,
     private val workerScheduler: WorkerScheduler,
     private val vaultAuthManager: VaultAuthManager,
     private val database: AppDatabase,
+    private val vaultManager: VaultManager,
 ) : ViewModel() {
-
     val uiState: StateFlow<SettingsUiState> = combine(
         preferences.notificationsEnabled,
         preferences.autoCleanEnabled,
         preferences.storageAlertThresholdPercent,
         billing.isPremium,
     ) { notif, auto, threshold, premium ->
-        SettingsUiState(
-            notificationsEnabled = notif,
-            autoCleanEnabled = auto,
-            storageAlertThreshold = threshold,
-            isPremium = premium,
-            vaultPinSet = vaultAuthManager.isPinSet(),
-            biometricEnabled = vaultAuthManager.isBiometricEnabled(),
-        )
+        SettingsUiState(notif, auto, threshold, premium, vaultAuthManager.isPinSet(), vaultAuthManager.isBiometricEnabled())
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SettingsUiState())
 
     fun setNotifications(enabled: Boolean) = viewModelScope.launch {
         preferences.setNotificationsEnabled(enabled)
-        if (enabled) workerScheduler.scheduleStorageAlerts() else workerScheduler.cancelStorageAlerts()
+        workerScheduler.scheduleFromPreferences()
     }
 
     fun setAutoClean(enabled: Boolean) = viewModelScope.launch {
         preferences.setAutoCleanEnabled(enabled)
-        if (enabled) autoCleanScheduler.schedule(24) else autoCleanScheduler.cancel()
+        workerScheduler.scheduleFromPreferences()
     }
 
-    fun setThreshold(percent: Int) = viewModelScope.launch { preferences.setStorageAlertThresholdPercent(percent) }
+    fun setThreshold(percent: Int) = viewModelScope.launch { preferences.setStorageAlertThresholdPercent(percent.coerceIn(1, 100)) }
 
+    /** Backward-compatible callback; callers that need the explicit outcome can use the overload below. */
     fun clearAllData(onDone: () -> Unit) = viewModelScope.launch {
-        withContext(Dispatchers.IO) { runCatching { database.clearAllTables() } }
+        clearAllDataInternal()
         onDone()
+    }
+
+    fun clearAllData(onDone: (ClearAllDataResult) -> Unit) = viewModelScope.launch {
+        onDone(clearAllDataInternal())
+    }
+
+    private suspend fun clearAllDataInternal(): ClearAllDataResult = withContext(Dispatchers.IO) {
+        val errors = mutableListOf<String>()
+        val workCleared = workerScheduler.cancelAllWork()
+        if (!workCleared) errors += "workManager: cancel failed"
+        val vaultResult = runCatching { vaultManager.clearAllData() }
+            .onFailure { if (it is CancellationException) throw it }
+            .getOrElse {
+                errors += "vault: ${it.message ?: it::class.simpleName}"
+                null
+            }
+        val databaseCleared = runCatching { database.clearAllTables(); true }
+            .onFailure { if (it is CancellationException) throw it }
+            .getOrElse {
+                errors += "database: ${it.message ?: it::class.simpleName}"
+                false
+            }
+        val dataStoreCleared = runCatching { preferences.clearAllData(); true }
+            .onFailure { if (it is CancellationException) throw it }
+            .getOrElse {
+                errors += "dataStore: ${it.message ?: it::class.simpleName}"
+                false
+            }
+        errors += vaultResult?.errors.orEmpty()
+        ClearAllDataResult(
+            databaseCleared = databaseCleared,
+            dataStoreCleared = dataStoreCleared,
+            vaultCleared = vaultResult?.vaultCleared == true,
+            tempCleared = vaultResult?.tempCleared == true,
+            workManagerCleared = workCleared,
+            errors = errors,
+        )
     }
 }

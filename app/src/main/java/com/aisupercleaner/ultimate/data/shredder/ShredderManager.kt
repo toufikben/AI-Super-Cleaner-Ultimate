@@ -2,6 +2,8 @@ package com.aisupercleaner.ultimate.data.shredder
 
 import com.aisupercleaner.ultimate.core.util.FileUtils
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
@@ -19,8 +21,11 @@ class ShredderManager @Inject constructor() {
 
     suspend fun shredBatch(files: List<File>, passes: Int = 3, onProgress: (Int, Int) -> Unit = { _, _ -> }): List<ShredResult> = withContext(Dispatchers.IO) {
         files.mapIndexed { idx, file ->
+            currentCoroutineContext().ensureActive()
+            onProgress(idx, files.size)
+            val result = shred(file, passes)
             onProgress(idx + 1, files.size)
-            shred(file, passes)
+            result
         }
     }
 

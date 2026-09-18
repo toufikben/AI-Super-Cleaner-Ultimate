@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aisupercleaner.ultimate.core.permissions.PermissionManager
 import com.aisupercleaner.ultimate.data.cleanup.CleanupManager
+import com.aisupercleaner.ultimate.data.history.HistoryEntry
 import com.aisupercleaner.ultimate.data.scanner.LargeFileScanner
 import com.aisupercleaner.ultimate.data.storage.StorageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -60,13 +61,13 @@ class LargeFilesViewModel @Inject constructor(
         if (paths.isEmpty()) return
         _uiState.update { it.copy(phase = LargeFilesUiState.Phase.DELETING) }
         viewModelScope.launch {
-            val result = cleanupManager.deleteFiles(paths)
+            val result = cleanupManager.deleteFiles(paths, HistoryEntry.Source.LARGE_FILES)
             storageRepository.refresh()
             _uiState.update { s ->
                 s.copy(
                     phase = LargeFilesUiState.Phase.DONE,
-                    files = s.files.filterNot { it.path in paths },
-                    selectedPaths = emptySet(),
+                    files = s.files.filterNot { it.path in result.successfulPaths },
+                    selectedPaths = result.failedPaths.toSet(),
                     lastResult = result,
                 )
             }

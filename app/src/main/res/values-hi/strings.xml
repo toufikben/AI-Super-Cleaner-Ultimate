@@ -345,4 +345,129 @@
     <string name="widget_title">स्टोरेज</string>
     <string name="widget_free">%1$s खाली</string>
     <string name="widget_description">लाइव स्टोरेज डिस्प्ले</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">बैटरी गर्म है — कुछ देर के लिए चार्जर निकालें</string>
+    <string name="battery_charging">चार्ज हो रहा है</string>
+    <string name="battery_status">स्थिति</string>
+    <string name="battery_status_charging">चार्ज हो रहा है</string>
+    <string name="battery_status_discharging">डिस्चार्ज हो रहा है</string>
+    <string name="battery_temperature">तापमान</string>
+    <string name="battery_voltage">वोल्टेज</string>
+    <string name="battery_technology">तकनीक</string>
+    <string name="battery_health">स्वास्थ्य</string>
+    <string name="battery_health_good">अच्छी ✓</string>
+    <string name="battery_health_overheat">बहुत गर्म!</string>
+    <string name="battery_health_dead">खराब</string>
+    <string name="battery_health_over_voltage">उच्च वोल्टेज</string>
+    <string name="battery_health_cold">ठंडी</string>
+    <string name="battery_health_failure">विफलता</string>
+    <string name="battery_health_unknown">अज्ञात</string>
+    <string name="battery_power_source">पावर स्रोत</string>
+    <string name="battery_source_ac">चार्जर</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">वायरलेस</string>
+    <string name="battery_source_none">कनेक्ट नहीं है</string>
+    <string name="dashboard_storage_from">%1$s में से</string>
+    <string name="dashboard_storage_used">%1$d%% उपयोग में</string>
+    <string name="dashboard_storage_free">%1$s उपलब्ध</string>
+    <string name="permission_missing_title">अनुमतियाँ नहीं हैं</string>
+    <string name="permission_missing_message">आपके डिवाइस को स्कैन करने के लिए फ़ाइलों की अनुमति चाहिए।</string>
+    <string name="shred_selected_count">%1$d फ़ाइलें</string>
+    <string name="theme_live_preview">लाइव पूर्वावलोकन</string>
+    <string name="theme_preview_button_one">बटन 1</string>
+    <string name="theme_preview_button_two">बटन 2</string>
+    <string name="theme_preview_button_three">बटन 3</string>
+    <string name="scheduler_interval_6">हर 6 घंटे</string>
+    <string name="scheduler_interval_12">हर 12 घंटे</string>
+    <string name="scheduler_interval_24">दैनिक</string>
+    <string name="scheduler_interval_72">हर 3 दिन</string>
+    <string name="scheduler_interval_168">साप्ताहिक</string>
+    <string name="rules_unnamed">बिना नाम का नियम</string>
+    <string name="rules_logic">तर्क: %1$s</string>
+    <string name="rules_logic_all">सभी शर्तें</string>
+    <string name="rules_logic_any">कोई भी शर्त</string>
+    <string name="rules_edit">संपादित करें</string>
+    <string name="rules_delete">हटाएँ</string>
+    <string name="rules_delete_title">नियम हटाएँ?</string>
+    <string name="rules_delete_message">%1$s को स्थायी रूप से हटा दिया जाएगा।</string>
+    <string name="rules_evaluating">मूल्यांकन हो रहा है…</string>
+    <string name="rules_scanned_count">%1$d फ़ाइलें</string>
+    <string name="rules_no_results">कोई परिणाम नहीं</string>
+    <string name="rules_back">वापस</string>
+    <string name="rules_results_title">नियम मूल्यांकन के परिणाम</string>
+    <string name="rules_results_summary">%1$d फ़ाइलें · %2$s</string>
+    <string name="rules_match_summary">%1$d फ़ाइलें · %2$s</string>
+    <string name="rules_action_suggest">सुझाएँ</string>
+    <string name="rules_action_delete">हटाएँ</string>
+    <string name="rules_action_shred">सुरक्षित मिटाएँ</string>
+    <string name="rules_action_vault">वॉल्ट में ले जाएँ</string>
+    <string name="rules_back_to_list">नियमों पर वापस जाएँ</string>
+    <string name="rules_error_title">एक त्रुटि हुई</string>
+    <string name="condition_field_size">आकार</string>
+    <string name="condition_field_age">आयु</string>
+    <string name="condition_field_extension">प्रकार</string>
+    <string name="condition_field_path">पथ</string>
+    <string name="condition_field_name">नाम</string>
+    <string name="condition_field_gallery">गैलरी</string>
+    <string name="condition_days">दिन</string>
+    <string name="condition_path_hint">उदाहरण: Download</string>
+    <string name="condition_name_hint">नाम का पैटर्न</string>
+    <string name="condition_op_older_than">से पुराना</string>
+    <string name="condition_op_newer_than">से नया</string>
+    <string name="condition_op_greater_than">से बड़ा</string>
+    <string name="condition_op_less_than">से छोटा</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">के बराबर</string>
+    <string name="condition_add_size">आकार</string>
+    <string name="condition_add_age">आयु</string>
+    <string name="condition_add_extension">एक्सटेंशन</string>
+    <string name="condition_add_path">पथ में शामिल है</string>
+    <string name="condition_add_name">नाम में शामिल है</string>
+    <string name="rule_editor_new_title">नया नियम</string>
+    <string name="rule_editor_edit_title">नियम संपादित करें</string>
+    <string name="rule_editor_name">नियम का नाम</string>
+    <string name="rule_editor_description">विवरण (वैकल्पिक)</string>
+    <string name="rules_logic_label">तर्क</string>
+    <string name="rules_logic_all_and">सभी शर्तें (AND)</string>
+    <string name="rules_logic_any_or">कोई भी शर्त (OR)</string>
+    <string name="rules_conditions">शर्तें</string>
+    <string name="rules_action_label">कार्रवाई</string>
+    <string name="rule_action_suggest_full">केवल सुझाव दें (अपने आप न हटाएँ)</string>
+    <string name="rule_action_move_vault">वॉल्ट में ले जाएँ</string>
+    <string name="rule_action_shred_full">सुरक्षित मिटाएँ (Shredder)</string>
+    <string name="rule_action_delete_full">सीधे हटाएँ</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">अज्ञात त्रुटि</string>
+    <string name="duplicates_summary">%1$d समूह · %2$d डुप्लिकेट</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d अन्य आइटम</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">फ़िल्टर</string>
+    <string name="large_files_min_size">न्यूनतम आकार: %1$d MB</string>
+    <string name="large_files_categories">श्रेणियाँ</string>
+    <string name="large_files_older_than">से पुरानी</string>
+    <string name="large_files_all">सभी</string>
+    <string name="apply">लागू करें</string>
+    <string name="ram_available">उपलब्ध</string>
+    <string name="ram_used">उपयोग में</string>
+    <string name="ram_boosting">मेमोरी खाली की जा रही है…</string>
+    <string name="ram_success_title">मेमोरी खाली हुई</string>
+    <string name="ram_success_message">%1$s मेमोरी खाली की गई।</string>
+    <string name="ram_total_of">कुल %1$s में से</string>
+    <string name="large_files_category_video">वीडियो</string>
+    <string name="large_files_category_audio">ऑडियो</string>
+    <string name="large_files_category_image">इमेज</string>
+    <string name="large_files_category_archive">आर्काइव</string>
+    <string name="large_files_category_document">दस्तावेज़</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">अन्य</string>
+    <plurals name="duplicates_selected_count"><item quantity="one">%d चयनित आइटम</item><item quantity="other">%d चयनित आइटम</item></plurals>
+    <plurals name="junk_items_count"><item quantity="one">%d आइटम</item><item quantity="other">%d आइटम</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="one">%1$d फ़ाइल स्कैन की गई</item><item quantity="other">%1$d फ़ाइलें स्कैन की गईं</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="one">%d आइटम</item><item quantity="other">%d आइटम</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="one">%1$d बड़ी फ़ाइल</item><item quantity="other">%1$d बड़ी फ़ाइलें</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="one">%1$d फ़ाइल</item><item quantity="other">%1$d फ़ाइलें</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="one">%1$d दिन</item><item quantity="other">%1$d दिन</item></plurals>
 </resources>

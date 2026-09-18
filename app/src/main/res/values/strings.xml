@@ -345,4 +345,129 @@
     <string name="widget_title">Storage</string>
     <string name="widget_free">%1$s free</string>
     <string name="widget_description">Live storage display</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">Battery is hot — unplug the charger for a while</string>
+    <string name="battery_charging">Charging</string>
+    <string name="battery_status">Status</string>
+    <string name="battery_status_charging">Charging</string>
+    <string name="battery_status_discharging">Discharging</string>
+    <string name="battery_temperature">Temperature</string>
+    <string name="battery_voltage">Voltage</string>
+    <string name="battery_technology">Technology</string>
+    <string name="battery_health">Health</string>
+    <string name="battery_health_good">Good ✓</string>
+    <string name="battery_health_overheat">Overheated!</string>
+    <string name="battery_health_dead">Dead</string>
+    <string name="battery_health_over_voltage">High voltage</string>
+    <string name="battery_health_cold">Cold</string>
+    <string name="battery_health_failure">Failure</string>
+    <string name="battery_health_unknown">Unknown</string>
+    <string name="battery_power_source">Power source</string>
+    <string name="battery_source_ac">Charger</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">Wireless</string>
+    <string name="battery_source_none">Not connected</string>
+    <string name="dashboard_storage_from">of %1$s</string>
+    <string name="dashboard_storage_used">%1$d%% used</string>
+    <string name="dashboard_storage_free">%1$s available</string>
+    <string name="permission_missing_title">Missing permissions</string>
+    <string name="permission_missing_message">We need file access permission to scan your device.</string>
+    <string name="shred_selected_count">%1$d files</string>
+    <string name="theme_live_preview">Live preview</string>
+    <string name="theme_preview_button_one">Button 1</string>
+    <string name="theme_preview_button_two">Button 2</string>
+    <string name="theme_preview_button_three">Button 3</string>
+    <string name="scheduler_interval_6">Every 6 hours</string>
+    <string name="scheduler_interval_12">Every 12 hours</string>
+    <string name="scheduler_interval_24">Daily</string>
+    <string name="scheduler_interval_72">Every 3 days</string>
+    <string name="scheduler_interval_168">Weekly</string>
+    <string name="rules_unnamed">Unnamed rule</string>
+    <string name="rules_logic">Logic: %1$s</string>
+    <string name="rules_logic_all">all conditions</string>
+    <string name="rules_logic_any">any condition</string>
+    <string name="rules_edit">Edit</string>
+    <string name="rules_delete">Delete</string>
+    <string name="rules_delete_title">Delete rule?</string>
+    <string name="rules_delete_message">"%1$s" will be permanently deleted.</string>
+    <string name="rules_evaluating">Evaluating…</string>
+    <string name="rules_scanned_count">%1$d files</string>
+    <string name="rules_no_results">No results</string>
+    <string name="rules_back">Back</string>
+    <string name="rules_results_title">Rule evaluation results</string>
+    <string name="rules_results_summary">%1$d files · %2$s</string>
+    <string name="rules_match_summary">%1$d files · %2$s</string>
+    <string name="rules_action_suggest">Suggest</string>
+    <string name="rules_action_delete">Delete</string>
+    <string name="rules_action_shred">Secure erase</string>
+    <string name="rules_action_vault">Move to vault</string>
+    <string name="rules_back_to_list">Back to rules</string>
+    <string name="rules_error_title">An error occurred</string>
+    <string name="condition_field_size">Size</string>
+    <string name="condition_field_age">Age</string>
+    <string name="condition_field_extension">Type</string>
+    <string name="condition_field_path">Path</string>
+    <string name="condition_field_name">Name</string>
+    <string name="condition_field_gallery">Gallery</string>
+    <string name="condition_days">Days</string>
+    <string name="condition_path_hint">Example: Download</string>
+    <string name="condition_name_hint">Name pattern</string>
+    <string name="condition_op_older_than">Older than</string>
+    <string name="condition_op_newer_than">Newer than</string>
+    <string name="condition_op_greater_than">Greater than</string>
+    <string name="condition_op_less_than">Less than</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">Equals</string>
+    <string name="condition_add_size">Size</string>
+    <string name="condition_add_age">Age</string>
+    <string name="condition_add_extension">Extension</string>
+    <string name="condition_add_path">Path contains</string>
+    <string name="condition_add_name">Name contains</string>
+    <string name="rule_editor_new_title">New rule</string>
+    <string name="rule_editor_edit_title">Edit rule</string>
+    <string name="rule_editor_name">Rule name</string>
+    <string name="rule_editor_description">Description (optional)</string>
+    <string name="rules_logic_label">Logic</string>
+    <string name="rules_logic_all_and">All conditions (AND)</string>
+    <string name="rules_logic_any_or">Any condition (OR)</string>
+    <string name="rules_conditions">Conditions</string>
+    <string name="rules_action_label">Action</string>
+    <string name="rule_action_suggest_full">Suggest only (do not delete automatically)</string>
+    <string name="rule_action_move_vault">Move to vault</string>
+    <string name="rule_action_shred_full">Secure erase (Shredder)</string>
+    <string name="rule_action_delete_full">Delete directly</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">Unknown error</string>
+    <string name="duplicates_summary">%1$d groups · %2$d duplicates</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d more items</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">Filters</string>
+    <string name="large_files_min_size">Minimum size: %1$d MB</string>
+    <string name="large_files_categories">Categories</string>
+    <string name="large_files_older_than">Older than</string>
+    <string name="large_files_all">All</string>
+    <string name="apply">Apply</string>
+    <string name="ram_available">Available</string>
+    <string name="ram_used">Used</string>
+    <string name="ram_boosting">Freeing memory…</string>
+    <string name="ram_success_title">Memory freed</string>
+    <string name="ram_success_message">Freed %1$s of memory.</string>
+    <string name="ram_total_of">of %1$s</string>
+    <string name="large_files_category_video">Video</string>
+    <string name="large_files_category_audio">Audio</string>
+    <string name="large_files_category_image">Image</string>
+    <string name="large_files_category_archive">Archive</string>
+    <string name="large_files_category_document">Document</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">Other</string>
+    <plurals name="duplicates_selected_count"><item quantity="one">%d selected item</item><item quantity="other">%d selected items</item></plurals>
+    <plurals name="junk_items_count"><item quantity="one">%d item</item><item quantity="other">%d items</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="one">%1$d file scanned</item><item quantity="other">%1$d files scanned</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="one">%d item</item><item quantity="other">%d items</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="one">%1$d file</item><item quantity="other">%1$d files</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="one">%1$d file</item><item quantity="other">%1$d files</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="one">%1$d day</item><item quantity="other">%1$d days</item></plurals>
 </resources>

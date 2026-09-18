@@ -11,6 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -23,6 +25,7 @@ private val Context.rulesDataStore: DataStore<Preferences> by preferencesDataSto
 class RuleRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true; prettyPrint = false }
+    private val rulesMutex = Mutex()
 
     val rulesFlow: Flow<List<CleanupRule>> = context.rulesDataStore.data.map { prefs ->
         prefs[KEY_RULES]?.let { decode(it) } ?: emptyList()
@@ -33,10 +36,19 @@ class RuleRepository @Inject constructor(@ApplicationContext private val context
         context.rulesDataStore.edit { it[KEY_RULES] = serialized }
     }
 
-    suspend fun addRule(rule: CleanupRule) { save(readAll() + rule) }
-    suspend fun updateRule(rule: CleanupRule) { save(readAll().map { if (it.id == rule.id) rule else it }) }
-    suspend fun deleteRule(id: String) { save(readAll().filterNot { it.id == id }) }
-    suspend fun toggleRule(id: String, enabled: Boolean) { save(readAll().map { if (it.id == id) it.copy(enabled = enabled) else it }) }
+    suspend fun addRule(rule: CleanupRule) { updateAtomically { it + rule } }
+    suspend fun updateRule(rule: CleanupRule) { updateAtomically { rules -> rules.map { if (it.id == rule.id) rule else it } } }
+    suspend fun deleteRule(id: String) { updateAtomically { rules -> rules.filterNot { it.id == id } } }
+    suspend fun toggleRule(id: String, enabled: Boolean) { updateAtomically { rules -> rules.map { if (it.id == id) it.copy(enabled = enabled) else it } } }
+
+    private suspend fun updateAtomically(transform: (List<CleanupRule>) -> List<CleanupRule>) = withContext(Dispatchers.IO) {
+        rulesMutex.withLock {
+            context.rulesDataStore.edit { prefs ->
+                val current = prefs[KEY_RULES]?.let { decode(it) } ?: emptyList()
+                prefs[KEY_RULES] = json.encodeToString(ListSerializer(CleanupRule.serializer()), transform(current))
+            }
+        }
+    }
 
     // ✅ FIX: first() للقراءة، لا edit()
     suspend fun readAll(): List<CleanupRule> = withContext(Dispatchers.IO) {

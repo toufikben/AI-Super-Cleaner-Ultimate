@@ -345,4 +345,129 @@
     <string name="widget_title">Хранилище</string>
     <string name="widget_free">Свободно: %1$s</string>
     <string name="widget_description">Отображение хранилища в реальном времени</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">Батарея горячая — ненадолго отключите зарядное устройство</string>
+    <string name="battery_charging">Заряжается</string>
+    <string name="battery_status">Состояние</string>
+    <string name="battery_status_charging">Заряжается</string>
+    <string name="battery_status_discharging">Разряжается</string>
+    <string name="battery_temperature">Температура</string>
+    <string name="battery_voltage">Напряжение</string>
+    <string name="battery_technology">Технология</string>
+    <string name="battery_health">Состояние</string>
+    <string name="battery_health_good">Хорошее ✓</string>
+    <string name="battery_health_overheat">Перегрев!</string>
+    <string name="battery_health_dead">Неисправна</string>
+    <string name="battery_health_over_voltage">Высокое напряжение</string>
+    <string name="battery_health_cold">Холодная</string>
+    <string name="battery_health_failure">Ошибка</string>
+    <string name="battery_health_unknown">Неизвестно</string>
+    <string name="battery_power_source">Источник питания</string>
+    <string name="battery_source_ac">Зарядное устройство</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">Беспроводная</string>
+    <string name="battery_source_none">Не подключена</string>
+    <string name="dashboard_storage_from">из %1$s</string>
+    <string name="dashboard_storage_used">Использовано %1$d%%</string>
+    <string name="dashboard_storage_free">Доступно %1$s</string>
+    <string name="permission_missing_title">Нет разрешений</string>
+    <string name="permission_missing_message">Для сканирования устройства нужен доступ к файлам.</string>
+    <string name="shred_selected_count">%1$d файлов</string>
+    <string name="theme_live_preview">Предпросмотр в реальном времени</string>
+    <string name="theme_preview_button_one">Кнопка 1</string>
+    <string name="theme_preview_button_two">Кнопка 2</string>
+    <string name="theme_preview_button_three">Кнопка 3</string>
+    <string name="scheduler_interval_6">Каждые 6 часов</string>
+    <string name="scheduler_interval_12">Каждые 12 часов</string>
+    <string name="scheduler_interval_24">Ежедневно</string>
+    <string name="scheduler_interval_72">Каждые 3 дня</string>
+    <string name="scheduler_interval_168">Еженедельно</string>
+    <string name="rules_unnamed">Правило без имени</string>
+    <string name="rules_logic">Логика: %1$s</string>
+    <string name="rules_logic_all">все условия</string>
+    <string name="rules_logic_any">любое условие</string>
+    <string name="rules_edit">Изменить</string>
+    <string name="rules_delete">Удалить</string>
+    <string name="rules_delete_title">Удалить правило?</string>
+    <string name="rules_delete_message">«%1$s» будет удалено навсегда.</string>
+    <string name="rules_evaluating">Оценка…</string>
+    <string name="rules_scanned_count">%1$d файлов</string>
+    <string name="rules_no_results">Нет результатов</string>
+    <string name="rules_back">Назад</string>
+    <string name="rules_results_title">Результаты оценки правил</string>
+    <string name="rules_results_summary">%1$d файлов · %2$s</string>
+    <string name="rules_match_summary">%1$d файлов · %2$s</string>
+    <string name="rules_action_suggest">Предложить</string>
+    <string name="rules_action_delete">Удалить</string>
+    <string name="rules_action_shred">Безопасное стирание</string>
+    <string name="rules_action_vault">Переместить в хранилище</string>
+    <string name="rules_back_to_list">Назад к правилам</string>
+    <string name="rules_error_title">Произошла ошибка</string>
+    <string name="condition_field_size">Размер</string>
+    <string name="condition_field_age">Возраст</string>
+    <string name="condition_field_extension">Тип</string>
+    <string name="condition_field_path">Путь</string>
+    <string name="condition_field_name">Имя</string>
+    <string name="condition_field_gallery">Галерея</string>
+    <string name="condition_days">Дни</string>
+    <string name="condition_path_hint">Пример: Download</string>
+    <string name="condition_name_hint">Шаблон имени</string>
+    <string name="condition_op_older_than">Старше чем</string>
+    <string name="condition_op_newer_than">Новее чем</string>
+    <string name="condition_op_greater_than">Больше чем</string>
+    <string name="condition_op_less_than">Меньше чем</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">Равно</string>
+    <string name="condition_add_size">Размер</string>
+    <string name="condition_add_age">Возраст</string>
+    <string name="condition_add_extension">Расширение</string>
+    <string name="condition_add_path">Путь содержит</string>
+    <string name="condition_add_name">Имя содержит</string>
+    <string name="rule_editor_new_title">Новое правило</string>
+    <string name="rule_editor_edit_title">Изменить правило</string>
+    <string name="rule_editor_name">Название правила</string>
+    <string name="rule_editor_description">Описание (необязательно)</string>
+    <string name="rules_logic_label">Логика</string>
+    <string name="rules_logic_all_and">Все условия (AND)</string>
+    <string name="rules_logic_any_or">Любое условие (OR)</string>
+    <string name="rules_conditions">Условия</string>
+    <string name="rules_action_label">Действие</string>
+    <string name="rule_action_suggest_full">Только предложить (не удалять автоматически)</string>
+    <string name="rule_action_move_vault">Переместить в хранилище</string>
+    <string name="rule_action_shred_full">Безопасное стирание (Shredder)</string>
+    <string name="rule_action_delete_full">Удалить напрямую</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="duplicates_summary">%1$d групп · %2$d дубликатов</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ ещё %1$d</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">Фильтры</string>
+    <string name="large_files_min_size">Минимальный размер: %1$d МБ</string>
+    <string name="large_files_categories">Категории</string>
+    <string name="large_files_older_than">Старше</string>
+    <string name="large_files_all">Все</string>
+    <string name="apply">Применить</string>
+    <string name="ram_available">Доступно</string>
+    <string name="ram_used">Используется</string>
+    <string name="ram_boosting">Освобождение памяти…</string>
+    <string name="ram_success_title">Память освобождена</string>
+    <string name="ram_success_message">Освобождено памяти: %1$s.</string>
+    <string name="ram_total_of">из %1$s</string>
+    <string name="large_files_category_video">Видео</string>
+    <string name="large_files_category_audio">Аудио</string>
+    <string name="large_files_category_image">Изображение</string>
+    <string name="large_files_category_archive">Архив</string>
+    <string name="large_files_category_document">Документ</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">Другое</string>
+    <plurals name="duplicates_selected_count"><item quantity="zero">%d выбранных элемента</item><item quantity="one">%d выбранный элемент</item><item quantity="two">%d выбранных элемента</item><item quantity="few">%d выбранных элемента</item><item quantity="many">%d выбранных элементов</item><item quantity="other">%d выбранных элемента</item></plurals>
+    <plurals name="junk_items_count"><item quantity="zero">%d элемента</item><item quantity="one">%d элемент</item><item quantity="two">%d элемента</item><item quantity="few">%d элемента</item><item quantity="many">%d элементов</item><item quantity="other">%d элемента</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="zero">просканировано файлов: %1$d</item><item quantity="one">%1$d файл просканирован</item><item quantity="two">просканировано файла: %1$d</item><item quantity="few">просканировано файла: %1$d</item><item quantity="many">просканировано файлов: %1$d</item><item quantity="other">просканировано файлов: %1$d</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="zero">%d элемента</item><item quantity="one">%d элемент</item><item quantity="two">%d элемента</item><item quantity="few">%d элемента</item><item quantity="many">%d элементов</item><item quantity="other">%d элемента</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="zero">больших файлов: %1$d</item><item quantity="one">%1$d большой файл</item><item quantity="two">больших файла: %1$d</item><item quantity="few">больших файла: %1$d</item><item quantity="many">больших файлов: %1$d</item><item quantity="other">больших файлов: %1$d</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="zero">%1$d файла</item><item quantity="one">%1$d файл</item><item quantity="two">%1$d файла</item><item quantity="few">%1$d файла</item><item quantity="many">%1$d файлов</item><item quantity="other">%1$d файла</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="zero">%1$d дней</item><item quantity="one">%1$d день</item><item quantity="two">%1$d дня</item><item quantity="few">%1$d дня</item><item quantity="many">%1$d дней</item><item quantity="other">%1$d дней</item></plurals>
 </resources>

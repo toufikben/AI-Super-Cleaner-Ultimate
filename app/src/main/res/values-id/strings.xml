@@ -345,4 +345,129 @@
     <string name="widget_title">Penyimpanan</string>
     <string name="widget_free">%1$s tersedia</string>
     <string name="widget_description">Tampilan penyimpanan langsung</string>
+
+    <!-- Screen and rule editor localization -->
+    <string name="battery_overheat_warning">Baterai panas — cabut pengisi daya sebentar</string>
+    <string name="battery_charging">Mengisi daya</string>
+    <string name="battery_status">Status</string>
+    <string name="battery_status_charging">Mengisi daya</string>
+    <string name="battery_status_discharging">Mengosongkan daya</string>
+    <string name="battery_temperature">Suhu</string>
+    <string name="battery_voltage">Tegangan</string>
+    <string name="battery_technology">Teknologi</string>
+    <string name="battery_health">Kesehatan</string>
+    <string name="battery_health_good">Baik ✓</string>
+    <string name="battery_health_overheat">Terlalu panas!</string>
+    <string name="battery_health_dead">Rusak</string>
+    <string name="battery_health_over_voltage">Tegangan tinggi</string>
+    <string name="battery_health_cold">Dingin</string>
+    <string name="battery_health_failure">Gagal</string>
+    <string name="battery_health_unknown">Tidak diketahui</string>
+    <string name="battery_power_source">Sumber daya</string>
+    <string name="battery_source_ac">Pengisi daya</string>
+    <string name="battery_source_usb">USB</string>
+    <string name="battery_source_wireless">Nirkabel</string>
+    <string name="battery_source_none">Tidak terhubung</string>
+    <string name="dashboard_storage_from">dari %1$s</string>
+    <string name="dashboard_storage_used">%1$d%% digunakan</string>
+    <string name="dashboard_storage_free">%1$s tersedia</string>
+    <string name="permission_missing_title">Izin tidak lengkap</string>
+    <string name="permission_missing_message">Kami memerlukan izin akses file untuk memindai perangkat Anda.</string>
+    <string name="shred_selected_count">%1$d file</string>
+    <string name="theme_live_preview">Pratinjau langsung</string>
+    <string name="theme_preview_button_one">Tombol 1</string>
+    <string name="theme_preview_button_two">Tombol 2</string>
+    <string name="theme_preview_button_three">Tombol 3</string>
+    <string name="scheduler_interval_6">Setiap 6 jam</string>
+    <string name="scheduler_interval_12">Setiap 12 jam</string>
+    <string name="scheduler_interval_24">Harian</string>
+    <string name="scheduler_interval_72">Setiap 3 hari</string>
+    <string name="scheduler_interval_168">Mingguan</string>
+    <string name="rules_unnamed">Aturan tanpa nama</string>
+    <string name="rules_logic">Logika: %1$s</string>
+    <string name="rules_logic_all">semua kondisi</string>
+    <string name="rules_logic_any">kondisi apa pun</string>
+    <string name="rules_edit">Edit</string>
+    <string name="rules_delete">Hapus</string>
+    <string name="rules_delete_title">Hapus aturan?</string>
+    <string name="rules_delete_message">%1$s akan dihapus secara permanen.</string>
+    <string name="rules_evaluating">Mengevaluasi…</string>
+    <string name="rules_scanned_count">%1$d file</string>
+    <string name="rules_no_results">Tidak ada hasil</string>
+    <string name="rules_back">Kembali</string>
+    <string name="rules_results_title">Hasil evaluasi aturan</string>
+    <string name="rules_results_summary">%1$d file · %2$s</string>
+    <string name="rules_match_summary">%1$d file · %2$s</string>
+    <string name="rules_action_suggest">Sarankan</string>
+    <string name="rules_action_delete">Hapus</string>
+    <string name="rules_action_shred">Hapus aman</string>
+    <string name="rules_action_vault">Pindahkan ke brankas</string>
+    <string name="rules_back_to_list">Kembali ke aturan</string>
+    <string name="rules_error_title">Terjadi kesalahan</string>
+    <string name="condition_field_size">Ukuran</string>
+    <string name="condition_field_age">Usia</string>
+    <string name="condition_field_extension">Jenis</string>
+    <string name="condition_field_path">Jalur</string>
+    <string name="condition_field_name">Nama</string>
+    <string name="condition_field_gallery">Galeri</string>
+    <string name="condition_days">Hari</string>
+    <string name="condition_path_hint">Contoh: Download</string>
+    <string name="condition_name_hint">Pola nama</string>
+    <string name="condition_op_older_than">Lebih lama dari</string>
+    <string name="condition_op_newer_than">Lebih baru dari</string>
+    <string name="condition_op_greater_than">Lebih besar dari</string>
+    <string name="condition_op_less_than">Lebih kecil dari</string>
+    <string name="condition_op_equals_symbol">=</string>
+    <string name="condition_op_equals">Sama dengan</string>
+    <string name="condition_add_size">Ukuran</string>
+    <string name="condition_add_age">Usia</string>
+    <string name="condition_add_extension">Ekstensi</string>
+    <string name="condition_add_path">Jalur berisi</string>
+    <string name="condition_add_name">Nama berisi</string>
+    <string name="rule_editor_new_title">Aturan baru</string>
+    <string name="rule_editor_edit_title">Edit aturan</string>
+    <string name="rule_editor_name">Nama aturan</string>
+    <string name="rule_editor_description">Deskripsi (opsional)</string>
+    <string name="rules_logic_label">Logika</string>
+    <string name="rules_logic_all_and">Semua kondisi (AND)</string>
+    <string name="rules_logic_any_or">Kondisi apa pun (OR)</string>
+    <string name="rules_conditions">Kondisi</string>
+    <string name="rules_action_label">Tindakan</string>
+    <string name="rule_action_suggest_full">Hanya sarankan (jangan hapus otomatis)</string>
+    <string name="rule_action_move_vault">Pindahkan ke brankas</string>
+    <string name="rule_action_shred_full">Hapus aman (Shredder)</string>
+    <string name="rule_action_delete_full">Hapus langsung</string>
+
+    <!-- Follow-up localization: remaining presentation strings -->
+    <string name="error_unknown">Kesalahan tidak diketahui</string>
+    <string name="duplicates_summary">%1$d grup · %2$d duplikat</string>
+    <string name="junk_category_summary">%1$s · %2$s</string>
+    <string name="junk_additional_items">+ %1$d item lainnya</string>
+    <string name="history_entry_summary">%1$s · %2$s</string>
+    <string name="large_files_filters">Filter</string>
+    <string name="large_files_min_size">Ukuran minimum: %1$d MB</string>
+    <string name="large_files_categories">Kategori</string>
+    <string name="large_files_older_than">Lebih lama dari</string>
+    <string name="large_files_all">Semua</string>
+    <string name="apply">Terapkan</string>
+    <string name="ram_available">Tersedia</string>
+    <string name="ram_used">Terpakai</string>
+    <string name="ram_boosting">Membebaskan memori…</string>
+    <string name="ram_success_title">Memori dibebaskan</string>
+    <string name="ram_success_message">%1$s memori dibebaskan.</string>
+    <string name="ram_total_of">dari %1$s</string>
+    <string name="large_files_category_video">Video</string>
+    <string name="large_files_category_audio">Audio</string>
+    <string name="large_files_category_image">Gambar</string>
+    <string name="large_files_category_archive">Arsip</string>
+    <string name="large_files_category_document">Dokumen</string>
+    <string name="large_files_category_apk">APK</string>
+    <string name="large_files_category_other">Lainnya</string>
+    <plurals name="duplicates_selected_count"><item quantity="one">%d item dipilih</item><item quantity="other">%d item dipilih</item></plurals>
+    <plurals name="junk_items_count"><item quantity="one">%d item</item><item quantity="other">%d item</item></plurals>
+    <plurals name="junk_scanned_files"><item quantity="one">%1$d file dipindai</item><item quantity="other">%1$d file dipindai</item></plurals>
+    <plurals name="history_deleted_count"><item quantity="one">%d item</item><item quantity="other">%d item</item></plurals>
+    <plurals name="large_files_scanned"><item quantity="one">%1$d file besar</item><item quantity="other">%1$d file besar</item></plurals>
+    <plurals name="large_files_selected_count"><item quantity="one">%1$d file</item><item quantity="other">%1$d file</item></plurals>
+    <plurals name="large_files_filter_days"><item quantity="one">%1$d hari</item><item quantity="other">%1$d hari</item></plurals>
 </resources>

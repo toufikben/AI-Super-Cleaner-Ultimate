@@ -10,7 +10,10 @@ import com.aisupercleaner.ultimate.data.notifications.NotificationHelper
 import com.aisupercleaner.ultimate.data.preferences.AppPreferences
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.first
+import java.io.IOException
+import java.util.concurrent.TimeoutException
 
 @HiltWorker
 class StorageAlertWorker @AssistedInject constructor(
@@ -19,21 +22,32 @@ class StorageAlertWorker @AssistedInject constructor(
     private val preferences: AppPreferences,
     private val notifications: NotificationHelper,
 ) : CoroutineWorker(context, params) {
-
     override suspend fun doWork(): Result {
-        val threshold = runCatching { preferences.storageAlertThresholdPercent.first() }.getOrDefault(85)
-        val enabled = runCatching { preferences.notificationsEnabled.first() }.getOrDefault(true)
-        if (!enabled) return Result.success()
-
-        return runCatching {
+        return try {
+            val threshold = preferences.storageAlertThresholdPercent.first()
+            val enabled = preferences.notificationsEnabled.first()
+            if (!enabled) return Result.success()
             val stat = StatFs(Environment.getDataDirectory().path)
             val total = stat.blockCountLong * stat.blockSizeLong
             val free = stat.availableBlocksLong * stat.blockSizeLong
-            val usedPercent = ((total - free).toFloat() / total.toFloat() * 100).toInt()
-            if (usedPercent >= threshold) notifications.showStorageAlert(usedPercent, free)
-            Result.success()
-        }.getOrElse { Result.retry() }
+            if (total <= 0L) {
+                Result.success()
+            } else {
+                val usedPercent = ((total - free).toFloat() / total.toFloat() * 100).toInt()
+                if (usedPercent >= threshold.coerceIn(1, 100)) notifications.showStorageAlert(usedPercent, free)
+                Result.success()
+            }
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Throwable) {
+            when (error) {
+                is IOException, is TimeoutException -> Result.retry()
+                else -> Result.failure()
+            }
+        }
     }
-
-    companion object { const val UNIQUE_NAME = "storage_alert_unique" }
+    companion object {
+        const val WORK_NAME = "storage_alert_worker"
+        const val UNIQUE_NAME = "storage_alert_unique"
+    }
 }

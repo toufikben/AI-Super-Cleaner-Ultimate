@@ -18,7 +18,7 @@ data class HistoryEntry(
     val source: Source,
     val durationMs: Long,
 ) {
-    enum class Source { JUNK, DUPLICATES, VAULT, AUTO, SHREDDER, UNKNOWN }
+    enum class Source { JUNK, DUPLICATES, LARGE_FILES, VAULT, AUTO, SHREDDER, UNKNOWN }
 }
 
 @Singleton

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -78,6 +79,7 @@ private fun HistoryRow(entry: HistoryEntry) {
                     when (entry.source) {
                         HistoryEntry.Source.JUNK -> Icons.Rounded.CleaningServices
                         HistoryEntry.Source.DUPLICATES -> Icons.Rounded.ContentCopy
+                        HistoryEntry.Source.LARGE_FILES -> Icons.Rounded.Folder
                         HistoryEntry.Source.VAULT -> Icons.Rounded.Lock
                         HistoryEntry.Source.AUTO -> Icons.Rounded.Autorenew
                         HistoryEntry.Source.SHREDDER -> Icons.Rounded.DeleteForever
@@ -90,7 +92,7 @@ private fun HistoryRow(entry: HistoryEntry) {
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text(Formatter.formatBytes(entry.freedBytes), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                Text("${entry.deletedCount} عنصر · ${fmt.format(Date(entry.timestamp))}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.history_entry_summary, pluralStringResource(R.plurals.history_deleted_count, entry.deletedCount, entry.deletedCount), fmt.format(Date(entry.timestamp))), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }

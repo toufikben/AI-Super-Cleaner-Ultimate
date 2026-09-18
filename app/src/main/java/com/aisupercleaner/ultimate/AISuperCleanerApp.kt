@@ -6,17 +6,25 @@ import android.app.NotificationManager
 import android.os.Build
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.aisupercleaner.ultimate.data.worker.WorkerScheduler
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltAndroidApp
 class AISuperCleanerApp : Application(), Configuration.Provider {
-
     @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject lateinit var workerScheduler: WorkerScheduler
 
     override fun onCreate() {
         super.onCreate()
         createNotificationChannels()
+        CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
+            runCatching { workerScheduler.scheduleFromPreferences() }
+        }
     }
 
     override val workManagerConfiguration: Configuration
@@ -28,7 +36,6 @@ class AISuperCleanerApp : Application(), Configuration.Provider {
     private fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val manager = getSystemService(NotificationManager::class.java) ?: return
-
         manager.createNotificationChannel(
             NotificationChannel(CHANNEL_AUTO_CLEAN, getString(R.string.channel_auto_clean), NotificationManager.IMPORTANCE_LOW)
                 .apply { description = getString(R.string.channel_auto_clean_desc) }

@@ -82,33 +82,64 @@ class RulesViewModel @Inject constructor(
             var freedBytes = 0L
             var deletedCount = 0
             var failedCount = 0
+            var historySource: HistoryEntry.Source? = null
 
             when (rule.action) {
                 CleanupRule.Action.SUGGEST -> Unit
                 CleanupRule.Action.DELETE -> {
-                    val result = cleanupManager.deleteFiles(paths)
-                    freedBytes = result.freedBytes; deletedCount = result.deletedCount; failedCount = result.failedCount
+                    // CleanupManager owns DELETE history; do not record this result twice.
+                    cleanupManager.deleteFiles(paths, HistoryEntry.Source.JUNK)
                 }
                 CleanupRule.Action.SHRED -> {
                     val results = shredderManager.shredBatch(paths.map { File(it) }, passes = 3)
-                    results.forEach { r -> if (r.success) { deletedCount++; freedBytes += r.bytesShredded } else failedCount++ }
+                    results.forEach { result ->
+                        if (result.success) {
+                            deletedCount++
+                            freedBytes += result.bytesShredded
+                        } else {
+                            failedCount++
+                        }
+                    }
+                    historySource = HistoryEntry.Source.SHREDDER
                 }
                 CleanupRule.Action.MOVE_TO_VAULT -> {
                     paths.forEach { path ->
                         runCatching {
                             val file = File(path)
-                            if (file.exists()) {
-                                val uri = android.net.Uri.fromFile(file)
-                                val res = vaultManager.importFile(uri, deleteOriginal = true)
-                                if (res.isSuccess) { deletedCount++; freedBytes += file.length() } else failedCount++
+                            if (!file.exists()) {
+                                failedCount++
+                                return@runCatching
+                            }
+                            // importFile(deleteOriginal = true) deletes the source, so read
+                            // the source size before importing it.
+                            val sizeBeforeMove = file.length().coerceAtLeast(0L)
+                            val result = vaultManager.importFile(
+                                android.net.Uri.fromFile(file),
+                                deleteOriginal = true,
+                            )
+                            if (result.isSuccess) {
+                                deletedCount++
+                                freedBytes += sizeBeforeMove
+                            } else {
+                                failedCount++
                             }
                         }.onFailure { failedCount++ }
                     }
+                    historySource = HistoryEntry.Source.VAULT
                 }
             }
 
-            if (deletedCount > 0 || failedCount > 0) {
-                historyRepository.record(freedBytes, deletedCount, failedCount, HistoryEntry.Source.JUNK, System.currentTimeMillis() - startMs)
+            // Only non-empty successful sessions are recorded. DELETE was already
+            // recorded by CleanupManager; SHRED and VAULT are recorded here.
+            val source = historySource
+            if (source != null && deletedCount > 0) {
+                historyRepository.record(
+                    freedBytes = freedBytes,
+                    deletedCount = deletedCount,
+                    failedCount = failedCount,
+                    source = source,
+                    durationMs = System.currentTimeMillis() - startMs,
+                )
                 storageRepository.refresh()
             }
             evaluate()

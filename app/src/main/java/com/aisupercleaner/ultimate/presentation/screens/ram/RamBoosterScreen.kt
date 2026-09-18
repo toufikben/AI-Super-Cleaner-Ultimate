@@ -40,8 +40,8 @@ fun RamBoosterScreen(onBack: () -> Unit = {}, viewModel: RamViewModel = hiltView
         ) {
             Spacer(Modifier.height(8.dp))
             RamGauge(state.info.usedPercent, state.info.usedBytes, state.info.totalBytes)
-            InfoRow("متاح", Formatter.formatBytes(state.info.availBytes))
-            InfoRow("مُستخدَم", Formatter.formatBytes(state.info.usedBytes))
+            InfoRow(stringResource(R.string.ram_available), Formatter.formatBytes(state.info.availBytes))
+            InfoRow(stringResource(R.string.ram_used), Formatter.formatBytes(state.info.usedBytes))
             Spacer(Modifier.height(8.dp))
             Button(
                 onClick = viewModel::boost,
@@ -52,7 +52,7 @@ fun RamBoosterScreen(onBack: () -> Unit = {}, viewModel: RamViewModel = hiltView
                 if (state.isBoosting) {
                     CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
                     Spacer(Modifier.width(12.dp))
-                    Text("جاري التحرير…", fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.ram_boosting), fontWeight = FontWeight.SemiBold)
                 } else {
                     Icon(Icons.Rounded.Speed, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
@@ -66,8 +66,8 @@ fun RamBoosterScreen(onBack: () -> Unit = {}, viewModel: RamViewModel = hiltView
         AlertDialog(
             onDismissRequest = viewModel::dismissSuccess,
             icon = { Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
-            title = { Text("تم التحرير") },
-            text = { Text("تم تحرير ${Formatter.formatBytes(state.lastFreedBytes)} من الذاكرة.") },
+            title = { Text(stringResource(R.string.ram_success_title)) },
+            text = { Text(stringResource(R.string.ram_success_message, Formatter.formatBytes(state.lastFreedBytes))) },
             confirmButton = { TextButton(onClick = viewModel::dismissSuccess) { Text(stringResource(R.string.ok)) } },
         )
     }
@@ -87,7 +87,7 @@ private fun RamGauge(usedPercent: Float, usedBytes: Long, totalBytes: Long) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text("${(animated * 100).toInt()}%", style = MaterialTheme.typography.displayMedium, fontWeight = FontWeight.Bold)
             Text(Formatter.formatBytes(usedBytes), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("من ${Formatter.formatBytes(totalBytes)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.ram_total_of, Formatter.formatBytes(totalBytes)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
