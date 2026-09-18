@@ -111,8 +111,6 @@
     <string name="perm_all_files_desc">Para verificar todos os arquivos do dispositivo (Android 11+).</string>
     <string name="perm_notif_title">Notificações</string>
     <string name="perm_notif_desc">Para avisar quando o armazenamento estiver baixo.</string>
-    <string name="perm_query_title">Ler apps instalados</string>
-    <string name="perm_query_desc">Para verificar o cache e os dados de cada app.</string>
     <string name="perm_biometric_title">Impressão digital / rosto</string>
     <string name="perm_biometric_desc">Para proteger e desbloquear seu cofre privado.</string>
 

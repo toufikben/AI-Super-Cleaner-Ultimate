@@ -5,7 +5,10 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 grep -Eq '<uses-permission[^>]*android.permission.MANAGE_EXTERNAL_STORAGE' app/src/main/AndroidManifest.xml
-grep -Eq '<uses-permission[^>]*android.permission.QUERY_ALL_PACKAGES' app/src/main/AndroidManifest.xml
+if grep -Eq 'QUERY_ALL_PACKAGES' app/src/main/AndroidManifest.xml; then
+  echo "ERROR: QUERY_ALL_PACKAGES must not be declared." >&2
+  exit 1
+fi
 
 ./gradlew testDebugUnitTest assembleDebug lintDebug --no-daemon
 

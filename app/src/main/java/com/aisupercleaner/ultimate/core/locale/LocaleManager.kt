@@ -13,6 +13,12 @@ object LocaleManager {
         Language("es", "Español", "ES"),
         Language("de", "Deutsch", "DE"),
         Language("tr", "Türkçe", "TR"),
+        Language("hi", "हिन्दी", "IN"),
+        Language("id", "Bahasa Indonesia", "ID"),
+        Language("it", "Italiano", "IT"),
+        Language("pt-BR", "Português (Brasil)", "BR"),
+        Language("ru", "Русский", "RU"),
+        Language("ur", "اردو", "PK"),
     )
 
     fun applyLanguage(languageCode: String) {

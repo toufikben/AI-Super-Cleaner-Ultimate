@@ -102,8 +102,6 @@
     <string name="perm_all_files_desc">لفحص جميع ملفات الجهاز (Android 11+).</string>
     <string name="perm_notif_title">الإشعارات</string>
     <string name="perm_notif_desc">لتنبيهك عند امتلاء المساحة.</string>
-    <string name="perm_query_title">قراءة التطبيقات المثبتة</string>
-    <string name="perm_query_desc">لفحص كاش وبيانات كل تطبيق.</string>
     <string name="perm_biometric_title">البصمة / الوجه</string>
     <string name="perm_biometric_desc">لحماية الخزنة الخاصة وفتحها بأمان.</string>
 

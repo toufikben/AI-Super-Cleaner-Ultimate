@@ -13,7 +13,6 @@ enum class PermissionType(
     STORAGE(R.string.perm_storage_title, R.string.perm_storage_desc, true),
     ALL_FILES(R.string.perm_all_files_title, R.string.perm_all_files_desc, false),
     NOTIFICATIONS(R.string.perm_notif_title, R.string.perm_notif_desc, false),
-    QUERY_PACKAGES(R.string.perm_query_title, R.string.perm_query_desc, false),
     BIOMETRIC(R.string.perm_biometric_title, R.string.perm_biometric_desc, false);
 
     fun manifestPermissions(): Array<String> = when (this) {
@@ -27,7 +26,7 @@ enum class PermissionType(
         }
         NOTIFICATIONS -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             arrayOf(Manifest.permission.POST_NOTIFICATIONS) else emptyArray()
-        BIOMETRIC, ALL_FILES, QUERY_PACKAGES -> emptyArray()
+        BIOMETRIC, ALL_FILES -> emptyArray()
     }
 
     fun isSupportedOnThisDevice(): Boolean = when (this) {

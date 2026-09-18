@@ -89,8 +89,6 @@
     <string name="perm_all_files_desc">Para escanear todos los archivos.</string>
     <string name="perm_notif_title">Notificaciones</string>
     <string name="perm_notif_desc">Alertas de almacenamiento bajo.</string>
-    <string name="perm_query_title">Leer apps instaladas</string>
-    <string name="perm_query_desc">Para escanear caché de apps.</string>
     <string name="perm_biometric_title">Huella / Rostro</string>
     <string name="perm_biometric_desc">Para asegurar tu bóveda.</string>
     <string name="duplicates_title">Archivos duplicados</string>

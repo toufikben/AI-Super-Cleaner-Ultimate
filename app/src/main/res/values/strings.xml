@@ -111,8 +111,6 @@
     <string name="perm_all_files_desc">To scan all device files (Android 11+).</string>
     <string name="perm_notif_title">Notifications</string>
     <string name="perm_notif_desc">Alert you when storage is low.</string>
-    <string name="perm_query_title">Read Installed Apps</string>
-    <string name="perm_query_desc">To scan each app\'s cache and data.</string>
     <string name="perm_biometric_title">Fingerprint / Face</string>
     <string name="perm_biometric_desc">To secure and unlock your private vault.</string>
 

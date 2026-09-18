@@ -89,8 +89,6 @@
     <string name="perm_all_files_desc">Tüm dosyaları taramak için.</string>
     <string name="perm_notif_title">Bildirimler</string>
     <string name="perm_notif_desc">Düşük depolama uyarıları.</string>
-    <string name="perm_query_title">Yüklü Uygulamaları Oku</string>
-    <string name="perm_query_desc">Uygulama önbelleklerini taramak için.</string>
     <string name="perm_biometric_title">Parmak İzi / Yüz</string>
     <string name="perm_biometric_desc">Kasanızı güvence altına almak için.</string>
     <string name="duplicates_title">Yinelenen Dosyalar</string>

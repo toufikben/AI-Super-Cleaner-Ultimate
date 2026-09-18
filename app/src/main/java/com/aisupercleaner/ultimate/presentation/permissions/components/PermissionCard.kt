@@ -83,6 +83,5 @@ private fun PermissionType.icon(): ImageVector = when (this) {
     PermissionType.STORAGE -> Icons.Rounded.FolderOpen
     PermissionType.ALL_FILES -> Icons.Rounded.AdminPanelSettings
     PermissionType.NOTIFICATIONS -> Icons.Rounded.Notifications
-    PermissionType.QUERY_PACKAGES -> Icons.Rounded.Apps
     PermissionType.BIOMETRIC -> Icons.Rounded.Fingerprint
 }

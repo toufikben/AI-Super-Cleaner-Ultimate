@@ -74,7 +74,7 @@ fun PermissionsScreen(
                             viewModel.markRequested(type)
                             when (type) {
                                 PermissionType.ALL_FILES -> runCatching { context.startActivity(viewModel.allFilesIntent()) }
-                                PermissionType.BIOMETRIC, PermissionType.QUERY_PACKAGES -> Unit
+                                PermissionType.BIOMETRIC -> Unit
                                 else -> {
                                     val perms = type.manifestPermissions()
                                     if (perms.isNotEmpty()) launcher.launch(perms)

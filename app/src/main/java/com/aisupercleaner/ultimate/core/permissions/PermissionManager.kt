@@ -24,7 +24,6 @@ class PermissionManager @Inject constructor(
         return when (type) {
             PermissionType.ALL_FILES -> checkAllFiles()
             PermissionType.BIOMETRIC -> checkBiometric()
-            PermissionType.QUERY_PACKAGES -> PermissionStatus.GRANTED
             else -> checkStandard(type)
         }
     }

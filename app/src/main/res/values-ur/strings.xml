@@ -111,8 +111,6 @@
     <string name="perm_all_files_desc">ڈیوائس کی تمام فائلیں اسکین کرنے کے لیے (Android 11+)۔</string>
     <string name="perm_notif_title">اطلاعات</string>
     <string name="perm_notif_desc">اسٹوریج کم ہونے پر آپ کو خبردار کرنے کے لیے۔</string>
-    <string name="perm_query_title">انسٹال شدہ ایپس پڑھیں</string>
-    <string name="perm_query_desc">ہر ایپ کا کیش اور ڈیٹا اسکین کرنے کے لیے۔</string>
     <string name="perm_biometric_title">فنگر پرنٹ / چہرہ</string>
     <string name="perm_biometric_desc">اپنے نجی والٹ کو محفوظ اور غیر مقفل کرنے کے لیے۔</string>
 

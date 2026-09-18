@@ -89,8 +89,6 @@
     <string name="perm_all_files_desc">Pour analyser tous les fichiers.</string>
     <string name="perm_notif_title">Notifications</string>
     <string name="perm_notif_desc">Alertes de stockage faible.</string>
-    <string name="perm_query_title">Lire les applications</string>
-    <string name="perm_query_desc">Pour analyser le cache de chaque application.</string>
     <string name="perm_biometric_title">Empreinte / Visage</string>
     <string name="perm_biometric_desc">Pour sécuriser votre coffre-fort.</string>
     <string name="duplicates_title">Fichiers en double</string>

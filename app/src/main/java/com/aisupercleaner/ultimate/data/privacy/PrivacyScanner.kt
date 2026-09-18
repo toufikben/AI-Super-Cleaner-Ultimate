@@ -37,6 +37,7 @@ class PrivacyScanner @Inject constructor(
 
     fun scan(): Flow<List<AppPrivacyInfo>> = flow {
         val pm = context.packageManager
+        // Package visibility is intentionally restricted by the manifest <queries> entry.
         val packages = pm.getInstalledPackages(PackageManager.GET_PERMISSIONS)
 
         val result = packages.mapNotNull { pkg ->

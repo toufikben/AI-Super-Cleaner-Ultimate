@@ -29,7 +29,7 @@ AI Super Cleaner Ultimate helps you understand and manage your Android storage w
 
 **Protect your privacy**
 
-• Scan installed applications and their declared permissions with Privacy Scanner.
+• Scan user-launchable applications and their declared permissions with Privacy Scanner.
 • Review privacy risks and open Android settings for an application when you choose.
 • Keep selected private files in an encrypted, biometric-protected vault.
 • Permanently erase selected files with the secure file shredder.
@@ -45,7 +45,7 @@ AI Super Cleaner Ultimate helps you understand and manage your Android storage w
 
 The free experience is supported by Google AdMob advertisements. Premium options remove advertisements and unlock the Premium features available in the app. Google Play Billing manages the monthly subscription and one-time lifetime purchase.
 
-The app requests Android permissions needed for its functions, including file and media access. Privacy Scanner requires visibility of installed applications, and full-file cleaning requires broad file-management access on supported Android versions. Review each permission explanation in the app before granting access.
+The app requests Android permissions needed for its functions, including file and media access. Privacy Scanner checks user-launchable applications using narrowly scoped package visibility, and full-file cleaning requires broad file-management access on supported Android versions. Review each permission explanation in the app before granting access.
 
 AI Super Cleaner Ultimate does not upload your personal files, vault contents, scan results, or installed-app list to the developer. Advertising, consent, and billing providers may process information under their own policies and your consent choices. Read the Privacy Policy before using the app.
 

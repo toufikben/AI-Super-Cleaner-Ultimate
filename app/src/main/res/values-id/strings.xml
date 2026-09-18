@@ -111,8 +111,6 @@
     <string name="perm_all_files_desc">Untuk memindai semua file perangkat (Android 11+).</string>
     <string name="perm_notif_title">Notifikasi</string>
     <string name="perm_notif_desc">Beri tahu Anda saat penyimpanan hampir penuh.</string>
-    <string name="perm_query_title">Baca Aplikasi Terinstal</string>
-    <string name="perm_query_desc">Untuk memindai cache dan data setiap aplikasi.</string>
     <string name="perm_biometric_title">Sidik Jari / Wajah</string>
     <string name="perm_biometric_desc">Untuk mengamankan dan membuka brankas pribadi Anda.</string>
 

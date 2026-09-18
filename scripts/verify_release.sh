@@ -8,7 +8,10 @@ ARTIFACT="${1:-app/build/outputs/apk/release/app-release.apk}"
 test -s "$ARTIFACT"
 
 grep -Eq '<uses-permission[^>]*android.permission.MANAGE_EXTERNAL_STORAGE' app/src/main/AndroidManifest.xml
-grep -Eq '<uses-permission[^>]*android.permission.QUERY_ALL_PACKAGES' app/src/main/AndroidManifest.xml
+if grep -Eq 'QUERY_ALL_PACKAGES' app/src/main/AndroidManifest.xml; then
+  echo "ERROR: QUERY_ALL_PACKAGES must not be declared." >&2
+  exit 1
+fi
 
 if [[ "$ARTIFACT" == *.apk ]]; then
   AAPT="${ANDROID_HOME:?}/build-tools/36.0.0/aapt"

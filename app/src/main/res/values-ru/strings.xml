@@ -111,8 +111,6 @@
     <string name="perm_all_files_desc">Для сканирования всех файлов устройства (Android 11+).</string>
     <string name="perm_notif_title">Уведомления</string>
     <string name="perm_notif_desc">Чтобы уведомлять вас о нехватке места.</string>
-    <string name="perm_query_title">Чтение установленных приложений</string>
-    <string name="perm_query_desc">Для сканирования кэша и данных каждого приложения.</string>
     <string name="perm_biometric_title">Отпечаток пальца / лицо</string>
     <string name="perm_biometric_desc">Для защиты и разблокировки личного хранилища.</string>
 

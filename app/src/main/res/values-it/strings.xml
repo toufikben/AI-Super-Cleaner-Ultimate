@@ -111,8 +111,6 @@
     <string name="perm_all_files_desc">Per scansionare tutti i file del dispositivo (Android 11+).</string>
     <string name="perm_notif_title">Notifiche</string>
     <string name="perm_notif_desc">Per avvisarti quando lo spazio è insufficiente.</string>
-    <string name="perm_query_title">Leggi le app installate</string>
-    <string name="perm_query_desc">Per scansionare la cache e i dati di ogni app.</string>
     <string name="perm_biometric_title">Impronta digitale / volto</string>
     <string name="perm_biometric_desc">Per proteggere e sbloccare la tua cassaforte privata.</string>
 
