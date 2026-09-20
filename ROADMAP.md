@@ -59,7 +59,8 @@
 | P1 | تدقيق Billing/Ads/UMP وData Safety | entitlement بعد restart/expiry/refund، وconsent قبل الإعلانات، وتطابق السياسة | مفتوح |
 | P2 | تدقيق Privacy Scanner على Android 11+ | إثبات أن package visibility المحدودة تحقق الوعد الوظيفي | مفتوح |
 | P2 | اختبار backup/restore وClear All Data على Android 12+ | لا تسريب لـVault/DB/الإعدادات الحساسة، ونتيجة واضحة للمستخدم | مفتوح |
-| P2 | قياس Store Listing وASO | تجربة واحدة بفرضية وmetric ومدة وقرار، دون ادعاء نتائج مسبقة | مفتوح بعد ثبات listing |
+| P2 | قياس Store Listing وASO | تجربة واحدة بفرضية وmetric ومدة وقرار، دون ادعاء نتائج مسبقة؛ metrics الحالية غير متاحة | مفتوح بعد توفر البيانات |
+| P2 | تدقيق Monetization setup والمنتجات | مطابقة `premium_monthly` و`premium_lifetime` مع المنتجات والأسعار والحالات في Console | مفتوح |
 
 ## 5. قواعد العمل من الآن
 

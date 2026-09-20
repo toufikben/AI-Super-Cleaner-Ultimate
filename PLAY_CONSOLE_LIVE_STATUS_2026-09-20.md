@@ -23,6 +23,8 @@
 | App integrity | صفحة App integrity نقلت الإعدادات إلى Protected with Play | لا يوجد إجراء مطلوب من الصفحة القديمة |
 | Protected with Play | Good protection؛ Automatic protection: 1/1؛ Play Store protection: 6/7؛ Play Billing protection: 4/4؛ Play Integrity API: 0/7 وغير مدمج | Play Integrity API تحسين أمني لاحق، وليس شرطًا لرفع الصور أو إغلاق رفض Query الحالي بحد ذاته |
 | Automatic protection | Play installs 100.0%، Unknown redistribution غير متاح/بدون قيمة ظاهرة | لا توجد إشارة إعادة توزيع غير معروفة في البيانات الحالية |
+| Grow users | Device impressions، acquisitions، first opens، monthly active devices، و7-day retention كلها **Data unavailable** لآخر 28 يومًا | لا يمكن بناء قرار ASO أو تجربة Listing من metrics غير موجودة |
+| Monetize with Play | تظهر أقسام Products، Merchandising and optimization، Price experiments، Promo codes، Financial reports، وMonetization setup، لكن الصفحة العامة لا تعرض حالة المنتجات نفسها | يلزم فتح كل قسم لاحقًا للتحقق من `premium_monthly` و`premium_lifetime` وحالة الأسعار/الاشتراكات |
 
 ## ما تم تجاوزه حسب طلب المالك
 
@@ -37,6 +39,7 @@
 5. تشغيل build، unit tests، lint، وAAB validation ببيئة JDK كاملة؛ الفشل السابق كان بيئيًا قبل compilation.
 6. تدقيق Quick Clean shortcut، Shredder claims، Vault lifecycle، WorkManager، Billing، UMP، Data Safety، والـprivacy policy مقابل التطبيق الحالي.
 7. عدم استخدام Vitals أو Ratings كمواد تسويقية حاليًا لأن البيانات غير متاحة.
+8. فتح Monetization setup والمنتجات لاحقًا للتحقق من product IDs والأسعار وحالات Billing دون تعديلها تلقائيًا.
 
 ## قيود القرار
 
