@@ -72,7 +72,7 @@
 
 ## 6. قرار التنفيذ الحالي
 
-**المرحلة الحالية: تحسين listing والتحقق قبل النشر.** تم تحديث النصوص والمواد البصرية محليًا، بينما يبقى رفع الصور المحلية إلى locale Arabic/French/English بحاجة إلى تحقق داخل Console بسبب منع موصل المتصفح من تمرير الملفات إلى native file picker. لا توجد موافقة على الإرسال للمراجعة أو النشر، ولذلك لن ينفذ أي منهما تلقائيًا.
+**المرحلة الحالية: تدقيق listing والإصدار والسياسات قبل النشر.** تم تحديث النصوص والمواد البصرية محليًا، وقرر المالك تجاوز رفع الصور والفيديو والتعامل معه يدويًا. الفحص الحي الأخير يثبت أن App Content مكتمل، لكن Policy status ما زال يعرض رفض `QUERY_ALL_PACKAGES`، والتحديث ما زال **In review**، وتغييرات Production/Open testing وStore listings ضمن **Changes in review**. لا توجد موافقة على Remove changes أو Submit أو Publish.
 
 ## 7. Skills وأدوات GitHub التي تم تقييمها
 
@@ -91,6 +91,10 @@
 2. تفعيل Google Play Developer API/Service Account Connector، ثم استخدام API أو Fastlane/Supply لرفع metadata والصور دون واجهة المتصفح.
 
 هذه النتيجة ليست تخطيًا ولا فشلًا في فحص التطبيق؛ إنها **حاجة إلى جلسة مصادق عليها أو Connector خارجي**. لم تُحفظ أي بيانات اعتماد داخل المستودع.
+
+## 8. آخر قراءة حية بعد تجاوز الصور والفيديو
+
+التفاصيل الكاملة محفوظة في [PLAY_CONSOLE_LIVE_STATUS_2026-09-20.md](PLAY_CONSOLE_LIVE_STATUS_2026-09-20.md). أهم النتائج: App Content يعرض “You're all caught up”، Android vitals وRatings غير متاحة، Protected with Play يعرض Good protection، وPlay Integrity API غير مدمج (0/7). ما زال يلزم مطابقة الـAAB/track الفعلي مع commit الحالي وحسم `MANAGE_EXTERNAL_STORAGE` قبل اعتبار مشكلة الرفض مغلقة.
 
 ## الأدلة المرتبطة
 
