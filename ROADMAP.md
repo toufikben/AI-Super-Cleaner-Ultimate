@@ -74,6 +74,24 @@
 
 **المرحلة الحالية: تحسين listing والتحقق قبل النشر.** تم تحديث النصوص والمواد البصرية محليًا، بينما يبقى رفع الصور المحلية إلى locale Arabic/French/English بحاجة إلى تحقق داخل Console بسبب منع موصل المتصفح من تمرير الملفات إلى native file picker. لا توجد موافقة على الإرسال للمراجعة أو النشر، ولذلك لن ينفذ أي منهما تلقائيًا.
 
+## 7. Skills وأدوات GitHub التي تم تقييمها
+
+| الأداة | الإجراء | النتيجة |
+|---|---|---|
+| `blockmatic/basilic@playwright-v1` | تم العثور عليها عبر `npx skills find` ثم تثبيتها وتشغيل Playwright فعليًا | مفيدة للأتمتة العامة ورفع الملفات عندما توجد جلسة مصادق عليها |
+| Playwright standalone | فُتح رابط Play Console من جلسة Chromium مستقلة | أعاد Google إلى صفحة Sign in؛ لا يشارك جلسة المتصفح المصادق عليها في موصل Manus |
+| Skills catalog | تم البحث عن browser/file-upload/Playwright/Google Play skills | لم يظهر Skill موثوق ومحدد لـGoogle Play Console؛ أقرب نتيجة عملية كانت Playwright |
+| Google Play API connector | تم فحص إعدادات connectors | لا يوجد Google Play API أو Service Account مهيأ في هذه الجلسة |
+
+### قرار الأتمتة بعد التجربة
+
+لم يتم تثبيت أي Skill عشوائي خاص برفع الملفات لمجرد اسمه؛ النتائج منخفضة الاستخدام أو لا تتعلق بـGoogle Play. تم استخدام Playwright Skill فعليًا، لكن غياب جلسة OAuth في Chromium المستقل يمنع الوصول إلى حساب Console. المساران التقنيان القابلان للإغلاق لاحقًا هما:
+
+1. استخدام جلسة المتصفح المصادق عليها مع file picker يدوي قصير، ثم التحقق من ظهور الصور داخل Console.
+2. تفعيل Google Play Developer API/Service Account Connector، ثم استخدام API أو Fastlane/Supply لرفع metadata والصور دون واجهة المتصفح.
+
+هذه النتيجة ليست تخطيًا ولا فشلًا في فحص التطبيق؛ إنها **حاجة إلى جلسة مصادق عليها أو Connector خارجي**. لم تُحفظ أي بيانات اعتماد داخل المستودع.
+
 ## الأدلة المرتبطة
 
 - `play-store-listing.md` — نصوص المتجر الحالية.
@@ -84,4 +102,3 @@
 - المستودع: `https://github.com/toufikben/AI-Super-Cleaner-Ultimate`.
 
 > **تنبيه:** لا يحتوي هذا الملف على أسرار توقيع أو مفاتيح Google Play أو بيانات اعتماد.
-
