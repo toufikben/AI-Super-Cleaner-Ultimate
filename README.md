@@ -2,6 +2,10 @@
 
 تطبيق Android لتنظيف التخزين وفحص الخصوصية وإدارة الملفات محليًا، مع إعلانات للمستخدم المجاني وميزات Premium عبر Google Play Billing.
 
+## خريطة الطريق الحالية
+
+راجع [ROADMAP.md](ROADMAP.md) لمعرفة ما تم إثباته في الكود وGoogle Play Console، وما بقي مفتوحًا، وما لم يُعتبر مكتملًا دون تحقق مباشر.
+
 ## الهوية والمنتجات
 
 - Application ID: `com.aisupercleaner.ultimate`
