@@ -59,7 +59,7 @@
 | P1 | تدقيق Billing/Ads/UMP وData Safety | entitlement بعد restart/expiry/refund، وconsent قبل الإعلانات، وتطابق السياسة | مفتوح |
 | P2 | تدقيق Privacy Scanner على Android 11+ | إثبات أن package visibility المحدودة تحقق الوعد الوظيفي | مفتوح |
 | P2 | اختبار backup/restore وClear All Data على Android 12+ | لا تسريب لـVault/DB/الإعدادات الحساسة، ونتيجة واضحة للمستخدم | مفتوح |
-| P2 | قياس Store Listing وASO | تجربة واحدة بفرضية وmetric ومدة وقرار، دون ادعاء نتائج مسبقة؛ metrics الحالية غير متاحة | مفتوح بعد توفر البيانات |
+| P2 | قياس Store Listing وASO | تجربة واحدة بفرضية وmetric ومدة وقرار، دون ادعاء نتائج مسبقة؛ النص العربي والفرنسي محفوظ كمسودة | مفتوح بعد توفر البيانات |
 | P2 | تدقيق Monetization setup والمنتجات | مطابقة `premium_monthly` و`premium_lifetime` مع المنتجات والأسعار والحالات في Console | مفتوح |
 
 ## 5. قواعد العمل من الآن
@@ -95,7 +95,7 @@
 
 ## 8. آخر قراءة حية بعد تجاوز الصور والفيديو
 
-التفاصيل الكاملة محفوظة في [PLAY_CONSOLE_LIVE_STATUS_2026-09-20.md](PLAY_CONSOLE_LIVE_STATUS_2026-09-20.md). أهم النتائج: App Content يعرض “You're all caught up”، Android vitals وRatings غير متاحة، Protected with Play يعرض Good protection، وPlay Integrity API غير مدمج (0/7). ما زال يلزم مطابقة الـAAB/track الفعلي مع commit الحالي وحسم `MANAGE_EXTERNAL_STORAGE` قبل اعتبار مشكلة الرفض مغلقة.
+التفاصيل الكاملة محفوظة في [PLAY_CONSOLE_LIVE_STATUS_2026-09-20.md](PLAY_CONSOLE_LIVE_STATUS_2026-09-20.md). أهم النتائج: App Content يعرض “You're all caught up”، Android vitals وRatings غير متاحة، Protected with Play يعرض Good protection، وPlay Integrity API غير مدمج (0/7). تم الآن حفظ الوصفين العربي والفرنسي كمسودة مع إبقاء اسم التطبيق كما هو وعدم رفع الصور والفيديو. ما زال يلزم مطابقة الـAAB/track الفعلي مع commit الحالي وحسم `MANAGE_EXTERNAL_STORAGE` قبل اعتبار مشكلة الرفض مغلقة.
 
 ## الأدلة المرتبطة
 
